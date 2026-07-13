@@ -98,8 +98,46 @@ button{font-size:1.2rem}
 
 <!-- BANK SOAL PDF -->
 <section class="px-4 py-8">
-  <h2 class="font-luxury text-red-900 mb-5 text-center" style="font-size:2.4rem">Bank Soal PDF</h2>
-  <div class="space-y-4">
+  <h2 class="font-luxury text-red-900 mb-3 text-center" style="font-size:2.4rem">Bank Soal PDF</h2>
+  <p class="text-gray-600 text-center mb-5 txt-med">Pilih jenjang pendidikan</p>
+  
+  <!-- TAB JENJANG -->
+  <div class="flex bg-white rounded-2xl shadow overflow-hidden mb-5 border-2 border-red-900">
+    <button onclick="showJenjang('sd')" id="tabSD" class="flex-1 py-4 font-black txt-big text-gray-600">🎒 SD</button>
+    <button onclick="showJenjang('smp')" id="tabSMP" class="flex-1 py-4 font-black txt-big bg-red-900 text-white">📚 SMP</button>
+    <button onclick="showJenjang('sma')" id="tabSMA" class="flex-1 py-4 font-black txt-big text-gray-600">🎓 SMA</button>
+  </div>
+
+  <!-- ============ TAB SD ============ -->
+  <div id="jenjangSD" class="hidden space-y-4">
+    <div class="border-2 border-gray-200 p-5 rounded-2xl bg-white">
+      <div class="text-red-700 font-black txt-med">PDF FILE • SD</div>
+      <h4 class="txt-huge mb-3 text-red-900">Latihan Paket A</h4>
+      <div class="flex gap-2">
+        <button onclick="bukaPDF('pdf/sd/soal-a.pdf')" class="flex-1 text-center bg-gray-800 text-white py-4 rounded-xl font-black txt-big">📖 Buka</button>
+        <a href="pdf/sd/soal-a.pdf" download class="flex-1 text-center border-2 py-4 rounded-xl font-black txt-big">⬇️ Download</a>
+      </div>
+    </div>
+    <div class="border-2 border-gray-200 p-5 rounded-2xl bg-white">
+      <div class="text-red-700 font-black txt-med">PDF FILE • SD</div>
+      <h4 class="txt-huge mb-3 text-red-900">Latihan Paket B</h4>
+      <div class="flex gap-2">
+        <button onclick="bukaPDF('pdf/sd/soal-b.pdf')" class="flex-1 text-center bg-gray-800 text-white py-4 rounded-xl font-black txt-big">📖 Buka</button>
+        <a href="pdf/sd/soal-b.pdf" download class="flex-1 text-center border-2 py-4 rounded-xl font-black txt-big">⬇️ Download</a>
+      </div>
+    </div>
+    <div class="border-2 border-gray-200 p-5 rounded-2xl bg-white">
+      <div class="text-red-700 font-black txt-med">PDF FILE • SD</div>
+      <h4 class="txt-huge mb-3 text-red-900">UTS 2026</h4>
+      <div class="flex gap-2">
+        <button onclick="bukaPDF('pdf/sd/uts-2026.pdf')" class="flex-1 text-center bg-gray-800 text-white py-4 rounded-xl font-black txt-big">📖 Buka</button>
+        <a href="pdf/sd/uts-2026.pdf" download class="flex-1 text-center border-2 py-4 rounded-xl font-black txt-big">⬇️ Download</a>
+      </div>
+    </div>
+  </div>
+
+  <!-- ============ TAB SMP (DEFAULT AKTIF) ============ -->
+  <div id="jenjangSMP" class="space-y-4">
     <div class="border-2 border-gray-200 p-5 rounded-2xl bg-white">
       <div class="text-red-700 font-black txt-med">PDF FILE • SMP</div>
       <h4 class="txt-huge mb-3 text-red-900">Latihan Paket A</h4>
@@ -122,6 +160,34 @@ button{font-size:1.2rem}
       <div class="flex gap-2">
         <button onclick="bukaPDF('pdf/smp/uts-2026.pdf')" class="flex-1 text-center bg-gray-800 text-white py-4 rounded-xl font-black txt-big">📖 Buka</button>
         <a href="pdf/smp/uts-2026.pdf" download class="flex-1 text-center border-2 py-4 rounded-xl font-black txt-big">⬇️ Download</a>
+      </div>
+    </div>
+  </div>
+
+  <!-- ============ TAB SMA ============ -->
+  <div id="jenjangSMA" class="hidden space-y-4">
+    <div class="border-2 border-gray-200 p-5 rounded-2xl bg-white">
+      <div class="text-red-700 font-black txt-med">PDF FILE • SMA</div>
+      <h4 class="txt-huge mb-3 text-red-900">Latihan Paket A</h4>
+      <div class="flex gap-2">
+        <button onclick="bukaPDF('pdf/sma/soal-a.pdf')" class="flex-1 text-center bg-gray-800 text-white py-4 rounded-xl font-black txt-big">📖 Buka</button>
+        <a href="pdf/sma/soal-a.pdf" download class="flex-1 text-center border-2 py-4 rounded-xl font-black txt-big">⬇️ Download</a>
+      </div>
+    </div>
+    <div class="border-2 border-gray-200 p-5 rounded-2xl bg-white">
+      <div class="text-red-700 font-black txt-med">PDF FILE • SMA</div>
+      <h4 class="txt-huge mb-3 text-red-900">Latihan Paket B</h4>
+      <div class="flex gap-2">
+        <button onclick="bukaPDF('pdf/sma/soal-b.pdf')" class="flex-1 text-center bg-gray-800 text-white py-4 rounded-xl font-black txt-big">📖 Buka</button>
+        <a href="pdf/sma/soal-b.pdf" download class="flex-1 text-center border-2 py-4 rounded-xl font-black txt-big">⬇️ Download</a>
+      </div>
+    </div>
+    <div class="border-2 border-gray-200 p-5 rounded-2xl bg-white">
+      <div class="text-red-700 font-black txt-med">PDF FILE • SMA</div>
+      <h4 class="txt-huge mb-3 text-red-900">TKA Matematika</h4>
+      <div class="flex gap-2">
+        <button onclick="bukaPDF('pdf/sma/tka-matematika.pdf')" class="flex-1 text-center bg-gray-800 text-white py-4 rounded-xl font-black txt-big">📖 Buka</button>
+        <a href="pdf/sma/tka-matematika.pdf" download class="flex-1 text-center border-2 py-4 rounded-xl font-black txt-big">⬇️ Download</a>
       </div>
     </div>
   </div>
@@ -215,6 +281,19 @@ function bukaPDF(pathPDF) {
   const urlLengkap = baseURL + pathPDF;
   const viewerURL = 'https://docs.google.com/viewer?url=' + encodeURIComponent(urlLengkap) + '&embedded=false';
   window.open(viewerURL, '_blank');
+}
+  // ============ SWITCH TAB JENJANG PDF ============
+function showJenjang(jenjang) {
+  ['sd','smp','sma'].forEach(j => {
+    const kap = j.toUpperCase();
+    document.getElementById('jenjang'+kap).classList.add('hidden');
+    document.getElementById('tab'+kap).classList.remove('bg-red-900','text-white');
+    document.getElementById('tab'+kap).classList.add('text-gray-600');
+  });
+  const kap = jenjang.toUpperCase();
+  document.getElementById('jenjang'+kap).classList.remove('hidden');
+  document.getElementById('tab'+kap).classList.add('bg-red-900','text-white');
+  document.getElementById('tab'+kap).classList.remove('text-gray-600');
 }
 
 let cacheSiswa=null, cacheOrtu=null;
