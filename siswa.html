@@ -23,7 +23,7 @@ body{margin:0;padding:0;font-family:'Poppins',sans-serif;-webkit-font-smoothing:
 .txt-med{font-size:1.15rem;line-height:1.4;font-weight:600}
 .txt-sml{font-size:1rem}
 
-/* SCANNER FULLSCREEN - AREA SCAN SANGAT BESAR */
+/* SCANNER */
 #modalScan{position:fixed;inset:0;z-index:100;background:#000;display:none}
 #modalScan.active{display:block}
 #qr-reader{width:100vw !important;height:100vh !important;border:none !important;position:absolute !important;inset:0}
@@ -49,6 +49,13 @@ body{margin:0;padding:0;font-family:'Poppins',sans-serif;-webkit-font-smoothing:
 @keyframes spin{100%{transform:rotate(360deg)}}
 .skeleton{background:linear-gradient(90deg,#f0f0f0 25%,#e0e0e0 50%,#f0f0f0 75%);background-size:200% 100%;animation:shim 1.2s infinite;border-radius:12px}
 @keyframes shim{0%{background-position:200% 0}100%{background-position:-200% 0}}
+
+/* ============ BADGE STATUS JADWAL ============ */
+.badge{display:inline-block;padding:6px 14px;border-radius:9999px;font-weight:900;font-size:0.95rem;margin-top:8px}
+.badge-hijau{background:#16a34a;color:white}
+.badge-kuning{background:#eab308;color:#78350f;animation:blink 2s infinite}
+.badge-merah{background:#dc2626;color:white}
+@keyframes blink{50%{opacity:0.6}}
 </style>
 </head>
 <body class="bg-gray-50 min-h-screen">
@@ -95,7 +102,13 @@ body{margin:0;padding:0;font-family:'Poppins',sans-serif;-webkit-font-smoothing:
   </div>
 
   <div id="contentJadwal" class="bg-white rounded-2xl shadow p-4">
-    <h3 class="txt-huge text-red-900 mb-4 border-l-4 border-yellow-500 pl-3">Jadwal Les Saya</h3>
+    <h3 class="txt-huge text-red-900 mb-3 border-l-4 border-yellow-500 pl-3">Jadwal Les Saya</h3>
+    <!-- LEGENDA WARNA -->
+    <div class="flex flex-wrap gap-2 mb-4 text-xs">
+      <span class="badge badge-hijau" style="font-size:0.85rem;padding:4px 10px">✓ Sudah Absen</span>
+      <span class="badge badge-kuning" style="font-size:0.85rem;padding:4px 10px">⏰ Hari Ini</span>
+      <span class="badge badge-merah" style="font-size:0.85rem;padding:4px 10px">○ Belum</span>
+    </div>
     <div id="listJadwal" class="space-y-3">
       <div class="skeleton h-24"></div><div class="skeleton h-24"></div>
     </div>
@@ -114,7 +127,6 @@ body{margin:0;padding:0;font-family:'Poppins',sans-serif;-webkit-font-smoothing:
 
 <div class="h-6"></div>
 
-<!-- SCANNER FULLSCREEN -->
 <div id="modalScan">
   <div id="qr-reader"></div>
   <div class="scan-overlay">
@@ -133,7 +145,6 @@ body{margin:0;padding:0;font-family:'Poppins',sans-serif;-webkit-font-smoothing:
   </div>
 </div>
 
-<!-- NOTIF -->
 <div id="modalNotif" class="hidden fixed inset-0 bg-black/85 z-[200] flex items-center justify-center p-4">
   <div class="bg-white rounded-3xl p-7 w-full max-w-md text-center">
     <div id="notifIcon" style="font-size:6rem" class="mb-3">✅</div>
@@ -146,7 +157,9 @@ body{margin:0;padding:0;font-family:'Poppins',sans-serif;-webkit-font-smoothing:
 
 <script>
 const API_URL="https://script.google.com/macros/s/AKfycbzsWmRDZQnf680vmXKcF7s-BxDxXdelv3K6MWG0fRfqpxYv7azBWnldN6UrjUIqdvLG/exec";
+const HARI_LIST = ['Minggu','Senin','Selasa','Rabu','Kamis','Jumat','Sabtu'];
 let siswa=null, html5QrCode=null;
+let cacheJadwal=[], cachePresensi=[], cacheNilai=[];
 
 window.onload = function() {
   const data = localStorage.getItem('ez_siswa');
@@ -156,16 +169,25 @@ window.onload = function() {
   document.getElementById('profilNama').innerText = siswa.nama;
   document.getElementById('profilKelas').innerText = siswa.kelas + ' • ' + siswa.id;
   
+  loadAll();
+  
+  if(location.search.includes('autoscan=1')) setTimeout(openScanner, 400);
+};
+
+function loadAll() {
   Promise.all([
     fetch(`${API_URL}?action=getJadwalSiswa&idSiswa=${siswa.id}`).then(r=>r.json()),
     fetch(`${API_URL}?action=getPresensiSiswa&idSiswa=${siswa.id}`).then(r=>r.json()),
     fetch(`${API_URL}?action=getNilaiSiswa&idSiswa=${siswa.id}`).then(r=>r.json())
   ]).then(([jd,pr,nl]) => {
-    renderJadwal(jd.data); renderPresensi(pr.data); renderNilai(nl.data);
+    cacheJadwal = jd.data; 
+    cachePresensi = pr.data; 
+    cacheNilai = nl.data;
+    renderJadwal();  // render jadwal butuh data presensi
+    renderPresensi();
+    renderNilai();
   }).catch(e=>console.log(e));
-  
-  if(location.search.includes('autoscan=1')) setTimeout(openScanner, 400);
-};
+}
 
 function logout(){ if(confirm('Yakin logout?')){localStorage.removeItem('ez_siswa');window.location='index.html';} }
 
@@ -182,20 +204,78 @@ function showTab(tab) {
   document.getElementById('tab'+c).classList.remove('text-gray-600');
 }
 
-function renderJadwal(d) {
-  const el = document.getElementById('listJadwal');
-  if(!d||d.length===0){el.innerHTML='<p class="text-gray-400 text-center py-8 txt-big">Belum ada jadwal</p>';return;}
-  el.innerHTML = d.map(x=>`
-    <div class="border-l-4 border-red-700 bg-red-50 p-4 rounded-r-xl">
-      <div class="txt-huge text-red-900">${x.hari}</div>
-      <div class="txt-big text-red-700">🕐 ${x.jam}</div>
-      <div class="txt-med text-gray-700 mt-1">${x.sesi}</div>
-      <div class="txt-sml text-gray-500 mt-1 font-semibold">📍 ${x.kelompok}</div>
-    </div>`).join('');
+// ============ CEK STATUS JADWAL BERDASARKAN PRESENSI HARI INI ============
+function cekStatusJadwal(jadwal) {
+  // Ambil hari ini dalam bahasa Indonesia
+  const now = new Date();
+  const hariIni = HARI_LIST[now.getDay()];
+  const tglIni = String(now.getDate()).padStart(2,'0') + '/' + String(now.getMonth()+1).padStart(2,'0') + '/' + now.getFullYear();
+  
+  // Cek apakah jadwal ini hari ini
+  const isHariIni = (jadwal.hari === hariIni);
+  
+  // Cek apakah SUDAH ada presensi HARI INI dengan hari & jam yang cocok
+  let sudahAbsen = false;
+  cachePresensi.forEach(p => {
+    // p.timestamp format: dd/MM/yyyy HH:mm
+    const tglPresensi = p.timestamp.substring(0,10);
+    if(tglPresensi === tglIni && p.hari === jadwal.hari) {
+      // Cek jam juga - ambil awal jam jadwal (contoh "13.00 - 14.30" -> "13.00")
+      const jamJadwal = jadwal.jam.split('-')[0].trim().substring(0,5);
+      const jamPresensi = String(p.jam).substring(0,5);
+      // Cek toleransi 3 jam (siswa scan sebelum atau di dalam jam kelas)
+      if(jamJadwal.substring(0,2) === jamPresensi.substring(0,2) || 
+         Math.abs(parseInt(jamJadwal.replace(/[.:]/g,''))-parseInt(jamPresensi.replace(/[.:]/g,''))) < 200) {
+        sudahAbsen = true;
+      }
+    }
+  });
+  
+  if(sudahAbsen) return 'hijau';
+  if(isHariIni) return 'kuning';
+  return 'merah';
 }
 
-function renderPresensi(d) {
+function renderJadwal() {
+  const el = document.getElementById('listJadwal');
+  const d = cacheJadwal;
+  if(!d||d.length===0){el.innerHTML='<p class="text-gray-400 text-center py-8 txt-big">Belum ada jadwal</p>';return;}
+  
+  el.innerHTML = d.map(x=>{
+    const status = cekStatusJadwal(x);
+    let bgClass, borderClass, textColor, badge;
+    
+    if(status === 'hijau') {
+      bgClass = 'bg-green-50';
+      borderClass = 'border-green-600';
+      textColor = 'text-green-900';
+      badge = '<span class="badge badge-hijau">✓ SUDAH ABSEN</span>';
+    } else if(status === 'kuning') {
+      bgClass = 'bg-yellow-50';
+      borderClass = 'border-yellow-500';
+      textColor = 'text-yellow-900';
+      badge = '<span class="badge badge-kuning">⏰ KELAS HARI INI</span>';
+    } else {
+      bgClass = 'bg-red-50';
+      borderClass = 'border-red-700';
+      textColor = 'text-red-900';
+      badge = '<span class="badge badge-merah">○ Belum Absen</span>';
+    }
+    
+    return `
+    <div class="border-l-4 ${borderClass} ${bgClass} p-4 rounded-r-xl">
+      <div class="txt-huge ${textColor}">${x.hari}</div>
+      <div class="txt-big ${textColor} opacity-80">🕐 ${x.jam}</div>
+      <div class="txt-med text-gray-700 mt-1">${x.sesi}</div>
+      <div class="txt-sml text-gray-500 mt-1 font-semibold">📍 ${x.kelompok}</div>
+      ${badge}
+    </div>`;
+  }).join('');
+}
+
+function renderPresensi() {
   const el = document.getElementById('listPresensi');
+  const d = cachePresensi;
   if(!d||d.length===0){el.innerHTML='<p class="text-gray-400 text-center py-8 txt-big">Belum ada presensi</p>';return;}
   el.innerHTML = d.map(x=>`
     <div class="flex items-center bg-green-50 p-4 rounded-xl border-l-4 border-green-500">
@@ -209,8 +289,9 @@ function renderPresensi(d) {
     </div>`).join('');
 }
 
-function renderNilai(d) {
+function renderNilai() {
   const el = document.getElementById('listNilai');
+  const d = cacheNilai;
   if(!d||d.length===0){el.innerHTML='<p class="text-gray-400 text-center py-8 txt-big">Belum ada nilai</p>';return;}
   el.innerHTML = d.map(x=>{
     const n=parseInt(x.nilai100)||0;
@@ -256,9 +337,13 @@ async function onScanSuccess(kodeQR) {
     const j = await r.json();
     if(j.status==='success'){
       showNotif('✅','BERHASIL!', j.namaSiswa, `📅 ${j.hari} • 🕐 ${j.jam}<br>📚 ${j.mapel}`);
-      fetch(`${API_URL}?action=getPresensiSiswa&idSiswa=${siswa.id}`).then(r=>r.json()).then(p=>renderPresensi(p.data));
-    } else if(j.status==='warning'){ showNotif('⚠️','Sudah Presensi', j.message, ''); }
-    else { showNotif('❌','Gagal', j.message, `Kode: ${kodeQR}`); }
+      // Refresh data presensi & re-render jadwal (biar warna berubah jadi hijau)
+      loadAll();
+    } else if(j.status==='warning'){ 
+      showNotif('⚠️','Sudah Presensi', j.message, ''); 
+    } else { 
+      showNotif('❌','Gagal', j.message, `Kode: ${kodeQR}`); 
+    }
   } catch(e){ showNotif('❌','Error','Gagal koneksi',''); }
 }
 
