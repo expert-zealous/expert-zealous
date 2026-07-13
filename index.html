@@ -6,153 +6,161 @@
 <meta name="theme-color" content="#8B0000">
 <title>EXPERT ZEALOUS</title>
 <script src="https://cdn.tailwindcss.com"></script>
-<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Poppins:wght@400;600;700;800&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Poppins:wght@400;600;700;800;900&display=swap" rel="stylesheet">
 <style>
 *{-webkit-tap-highlight-color:transparent;box-sizing:border-box}
-html,body{margin:0;padding:0;font-family:'Poppins',sans-serif;-webkit-font-smoothing:antialiased;font-size:17px}
+html{font-size:20px}
+body{margin:0;padding:0;font-family:'Poppins',sans-serif;-webkit-font-smoothing:antialiased;font-size:1rem}
 .font-luxury{font-family:'Playfair Display',serif}
 .btn-red{background:linear-gradient(to right,#8B0000,#FF0000);color:white}
-.card-tap{transition:transform 0.15s}
-.card-tap:active{transform:scale(0.96)}
-.spinner{border:3px solid #f3f3f3;border-top:3px solid #8B0000;border-radius:50%;width:22px;height:22px;animation:spin 0.7s linear infinite;display:inline-block;vertical-align:middle}
+.card-tap{transition:transform 0.15s}.card-tap:active{transform:scale(0.96)}
+.spinner{border:3px solid #f3f3f3;border-top:3px solid #8B0000;border-radius:50%;width:26px;height:26px;animation:spin 0.7s linear infinite;display:inline-block;vertical-align:middle}
 @keyframes spin{100%{transform:rotate(360deg)}}
-select,input,button{font-size:17px!important}
+
+.txt-jumbo{font-size:2.4rem;line-height:1.1;font-weight:900}
+.txt-huge{font-size:1.9rem;line-height:1.15;font-weight:800}
+.txt-big{font-size:1.5rem;line-height:1.3;font-weight:700}
+.txt-med{font-size:1.15rem;line-height:1.4;font-weight:600}
+.txt-sml{font-size:1rem;line-height:1.4}
+
+select,input{font-size:1.3rem !important;font-weight:600}
+button{font-size:1.2rem}
 </style>
 </head>
 <body class="bg-gray-50 text-gray-800">
 
 <nav class="px-4 py-3 flex justify-between items-center shadow-md border-b-4 border-yellow-500 sticky top-0 bg-white z-50">
   <div class="flex items-center">
-    <img src="images/logo-ez.png" class="h-12 mr-2" onerror="this.style.display='none'">
-    <span class="font-extrabold text-red-800 text-xl">EXPERT ZEALOUS</span>
+    <img src="images/logo-ez.png" class="h-14 mr-2" onerror="this.style.display='none'">
+    <span class="font-black text-red-800" style="font-size:1.5rem">EZ</span>
   </div>
-  <a href="admin-qr.html" class="text-sm bg-gray-800 text-white px-3 py-2 rounded-full font-bold">Admin</a>
+  <a href="admin-qr.html" class="bg-gray-800 text-white px-4 py-3 rounded-full font-black" style="font-size:1.05rem">Admin</a>
 </nav>
 
-<section class="px-3 py-5">
-  <div class="text-center mb-5">
-    <h1 class="text-4xl font-luxury text-red-900 mb-1 leading-tight">Portal <span class="text-yellow-600 italic">Eksklusif</span></h1>
-    <p class="text-gray-600 text-base">Pilih menu untuk masuk</p>
+<section class="px-4 py-6">
+  <div class="text-center mb-6">
+    <h1 class="font-luxury text-red-900 mb-2" style="font-size:3rem;line-height:1;">Portal <span class="text-yellow-600 italic">Eksklusif</span></h1>
+    <p class="text-gray-600 txt-big">Pilih menu untuk masuk</p>
   </div>
 
-  <div class="space-y-3 px-1">
+  <div class="space-y-4">
 
-  <button onclick="goScan()" class="card-tap w-full bg-gradient-to-br from-yellow-400 to-yellow-600 p-5 rounded-2xl shadow-lg text-red-900 flex items-center">
-    <div class="text-6xl mr-4">📷</div>
+  <button onclick="goScan()" class="card-tap w-full bg-gradient-to-br from-yellow-400 to-yellow-600 p-5 rounded-3xl shadow-xl text-red-900 flex items-center">
+    <div style="font-size:5rem" class="mr-4">📷</div>
     <div class="text-left flex-1">
-      <div class="font-extrabold text-2xl leading-tight">SCAN QR</div>
-      <div class="text-base font-semibold opacity-90">Absen masuk les</div>
+      <div class="txt-jumbo">SCAN QR</div>
+      <div class="txt-med opacity-90">Absen masuk les</div>
     </div>
-    <div class="text-4xl font-bold">›</div>
+    <div style="font-size:3.5rem;font-weight:900" class="ml-2">›</div>
   </button>
 
-  <button onclick="openModalSiswa()" class="card-tap w-full bg-gradient-to-br from-red-900 to-red-700 p-5 rounded-2xl shadow-lg text-white flex items-center">
-    <div class="text-6xl mr-4">👨‍🎓</div>
+  <button onclick="openModalSiswa()" class="card-tap w-full bg-gradient-to-br from-red-900 to-red-700 p-5 rounded-3xl shadow-xl text-white flex items-center">
+    <div style="font-size:5rem" class="mr-4">👨‍🎓</div>
     <div class="text-left flex-1">
-      <div class="font-extrabold text-2xl leading-tight">LOGIN SISWA</div>
-      <div class="text-base font-semibold opacity-90">Jadwal • Nilai • Absen</div>
+      <div class="txt-jumbo">LOGIN SISWA</div>
+      <div class="txt-med opacity-90">Jadwal • Nilai • Absen</div>
     </div>
-    <div class="text-4xl font-bold">›</div>
+    <div style="font-size:3.5rem;font-weight:900" class="ml-2">›</div>
   </button>
 
-  <button onclick="openModalOrtu()" class="card-tap w-full bg-white border-4 border-red-900 p-5 rounded-2xl shadow-lg text-red-900 flex items-center">
-    <div class="text-6xl mr-4">👨‍👩‍👧</div>
+  <button onclick="openModalOrtu()" class="card-tap w-full bg-white border-4 border-red-900 p-5 rounded-3xl shadow-xl text-red-900 flex items-center">
+    <div style="font-size:5rem" class="mr-4">👨‍👩‍👧</div>
     <div class="text-left flex-1">
-      <div class="font-extrabold text-2xl leading-tight">LOGIN ORTU</div>
-      <div class="text-base font-semibold text-gray-600">Pantau presensi anak</div>
+      <div class="txt-jumbo">LOGIN ORTU</div>
+      <div class="txt-med text-gray-600">Pantau presensi anak</div>
     </div>
-    <div class="text-4xl font-bold">›</div>
+    <div style="font-size:3.5rem;font-weight:900" class="ml-2">›</div>
   </button>
 
   </div>
 </section>
 
-<section class="bg-red-900 py-8 px-3 text-white mt-4">
-  <h2 class="text-3xl font-luxury mb-5 text-yellow-400 text-center">Kurikulum Merdeka</h2>
+<section class="bg-red-900 py-8 px-4 text-white mt-4">
+  <h2 class="font-luxury mb-5 text-yellow-400 text-center" style="font-size:2.4rem">Kurikulum Merdeka</h2>
   <div class="space-y-3">
-    <div class="bg-red-800 p-4 rounded-2xl border-2 border-yellow-600 flex items-center">
-      <div class="text-4xl mr-4">📘</div>
-      <div><div class="font-extrabold text-xl">Modul Teori</div><div class="text-base opacity-90">PDF interaktif lengkap</div></div>
+    <div class="bg-red-800 p-5 rounded-2xl border-2 border-yellow-600 flex items-center">
+      <div style="font-size:3.5rem" class="mr-4">📘</div>
+      <div><div class="txt-huge">Modul Teori</div><div class="txt-med opacity-90">PDF interaktif lengkap</div></div>
     </div>
-    <div class="bg-red-800 p-4 rounded-2xl border-2 border-yellow-600 flex items-center">
-      <div class="text-4xl mr-4">🎥</div>
-      <div><div class="font-extrabold text-xl">Video Pembahasan</div><div class="text-base opacity-90">Penjelasan visual</div></div>
+    <div class="bg-red-800 p-5 rounded-2xl border-2 border-yellow-600 flex items-center">
+      <div style="font-size:3.5rem" class="mr-4">🎥</div>
+      <div><div class="txt-huge">Video Pembahasan</div><div class="txt-med opacity-90">Penjelasan visual</div></div>
     </div>
-    <div class="bg-red-800 p-4 rounded-2xl border-2 border-yellow-600 flex items-center">
-      <div class="text-4xl mr-4">🔄</div>
-      <div><div class="font-extrabold text-xl">Update Mingguan</div><div class="text-base opacity-90">Konten baru tiap Minggu</div></div>
-    </div>
-  </div>
-</section>
-
-<section class="px-3 py-8">
-  <h2 class="text-3xl font-luxury text-red-900 mb-5 text-center">Bank Soal</h2>
-  <div class="space-y-3">
-    <div class="border-2 border-gray-200 p-4 rounded-2xl bg-white">
-      <div class="text-red-700 text-sm font-bold mb-1">PDF FILE</div>
-      <h4 class="font-extrabold text-xl mb-3">Latihan Paket A</h4>
-      <div class="flex gap-2">
-        <a href="pdf/soal-a.pdf" target="_blank" class="flex-1 text-center bg-gray-800 text-white py-3 rounded-xl font-bold text-base">📖 Buka</a>
-        <a href="pdf/soal-a.pdf" download class="flex-1 text-center border-2 py-3 rounded-xl font-bold text-base">⬇️ Download</a>
-      </div>
-    </div>
-    <div class="border-2 border-gray-200 p-4 rounded-2xl bg-white">
-      <div class="text-red-700 text-sm font-bold mb-1">PDF FILE</div>
-      <h4 class="font-extrabold text-xl mb-3">Latihan Paket B</h4>
-      <div class="flex gap-2">
-        <a href="pdf/soal-b.pdf" target="_blank" class="flex-1 text-center bg-gray-800 text-white py-3 rounded-xl font-bold text-base">📖 Buka</a>
-        <a href="pdf/soal-b.pdf" download class="flex-1 text-center border-2 py-3 rounded-xl font-bold text-base">⬇️ Download</a>
-      </div>
-    </div>
-    <div class="border-2 border-gray-200 p-4 rounded-2xl bg-white">
-      <div class="text-red-700 text-sm font-bold mb-1">PDF FILE</div>
-      <h4 class="font-extrabold text-xl mb-3">UTS 2026</h4>
-      <div class="flex gap-2">
-        <a href="pdf/uts-2026.pdf" target="_blank" class="flex-1 text-center bg-gray-800 text-white py-3 rounded-xl font-bold text-base">📖 Buka</a>
-        <a href="pdf/uts-2026.pdf" download class="flex-1 text-center border-2 py-3 rounded-xl font-bold text-base">⬇️ Download</a>
-      </div>
+    <div class="bg-red-800 p-5 rounded-2xl border-2 border-yellow-600 flex items-center">
+      <div style="font-size:3.5rem" class="mr-4">🔄</div>
+      <div><div class="txt-huge">Update Mingguan</div><div class="txt-med opacity-90">Konten baru tiap Minggu</div></div>
     </div>
   </div>
 </section>
 
-<footer class="py-5 text-center text-gray-500 text-sm border-t">&copy; 2026 EXPERT ZEALOUS</footer>
+<section class="px-4 py-8">
+  <h2 class="font-luxury text-red-900 mb-5 text-center" style="font-size:2.4rem">Bank Soal</h2>
+  <div class="space-y-4">
+    <div class="border-2 border-gray-200 p-5 rounded-2xl bg-white">
+      <div class="text-red-700 font-black txt-med">PDF FILE</div>
+      <h4 class="txt-huge mb-3 text-red-900">Latihan Paket A</h4>
+      <div class="flex gap-2">
+        <a href="pdf/soal-a.pdf" target="_blank" class="flex-1 text-center bg-gray-800 text-white py-4 rounded-xl font-black txt-big">📖 Buka</a>
+        <a href="pdf/soal-a.pdf" download class="flex-1 text-center border-2 py-4 rounded-xl font-black txt-big">⬇️</a>
+      </div>
+    </div>
+    <div class="border-2 border-gray-200 p-5 rounded-2xl bg-white">
+      <div class="text-red-700 font-black txt-med">PDF FILE</div>
+      <h4 class="txt-huge mb-3 text-red-900">Latihan Paket B</h4>
+      <div class="flex gap-2">
+        <a href="pdf/soal-b.pdf" target="_blank" class="flex-1 text-center bg-gray-800 text-white py-4 rounded-xl font-black txt-big">📖 Buka</a>
+        <a href="pdf/soal-b.pdf" download class="flex-1 text-center border-2 py-4 rounded-xl font-black txt-big">⬇️</a>
+      </div>
+    </div>
+    <div class="border-2 border-gray-200 p-5 rounded-2xl bg-white">
+      <div class="text-red-700 font-black txt-med">PDF FILE</div>
+      <h4 class="txt-huge mb-3 text-red-900">UTS 2026</h4>
+      <div class="flex gap-2">
+        <a href="pdf/uts-2026.pdf" target="_blank" class="flex-1 text-center bg-gray-800 text-white py-4 rounded-xl font-black txt-big">📖 Buka</a>
+        <a href="pdf/uts-2026.pdf" download class="flex-1 text-center border-2 py-4 rounded-xl font-black txt-big">⬇️</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer class="py-6 text-center text-gray-500 txt-med border-t">&copy; 2026 EXPERT ZEALOUS</footer>
 
 <div id="modalSiswa" class="hidden fixed inset-0 bg-black/80 flex items-end z-50">
   <div class="bg-white rounded-t-3xl p-6 w-full">
-    <div class="w-14 h-1.5 bg-gray-300 rounded-full mx-auto mb-4"></div>
-    <h3 class="text-2xl font-extrabold text-red-900 mb-4">👨‍🎓 Login Siswa</h3>
-    <label class="text-base font-bold text-gray-700">Nama</label>
-    <select id="selectSiswa" class="w-full border-2 p-4 rounded-xl mt-2 mb-4 font-semibold"></select>
-    <label class="text-base font-bold text-gray-700">Password</label>
-    <input id="passSiswa" type="password" value="1234" class="w-full border-2 p-4 rounded-xl mt-2 mb-3 font-semibold">
-    <div id="msgSiswa" class="text-base text-red-600 mb-3 font-semibold"></div>
-    <button onclick="loginSiswa()" id="btnLoginSiswa" class="w-full btn-red py-4 rounded-full font-extrabold text-lg">MASUK</button>
-    <button onclick="closeModals()" class="w-full mt-2 py-3 text-gray-500 font-semibold">Batal</button>
+    <div class="w-16 h-2 bg-gray-300 rounded-full mx-auto mb-5"></div>
+    <h3 class="txt-jumbo text-red-900 mb-5">👨‍🎓 Login Siswa</h3>
+    <label class="txt-big text-gray-700 block mb-2">Nama</label>
+    <select id="selectSiswa" class="w-full border-2 border-gray-300 p-5 rounded-2xl mb-4"></select>
+    <label class="txt-big text-gray-700 block mb-2">Password</label>
+    <input id="passSiswa" type="password" value="1234" class="w-full border-2 border-gray-300 p-5 rounded-2xl mb-3">
+    <div id="msgSiswa" class="txt-big text-red-600 mb-3 font-bold"></div>
+    <button onclick="loginSiswa()" id="btnLoginSiswa" class="w-full btn-red py-5 rounded-full font-black" style="font-size:1.5rem">MASUK</button>
+    <button onclick="closeModals()" class="w-full mt-2 py-3 text-gray-500 txt-big font-bold">Batal</button>
   </div>
 </div>
 
 <div id="modalOrtu" class="hidden fixed inset-0 bg-black/80 flex items-end z-50">
   <div class="bg-white rounded-t-3xl p-6 w-full">
-    <div class="w-14 h-1.5 bg-gray-300 rounded-full mx-auto mb-4"></div>
-    <h3 class="text-2xl font-extrabold text-red-900 mb-4">👨‍👩‍👧 Login Ortu</h3>
-    <label class="text-base font-bold text-gray-700">Nama Ortu</label>
-    <select id="selectOrtu" class="w-full border-2 p-4 rounded-xl mt-2 mb-4 font-semibold"></select>
-    <label class="text-base font-bold text-gray-700">Kode Login</label>
-    <input id="kodeOrtu" type="password" value="4321" class="w-full border-2 p-4 rounded-xl mt-2 mb-3 font-semibold">
-    <div id="msgOrtu" class="text-base text-red-600 mb-3 font-semibold"></div>
-    <button onclick="loginOrtu()" id="btnLoginOrtu" class="w-full bg-gray-800 text-white py-4 rounded-full font-extrabold text-lg">MASUK</button>
-    <button onclick="closeModals()" class="w-full mt-2 py-3 text-gray-500 font-semibold">Batal</button>
+    <div class="w-16 h-2 bg-gray-300 rounded-full mx-auto mb-5"></div>
+    <h3 class="txt-jumbo text-red-900 mb-5">👨‍👩‍👧 Login Ortu</h3>
+    <label class="txt-big text-gray-700 block mb-2">Nama Ortu</label>
+    <select id="selectOrtu" class="w-full border-2 border-gray-300 p-5 rounded-2xl mb-4"></select>
+    <label class="txt-big text-gray-700 block mb-2">Kode Login</label>
+    <input id="kodeOrtu" type="password" value="4321" class="w-full border-2 border-gray-300 p-5 rounded-2xl mb-3">
+    <div id="msgOrtu" class="txt-big text-red-600 mb-3 font-bold"></div>
+    <button onclick="loginOrtu()" id="btnLoginOrtu" class="w-full bg-gray-800 text-white py-5 rounded-full font-black" style="font-size:1.5rem">MASUK</button>
+    <button onclick="closeModals()" class="w-full mt-2 py-3 text-gray-500 txt-big font-bold">Batal</button>
   </div>
 </div>
 
 <script>
-const API_URL = "https://script.google.com/macros/s/AKfycbzsWmRDZQnf680vmXKcF7s-BxDxXdelv3K6MWG0fRfqpxYv7azBWnldN6UrjUIqdvLG/exec";
+const API_URL="https://script.google.com/macros/s/AKfycbzsWmRDZQnf680vmXKcF7s-BxDxXdelv3K6MWG0fRfqpxYv7azBWnldN6UrjUIqdvLG/exec";
 let cacheSiswa=null, cacheOrtu=null;
 
 window.addEventListener('load', preload);
 async function preload() {
   try {
-    const [rs, ro] = await Promise.all([
+    const [rs,ro] = await Promise.all([
       fetch(API_URL+'?action=getDaftarSiswa').then(r=>r.json()),
       fetch(API_URL+'?action=getDaftarOrtu').then(r=>r.json())
     ]);
@@ -160,26 +168,14 @@ async function preload() {
   } catch(e){}
 }
 
-function goScan() {
-  if(localStorage.getItem('ez_siswa')) window.location='siswa.html?autoscan=1';
-  else { openModalSiswa(); setTimeout(()=>document.getElementById('msgSiswa').innerText='Login dulu sebelum scan!',100); }
-}
+function goScan(){ if(localStorage.getItem('ez_siswa')) window.location='siswa.html?autoscan=1'; else { openModalSiswa(); setTimeout(()=>document.getElementById('msgSiswa').innerText='Login dulu sebelum scan!',100); } }
 function openModalSiswa(){document.getElementById('modalSiswa').classList.remove('hidden'); loadSiswa();}
 function openModalOrtu(){document.getElementById('modalOrtu').classList.remove('hidden'); loadOrtu();}
 function closeModals(){['modalSiswa','modalOrtu'].forEach(id=>document.getElementById(id).classList.add('hidden'))}
-
-function loadSiswa() {
-  const sel=document.getElementById('selectSiswa');
-  if(cacheSiswa){ renderSiswa(sel,cacheSiswa); }
-  else { sel.innerHTML='<option>Loading...</option>'; fetch(API_URL+'?action=getDaftarSiswa').then(r=>r.json()).then(j=>{cacheSiswa=j.data;renderSiswa(sel,j.data);}); }
-}
-function renderSiswa(sel,d){sel.innerHTML='<option value="">-- Pilih Nama --</option>';d.forEach(s=>sel.innerHTML+=`<option value="${s.nama}">${s.nama} (${s.kelas})</option>`);}
-function loadOrtu(){
-  const sel=document.getElementById('selectOrtu');
-  if(cacheOrtu){ renderOrtu(sel,cacheOrtu); }
-  else { sel.innerHTML='<option>Loading...</option>'; fetch(API_URL+'?action=getDaftarOrtu').then(r=>r.json()).then(j=>{cacheOrtu=j.data;renderOrtu(sel,j.data);}); }
-}
-function renderOrtu(sel,d){sel.innerHTML='<option value="">-- Pilih Nama Ortu --</option>';d.forEach(o=>sel.innerHTML+=`<option value="${o.nama}">${o.nama} → ${o.namaSiswa}</option>`);}
+function loadSiswa(){const sel=document.getElementById('selectSiswa'); if(cacheSiswa){renderSiswa(sel,cacheSiswa);}else{sel.innerHTML='<option>Loading...</option>';fetch(API_URL+'?action=getDaftarSiswa').then(r=>r.json()).then(j=>{cacheSiswa=j.data;renderSiswa(sel,j.data);});}}
+function renderSiswa(sel,d){sel.innerHTML='<option value="">-- Pilih Nama --</option>';d.forEach(s=>sel.innerHTML+=`<option value="${s.nama}">${s.nama}</option>`);}
+function loadOrtu(){const sel=document.getElementById('selectOrtu'); if(cacheOrtu){renderOrtu(sel,cacheOrtu);}else{sel.innerHTML='<option>Loading...</option>';fetch(API_URL+'?action=getDaftarOrtu').then(r=>r.json()).then(j=>{cacheOrtu=j.data;renderOrtu(sel,j.data);});}}
+function renderOrtu(sel,d){sel.innerHTML='<option value="">-- Pilih Nama Ortu --</option>';d.forEach(o=>sel.innerHTML+=`<option value="${o.nama}">${o.nama}</option>`);}
 
 async function loginSiswa(){
   const nama=document.getElementById('selectSiswa').value; const pass=document.getElementById('passSiswa').value;
@@ -188,9 +184,9 @@ async function loginSiswa(){
   try{
     const r=await fetch(`${API_URL}?action=loginSiswa&nama=${encodeURIComponent(nama)}&password=${encodeURIComponent(pass)}`);
     const j=await r.json();
-    if(j.status==='success'){ localStorage.setItem('ez_siswa',JSON.stringify(j.data)); window.location='siswa.html'; }
-    else { document.getElementById('msgSiswa').innerText=j.message; btn.innerHTML='MASUK'; btn.disabled=false; }
-  }catch(e){ document.getElementById('msgSiswa').innerText='Gagal koneksi'; btn.innerHTML='MASUK'; btn.disabled=false; }
+    if(j.status==='success'){localStorage.setItem('ez_siswa',JSON.stringify(j.data));window.location='siswa.html';}
+    else{document.getElementById('msgSiswa').innerText=j.message;btn.innerHTML='MASUK';btn.disabled=false;}
+  }catch(e){document.getElementById('msgSiswa').innerText='Gagal koneksi';btn.innerHTML='MASUK';btn.disabled=false;}
 }
 async function loginOrtu(){
   const nama=document.getElementById('selectOrtu').value; const kode=document.getElementById('kodeOrtu').value;
@@ -199,9 +195,9 @@ async function loginOrtu(){
   try{
     const r=await fetch(`${API_URL}?action=loginOrtu&nama=${encodeURIComponent(nama)}&kode=${encodeURIComponent(kode)}`);
     const j=await r.json();
-    if(j.status==='success'){ localStorage.setItem('ez_ortu',JSON.stringify(j.data)); window.location='orangtua.html'; }
-    else { document.getElementById('msgOrtu').innerText=j.message; btn.innerHTML='MASUK'; btn.disabled=false; }
-  }catch(e){ document.getElementById('msgOrtu').innerText='Gagal koneksi'; btn.innerHTML='MASUK'; btn.disabled=false; }
+    if(j.status==='success'){localStorage.setItem('ez_ortu',JSON.stringify(j.data));window.location='orangtua.html';}
+    else{document.getElementById('msgOrtu').innerText=j.message;btn.innerHTML='MASUK';btn.disabled=false;}
+  }catch(e){document.getElementById('msgOrtu').innerText='Gagal koneksi';btn.innerHTML='MASUK';btn.disabled=false;}
 }
 </script>
 </body>
