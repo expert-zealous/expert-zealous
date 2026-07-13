@@ -1,0 +1,295 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard Siswa - E-Presensi</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-auth-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore-compat.js"></script>
+    <!-- QR Scanner Library -->
+    <script src="https://unpkg.com/html5-qrcode@2.3.8/html5-qrcode.min.js"></script>
+</head>
+<body>
+    <!-- Header -->
+    <header class="app-header">
+        <div class="header-left">
+            <i class="fas fa-graduation-cap"></i>
+            <h2>E-Presensi</h2>
+        </div>
+        <div class="header-right">
+            <span id="namaUser" class="user-name"></span>
+            <button onclick="logout()" class="btn-logout">
+                <i class="fas fa-sign-out-alt"></i>
+            </button>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="dashboard">
+        <!-- Welcome Card -->
+        <div class="welcome-card">
+            <div class="welcome-info">
+                <h2>Selamat Datang, <span id="welcomeName"></span>! 👋</h2>
+                <p>Kelas: <span id="kelasUser"></span></p>
+                <p id="tanggalHari"></p>
+            </div>
+            <div class="welcome-avatar">
+                <i class="fas fa-user-circle"></i>
+            </div>
+        </div>
+
+        <!-- Menu Grid -->
+        <div class="menu-grid">
+            <!-- Scan QR Presensi -->
+            <div class="menu-card scan-card" onclick="openScanner()">
+                <div class="menu-icon" style="background: linear-gradient(135deg, #667eea, #764ba2);">
+                    <i class="fas fa-qrcode"></i>
+                </div>
+                <h3>Scan Presensi</h3>
+                <p>Scan QR Code kelas</p>
+            </div>
+
+            <!-- Riwayat Presensi -->
+            <div class="menu-card" onclick="showSection('riwayatPresensi')">
+                <div class="menu-icon" style="background: linear-gradient(135deg, #f093fb, #f5576c);">
+                    <i class="fas fa-calendar-check"></i>
+                </div>
+                <h3>Riwayat Presensi</h3>
+                <p>Lihat kehadiran</p>
+            </div>
+
+            <!-- Quiz -->
+            <div class="menu-card" onclick="showSection('quizSection')">
+                <div class="menu-icon" style="background: linear-gradient(135deg, #4facfe, #00f2fe);">
+                    <i class="fas fa-pen-fancy"></i>
+                </div>
+                <h3>Kerjakan Quiz</h3>
+                <p>Quiz tersedia</p>
+            </div>
+
+            <!-- Nilai -->
+            <div class="menu-card" onclick="showSection('nilaiSection')">
+                <div class="menu-icon" style="background: linear-gradient(135deg, #43e97b, #38f9d7);">
+                    <i class="fas fa-chart-bar"></i>
+                </div>
+                <h3>Nilai Quiz</h3>
+                <p>Lihat hasil quiz</p>
+            </div>
+        </div>
+
+        <!-- QR Scanner Section -->
+        <div id="scannerSection" class="section hidden">
+            <div class="section-header">
+                <h3><i class="fas fa-qrcode"></i> Scan QR Presensi</h3>
+                <button onclick="closeScanner()" class="btn-close">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <div class="scanner-container">
+                <div id="qr-reader" class="qr-reader"></div>
+                <p class="scanner-info">Arahkan kamera ke QR Code kelas</p>
+            </div>
+        </div>
+
+        <!-- Riwayat Presensi Section -->
+        <div id="riwayatPresensi" class="section hidden">
+            <div class="section-header">
+                <h3><i class="fas fa-calendar-check"></i> Riwayat Presensi</h3>
+                <button onclick="hideSection('riwayatPresensi')" class="btn-close">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <div class="filter-bar">
+                <select id="filterBulan" onchange="filterPresensi()">
+                    <option value="">Semua Bulan</option>
+                    <option value="01">Januari</option>
+                    <option value="02">Februari</option>
+                    <option value="03">Maret</option>
+                    <option value="04">April</option>
+                    <option value="05">Mei</option>
+                    <option value="06">Juni</option>
+                    <option value="07">Juli</option>
+                    <option value="08">Agustus</option>
+                    <option value="09">September</option>
+                    <option value="10">Oktober</option>
+                    <option value="11">November</option>
+                    <option value="12">Desember</option>
+                </select>
+            </div>
+            <!-- Statistik Presensi -->
+            <div class="stats-row">
+                <div class="stat-box hadir">
+                    <i class="fas fa-check-circle"></i>
+                    <span id="totalHadir">0</span>
+                    <small>Hadir</small>
+                </div>
+                <div class="stat-box izin">
+                    <i class="fas fa-envelope"></i>
+                    <span id="totalIzin">0</span>
+                    <small>Izin</small>
+                </div>
+                <div class="stat-box sakit">
+                    <i class="fas fa-briefcase-medical"></i>
+                    <span id="totalSakit">0</span>
+                    <small>Sakit</small>
+                </div>
+                <div class="stat-box alpha">
+                    <i class="fas fa-times-circle"></i>
+                    <span id="totalAlpha">0</span>
+                    <small>Alpha</small>
+                </div>
+            </div>
+            <div id="listPresensi" class="list-container">
+                <!-- Diisi JavaScript -->
+            </div>
+        </div>
+
+        <!-- Quiz Section -->
+        <div id="quizSection" class="section hidden">
+            <div class="section-header">
+                <h3><i class="fas fa-pen-fancy"></i> Quiz Tersedia</h3>
+                <button onclick="hideSection('quizSection')" class="btn-close">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <div id="listQuiz" class="list-container">
+                <!-- Diisi JavaScript -->
+            </div>
+        </div>
+
+        <!-- Quiz Play Section -->
+        <div id="quizPlaySection" class="section hidden">
+            <div class="section-header">
+                <h3 id="quizTitle"><i class="fas fa-pen-fancy"></i> Quiz</h3>
+                <button onclick="hideSection('quizPlaySection')" class="btn-close">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <div class="quiz-progress">
+                <div class="progress-bar">
+                    <div id="progressFill" class="progress-fill"></div>
+                </div>
+                <span id="progressText">Soal 1/10</span>
+            </div>
+            <div id="quizContent" class="quiz-content">
+                <!-- Diisi JavaScript -->
+            </div>
+            <div class="quiz-nav">
+                <button id="btnPrev" onclick="prevQuestion()" class="btn-quiz" disabled>
+                    <i class="fas fa-arrow-left"></i> Sebelumnya
+                </button>
+                <button id="btnNext" onclick="nextQuestion()" class="btn-quiz">
+                    Selanjutnya <i class="fas fa-arrow-right"></i>
+                </button>
+                <button id="btnSubmit" onclick="submitQuiz()" class="btn-quiz btn-submit hidden">
+                    <i class="fas fa-paper-plane"></i> Kirim Jawaban
+                </button>
+            </div>
+        </div>
+
+        <!-- Nilai Section -->
+        <div id="nilaiSection" class="section hidden">
+            <div class="section-header">
+                <h3><i class="fas fa-chart-bar"></i> Nilai Quiz</h3>
+                <button onclick="hideSection('nilaiSection')" class="btn-close">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <div id="listNilai" class="list-container">
+                <!-- Diisi JavaScript -->
+            </div>
+        </div>
+    </main>
+
+    <!-- Success Modal Presensi -->
+    <div id="modalPresensi" class="modal hidden">
+        <div class="modal-content success-modal">
+            <div class="success-animation">
+                <div class="checkmark-circle">
+                    <i class="fas fa-check"></i>
+                </div>
+            </div>
+            <h2>Presensi Berhasil! ✅</h2>
+            <p id="presensiMessage"></p>
+            <div class="presensi-detail">
+                <div class="detail-item">
+                    <i class="fas fa-user"></i>
+                    <span id="presensiNama"></span>
+                </div>
+                <div class="detail-item">
+                    <i class="fas fa-school"></i>
+                    <span id="presensiKelas"></span>
+                </div>
+                <div class="detail-item">
+                    <i class="fas fa-book"></i>
+                    <span id="presensiMapel"></span>
+                </div>
+                <div class="detail-item">
+                    <i class="fas fa-clock"></i>
+                    <span id="presensiWaktu"></span>
+                </div>
+            </div>
+            <button onclick="closeModal('modalPresensi')" class="btn-login">
+                <i class="fas fa-thumbs-up"></i> OK, Terima Kasih!
+            </button>
+        </div>
+    </div>
+
+    <!-- Quiz Result Modal -->
+    <div id="modalQuizResult" class="modal hidden">
+        <div class="modal-content">
+            <div class="result-animation">
+                <div id="resultIcon" class="result-icon">
+                    <i class="fas fa-trophy"></i>
+                </div>
+            </div>
+            <h2 id="resultTitle">Hasil Quiz</h2>
+            <div class="result-score">
+                <span id="resultScore">0</span>
+                <small>/100</small>
+            </div>
+            <p id="resultMessage"></p>
+            <div class="result-detail">
+                <div class="detail-item">
+                    <span>Benar:</span>
+                    <span id="resultBenar">0</span>
+                </div>
+                <div class="detail-item">
+                    <span>Salah:</span>
+                    <span id="resultSalah">0</span>
+                </div>
+            </div>
+            <button onclick="closeModal('modalQuizResult')" class="btn-login">
+                <i class="fas fa-check"></i> Selesai
+            </button>
+        </div>
+    </div>
+
+    <!-- Bottom Navigation -->
+    <nav class="bottom-nav">
+        <button class="nav-item active" onclick="goHome()">
+            <i class="fas fa-home"></i>
+            <span>Beranda</span>
+        </button>
+        <button class="nav-item" onclick="openScanner()">
+            <i class="fas fa-qrcode"></i>
+            <span>Scan QR</span>
+        </button>
+        <button class="nav-item" onclick="showSection('quizSection')">
+            <i class="fas fa-pen-fancy"></i>
+            <span>Quiz</span>
+        </button>
+        <button class="nav-item" onclick="showSection('nilaiSection')">
+            <i class="fas fa-chart-bar"></i>
+            <span>Nilai</span>
+        </button>
+    </nav>
+
+    <script src="js/app.js"></script>
+    <script src="js/presensi.js"></script>
+    <script src="js/quiz.js"></script>
+</body>
+</html>
