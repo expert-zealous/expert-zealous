@@ -1,71 +1,254 @@
 <!DOCTYPE html>
 <html lang="id">
 <head>
-<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+<meta name="theme-color" content="#8B0000">
 <title>EXPERT ZEALOUS - Portal Les</title>
 <script src="https://cdn.tailwindcss.com"></script>
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
 <style>
-body{font-family:'Poppins',sans-serif}.font-luxury{font-family:'Playfair Display',serif}
+*{-webkit-tap-highlight-color:transparent}
+body{font-family:'Poppins',sans-serif;-webkit-font-smoothing:antialiased}
+.font-luxury{font-family:'Playfair Display',serif}
 .btn-red{background:linear-gradient(to right,#8B0000,#FF0000);color:white}
+.card-hover{transition:all 0.2s ease}
+.card-hover:active{transform:scale(0.96)}
+.spinner{border:3px solid #f3f3f3;border-top:3px solid #8B0000;border-radius:50%;width:24px;height:24px;animation:spin 0.8s linear infinite;display:inline-block}
+@keyframes spin{100%{transform:rotate(360deg)}}
 </style>
 </head>
-<body class="bg-white text-gray-800">
-<nav class="p-4 flex justify-between items-center shadow-lg border-b-4 border-yellow-600 sticky top-0 bg-white z-50">
-<div class="flex items-center"><img src="images/logo-ez.png" class="h-10 mr-3" onerror="this.src='https://via.placeholder.com/40'"><span class="font-bold text-red-800 text-xl">EXPERT ZEALOUS</span></div>
-<div class="hidden md:flex space-x-4 font-bold text-sm"><a href="#portal">PORTAL</a><a href="#materi">MATERI</a><a href="#soal">SOAL</a><a href="#jadwal">JADWAL</a></div>
+<body class="bg-gray-50 text-gray-800">
+
+<!-- NAVBAR -->
+<nav class="p-3 flex justify-between items-center shadow-lg border-b-4 border-yellow-600 sticky top-0 bg-white z-50">
+<div class="flex items-center">
+  <img src="images/logo-ez.png" class="h-11 mr-2" onerror="this.style.display='none'">
+  <span class="font-bold text-red-800 text-lg">EXPERT ZEALOUS</span>
+</div>
+<a href="admin-qr.html" class="text-xs bg-gray-800 text-white px-3 py-2 rounded-full font-bold">Admin</a>
 </nav>
 
-<section id="portal" class="container mx-auto px-6 py-16 text-center">
-<h1 class="text-5xl font-luxury text-red-900 mb-4">Portal Belajar <span class="text-yellow-600 italic">Eksklusif</span></h1>
-<p class="text-gray-600 mb-10">Silahkan login sesuai akun Anda untuk akses jadwal, presensi & nilai</p>
-<div class="grid grid-cols-1 md:grid-cols-3 gap-6 max-w-4xl mx-auto">
-<div class="bg-red-900 text-white p-8 rounded-2xl shadow-xl hover:scale-105 transition cursor-pointer" onclick="openModalSiswa()"><div class="text-5xl mb-4">👨‍🎓</div><h3 class="font-bold text-xl">LOGIN SISWA</h3><p class="text-sm opacity-80 mt-2">Akses jadwal, nilai & absen QR</p><button class="mt-4 bg-yellow-500 text-red-900 px-6 py-2 rounded-full font-bold">MASUK</button></div>
-<div class="bg-white border-2 border-yellow-500 p-8 rounded-2xl shadow-xl hover:scale-105 transition cursor-pointer" onclick="openModalOrtu()"><div class="text-5xl mb-4">👨‍👩‍👧</div><h3 class="font-bold text-xl text-red-900">LOGIN ORANG TUA</h3><p class="text-sm text-gray-500 mt-2">Pantau presensi & nilai anak</p><button class="mt-4 bg-gray-800 text-white px-6 py-2 rounded-full font-bold">MASUK</button></div>
-<div class="bg-gradient-to-br from-yellow-400 to-yellow-600 p-8 rounded-2xl shadow-xl hover:scale-105 transition cursor-pointer" onclick="openModalScan()"><div class="text-5xl mb-4">📷</div><h3 class="font-bold text-xl text-red-900">SCAN QR KELAS</h3><p class="text-sm text-red-900 mt-2">Presensi cepat saat masuk les</p><button class="mt-4 bg-red-900 text-white px-6 py-2 rounded-full font-bold">SCAN SEKARANG</button></div>
+<!-- HERO -->
+<section id="portal" class="container mx-auto px-4 py-6">
+<div class="text-center mb-6">
+  <h1 class="text-3xl md:text-5xl font-luxury text-red-900 mb-2 leading-tight">Portal Belajar <span class="text-yellow-600 italic">Eksklusif</span></h1>
+  <p class="text-gray-600 text-sm md:text-base">Pilih menu untuk masuk</p>
+</div>
+
+<!-- KARTU LOGIN BESAR -->
+<div class="space-y-4 max-w-lg mx-auto">
+
+<!-- SCAN QR - PALING BESAR & ATAS -->
+<button onclick="goScan()" class="card-hover w-full bg-gradient-to-br from-yellow-400 to-yellow-600 p-6 rounded-3xl shadow-xl text-red-900 flex items-center">
+  <div class="text-6xl mr-4">📷</div>
+  <div class="text-left flex-1">
+    <div class="font-bold text-2xl">SCAN QR KELAS</div>
+    <div class="text-sm opacity-90">Absen cepat saat masuk les</div>
+  </div>
+  <div class="text-3xl">→</div>
+</button>
+
+<!-- LOGIN SISWA -->
+<button onclick="openModalSiswa()" class="card-hover w-full bg-gradient-to-br from-red-900 to-red-700 p-6 rounded-3xl shadow-xl text-white flex items-center">
+  <div class="text-6xl mr-4">👨‍🎓</div>
+  <div class="text-left flex-1">
+    <div class="font-bold text-2xl">LOGIN SISWA</div>
+    <div class="text-sm opacity-90">Jadwal • Nilai • Absen</div>
+  </div>
+  <div class="text-3xl">→</div>
+</button>
+
+<!-- LOGIN ORTU -->
+<button onclick="openModalOrtu()" class="card-hover w-full bg-white border-4 border-red-900 p-6 rounded-3xl shadow-xl text-red-900 flex items-center">
+  <div class="text-6xl mr-4">👨‍👩‍👧</div>
+  <div class="text-left flex-1">
+    <div class="font-bold text-2xl">LOGIN ORANG TUA</div>
+    <div class="text-sm text-gray-600">Pantau presensi & nilai anak</div>
+  </div>
+  <div class="text-3xl">→</div>
+</button>
+
 </div>
 </section>
 
-<section id="materi" class="bg-red-900 py-16 text-white"><div class="container mx-auto px-6 text-center"><h2 class="text-3xl font-luxury mb-8 text-yellow-400">Kurikulum Merdeka</h2><div class="grid grid-cols-1 md:grid-cols-3 gap-6"><div class="bg-red-800 p-6 rounded-xl border border-yellow-600"><h3 class="font-bold">Modul Teori</h3><p class="text-sm opacity-80 mt-2">Materi PDF interaktif</p></div><div class="bg-red-800 p-6 rounded-xl border border-yellow-600"><h3 class="font-bold">Video Pembahasan</h3><p class="text-sm opacity-80 mt-2">Penjelasan visual topik sulit</p></div><div class="bg-red-800 p-6 rounded-xl border border-yellow-600"><h3 class="font-bold">Update Mingguan</h3><p class="text-sm opacity-80 mt-2">Konten update setiap Minggu</p></div></div></div></section>
+<!-- MATERI -->
+<section id="materi" class="bg-red-900 py-10 text-white mt-6">
+<div class="container mx-auto px-4">
+<h2 class="text-2xl md:text-3xl font-luxury mb-6 text-yellow-400 text-center">Kurikulum Merdeka</h2>
+<div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+<div class="bg-red-800 p-5 rounded-2xl border-2 border-yellow-600">
+<div class="text-3xl mb-2">📘</div>
+<h3 class="font-bold text-lg">Modul Teori</h3>
+<p class="text-sm opacity-80 mt-1">Materi PDF interaktif</p>
+</div>
+<div class="bg-red-800 p-5 rounded-2xl border-2 border-yellow-600">
+<div class="text-3xl mb-2">🎥</div>
+<h3 class="font-bold text-lg">Video Pembahasan</h3>
+<p class="text-sm opacity-80 mt-1">Penjelasan visual</p>
+</div>
+<div class="bg-red-800 p-5 rounded-2xl border-2 border-yellow-600">
+<div class="text-3xl mb-2">🔄</div>
+<h3 class="font-bold text-lg">Update Mingguan</h3>
+<p class="text-sm opacity-80 mt-1">Konten baru tiap Minggu</p>
+</div>
+</div>
+</div>
+</section>
 
-<section id="soal" class="container mx-auto px-6 py-16"><h2 class="text-3xl font-luxury text-red-900 mb-6 text-center">Bank Soal</h2><div class="grid grid-cols-1 md:grid-cols-3 gap-6"><div class="border p-6 rounded-2xl"><h4 class="font-bold mb-4">Latihan Soal Paket A</h4><a href="pdf/soal-a.pdf" target="_blank" class="block text-center bg-gray-800 text-white py-2 rounded-lg mb-2">Buka Soal</a><a href="pdf/soal-a.pdf" download class="block text-center border py-2 rounded-lg text-sm">Download</a></div><div class="border p-6 rounded-2xl"><h4 class="font-bold mb-4">Latihan Soal Paket B</h4><a href="pdf/soal-b.pdf" target="_blank" class="block text-center bg-gray-800 text-white py-2 rounded-lg mb-2">Buka Soal</a><a href="pdf/soal-b.pdf" download class="block text-center border py-2 rounded-lg text-sm">Download</a></div><div class="border p-6 rounded-2xl"><h4 class="font-bold mb-4">UTS 2026</h4><a href="pdf/uts-2026.pdf" target="_blank" class="block text-center bg-gray-800 text-white py-2 rounded-lg mb-2">Buka Soal</a><a href="pdf/uts-2026.pdf" download class="block text-center border py-2 rounded-lg text-sm">Download</a></div></div></section>
+<!-- BANK SOAL -->
+<section id="soal" class="container mx-auto px-4 py-10">
+<h2 class="text-2xl md:text-3xl font-luxury text-red-900 mb-6 text-center">Bank Soal</h2>
+<div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+<div class="border-2 border-gray-200 p-5 rounded-2xl bg-white">
+  <div class="text-red-700 text-xs font-bold mb-1">PDF FILE</div>
+  <h4 class="font-bold text-lg mb-3">Latihan Paket A</h4>
+  <a href="pdf/soal-a.pdf" target="_blank" class="block text-center bg-gray-800 text-white py-3 rounded-xl mb-2 font-bold">📖 Buka Soal</a>
+  <a href="pdf/soal-a.pdf" download class="block text-center border-2 py-3 rounded-xl text-sm font-bold">⬇️ Download</a>
+</div>
+<div class="border-2 border-gray-200 p-5 rounded-2xl bg-white">
+  <div class="text-red-700 text-xs font-bold mb-1">PDF FILE</div>
+  <h4 class="font-bold text-lg mb-3">Latihan Paket B</h4>
+  <a href="pdf/soal-b.pdf" target="_blank" class="block text-center bg-gray-800 text-white py-3 rounded-xl mb-2 font-bold">📖 Buka Soal</a>
+  <a href="pdf/soal-b.pdf" download class="block text-center border-2 py-3 rounded-xl text-sm font-bold">⬇️ Download</a>
+</div>
+<div class="border-2 border-gray-200 p-5 rounded-2xl bg-white">
+  <div class="text-red-700 text-xs font-bold mb-1">PDF FILE</div>
+  <h4 class="font-bold text-lg mb-3">UTS 2026</h4>
+  <a href="pdf/uts-2026.pdf" target="_blank" class="block text-center bg-gray-800 text-white py-3 rounded-xl mb-2 font-bold">📖 Buka Soal</a>
+  <a href="pdf/uts-2026.pdf" download class="block text-center border-2 py-3 rounded-xl text-sm font-bold">⬇️ Download</a>
+</div>
+</div>
+</section>
 
-<div id="modalSiswa" class="hidden fixed inset-0 bg-black/60 flex items-center justify-center z-50 p-4"><div class="bg-white rounded-2xl p-8 w-full max-w-md"><h3 class="text-2xl font-bold text-red-900 mb-4">Login Siswa</h3><label class="text-sm">Pilih Nama</label><select id="selectSiswa" class="w-full border p-3 rounded-lg mt-1 mb-4"></select><label class="text-sm">Password</label><input id="passSiswa" type="password" value="1234" class="w-full border p-3 rounded-lg mt-1 mb-4"><div id="msgSiswa" class="text-sm text-red-600 mb-2"></div><button onclick="loginSiswa()" class="w-full btn-red py-3 rounded-full font-bold">MASUK</button><button onclick="closeModals()" class="w-full mt-2 py-2 text-gray-500">Batal</button></div></div>
+<footer class="py-6 text-center text-gray-400 text-sm border-t">
+&copy; 2026 EXPERT ZEALOUS
+</footer>
 
-<div id="modalOrtu" class="hidden fixed inset-0 bg-black/60 flex items-center justify-center z-50 p-4"><div class="bg-white rounded-2xl p-8 w-full max-w-md"><h3 class="text-2xl font-bold text-red-900 mb-4">Login Orang Tua</h3><label class="text-sm">Pilih Nama Ortu</label><select id="selectOrtu" class="w-full border p-3 rounded-lg mt-1 mb-4"></select><label class="text-sm">Kode Login</label><input id="kodeOrtu" type="password" value="4321" class="w-full border p-3 rounded-lg mt-1 mb-4"><div id="msgOrtu" class="text-sm text-red-600 mb-2"></div><button onclick="loginOrtu()" class="w-full bg-gray-800 text-white py-3 rounded-full font-bold">MASUK</button><button onclick="closeModals()" class="w-full mt-2 py-2 text-gray-500">Batal</button></div></div>
+<!-- MODAL LOGIN SISWA -->
+<div id="modalSiswa" class="hidden fixed inset-0 bg-black/70 flex items-end md:items-center justify-center z-50 p-0 md:p-4">
+<div class="bg-white rounded-t-3xl md:rounded-3xl p-6 w-full max-w-md">
+<div class="w-12 h-1 bg-gray-300 rounded-full mx-auto mb-4 md:hidden"></div>
+<h3 class="text-2xl font-bold text-red-900 mb-4">👨‍🎓 Login Siswa</h3>
+<label class="text-sm font-bold text-gray-700">Pilih Nama</label>
+<select id="selectSiswa" class="w-full border-2 p-4 rounded-xl mt-1 mb-4 text-base"></select>
+<label class="text-sm font-bold text-gray-700">Password</label>
+<input id="passSiswa" type="password" value="1234" class="w-full border-2 p-4 rounded-xl mt-1 mb-3 text-base">
+<div id="msgSiswa" class="text-sm text-red-600 mb-3"></div>
+<button onclick="loginSiswa()" id="btnLoginSiswa" class="w-full btn-red py-4 rounded-full font-bold text-lg">MASUK</button>
+<button onclick="closeModals()" class="w-full mt-2 py-3 text-gray-500">Batal</button>
+</div>
+</div>
 
-<div id="modalScan" class="hidden fixed inset-0 bg-black/60 flex items-center justify-center z-50 p-4"><div class="bg-white rounded-2xl p-8 w-full max-w-md text-center"><h3 class="text-2xl font-bold text-red-900 mb-2">Scan QR Presensi</h3><p class="text-sm text-gray-500 mb-4">Login dulu sebagai siswa, lalu scan di dashboard siswa agar tercatat.</p><a href="#" onclick="openModalSiswa();closeModal('modalScan')" class="block w-full btn-red py-3 rounded-full font-bold">LOGIN SISWA DULU</a><button onclick="closeModals()" class="w-full mt-2 py-2 text-gray-500">Tutup</button></div></div>
+<!-- MODAL LOGIN ORTU -->
+<div id="modalOrtu" class="hidden fixed inset-0 bg-black/70 flex items-end md:items-center justify-center z-50 p-0 md:p-4">
+<div class="bg-white rounded-t-3xl md:rounded-3xl p-6 w-full max-w-md">
+<div class="w-12 h-1 bg-gray-300 rounded-full mx-auto mb-4 md:hidden"></div>
+<h3 class="text-2xl font-bold text-red-900 mb-4">👨‍👩‍👧 Login Orang Tua</h3>
+<label class="text-sm font-bold text-gray-700">Pilih Nama Ortu</label>
+<select id="selectOrtu" class="w-full border-2 p-4 rounded-xl mt-1 mb-4 text-base"></select>
+<label class="text-sm font-bold text-gray-700">Kode Login</label>
+<input id="kodeOrtu" type="password" value="4321" class="w-full border-2 p-4 rounded-xl mt-1 mb-3 text-base">
+<div id="msgOrtu" class="text-sm text-red-600 mb-3"></div>
+<button onclick="loginOrtu()" id="btnLoginOrtu" class="w-full bg-gray-800 text-white py-4 rounded-full font-bold text-lg">MASUK</button>
+<button onclick="closeModals()" class="w-full mt-2 py-3 text-gray-500">Batal</button>
+</div>
+</div>
 
 <script>
 const API_URL = "https://script.google.com/macros/s/AKfycbzsWmRDZQnf680vmXKcF7s-BxDxXdelv3K6MWG0fRfqpxYv7azBWnldN6UrjUIqdvLG/exec";
+
+// PRELOAD data siswa & ortu saat page load (biar cepat saat buka modal)
+let cacheSiswa = null;
+let cacheOrtu = null;
+
+window.addEventListener('load', () => {
+  preload();
+});
+
+async function preload() {
+  try {
+    const [rs, ro] = await Promise.all([
+      fetch(API_URL + '?action=getDaftarSiswa').then(r=>r.json()),
+      fetch(API_URL + '?action=getDaftarOrtu').then(r=>r.json())
+    ]);
+    cacheSiswa = rs.data || [];
+    cacheOrtu = ro.data || [];
+  } catch(e) { console.log('preload gagal'); }
+}
+
+function goScan() {
+  const dataSiswa = localStorage.getItem('ez_siswa');
+  if(dataSiswa) {
+    window.location = 'siswa.html?autoscan=1';
+  } else {
+    openModalSiswa();
+    setTimeout(()=>{ document.getElementById('msgSiswa').innerText = 'Login dulu sebelum scan QR!'; }, 100);
+  }
+}
+
 function openModalSiswa(){document.getElementById('modalSiswa').classList.remove('hidden'); loadSiswa();}
 function openModalOrtu(){document.getElementById('modalOrtu').classList.remove('hidden'); loadOrtu();}
-function openModalScan(){document.getElementById('modalScan').classList.remove('hidden');}
-function closeModal(id){document.getElementById(id).classList.add('hidden');}
-function closeModals(){['modalSiswa','modalOrtu','modalScan'].forEach(id=>document.getElementById(id).classList.add('hidden'))}
-async function loadSiswa(){
- const sel=document.getElementById('selectSiswa'); sel.innerHTML='<option>Loading...</option>';
- try{ const r=await fetch(API_URL+'?action=getDaftarSiswa'); const j=await r.json(); sel.innerHTML='<option value="">-- Pilih Nama --</option>'; j.data.forEach(s=>sel.innerHTML+=`<option value="${s.nama}">${s.nama} - ${s.kelas}</option>`);}catch(e){sel.innerHTML='<option>Gagal load</option>'}
+function closeModals(){['modalSiswa','modalOrtu'].forEach(id=>document.getElementById(id).classList.add('hidden'))}
+
+function loadSiswa() {
+  const sel = document.getElementById('selectSiswa');
+  if(cacheSiswa) {
+    renderSiswa(sel, cacheSiswa);
+  } else {
+    sel.innerHTML = '<option>Loading...</option>';
+    fetch(API_URL+'?action=getDaftarSiswa').then(r=>r.json()).then(j=>{
+      cacheSiswa = j.data; renderSiswa(sel, j.data);
+    }).catch(()=>sel.innerHTML='<option>Gagal load</option>');
+  }
 }
-async function loadOrtu(){
- const sel=document.getElementById('selectOrtu'); sel.innerHTML='<option>Loading...</option>';
- try{ const r=await fetch(API_URL+'?action=getDaftarOrtu'); const j=await r.json(); sel.innerHTML='<option value="">-- Pilih Nama Ortu --</option>'; j.data.forEach(o=>sel.innerHTML+=`<option value="${o.nama}">${o.nama} - Anak: ${o.namaSiswa}</option>`);}catch(e){sel.innerHTML='<option>Gagal load</option>'}
+
+function renderSiswa(sel, data) {
+  sel.innerHTML='<option value="">-- Pilih Nama --</option>';
+  data.forEach(s=>sel.innerHTML+=`<option value="${s.nama}">${s.nama} (${s.kelas})</option>`);
 }
+
+function loadOrtu() {
+  const sel = document.getElementById('selectOrtu');
+  if(cacheOrtu) {
+    renderOrtu(sel, cacheOrtu);
+  } else {
+    sel.innerHTML = '<option>Loading...</option>';
+    fetch(API_URL+'?action=getDaftarOrtu').then(r=>r.json()).then(j=>{
+      cacheOrtu = j.data; renderOrtu(sel, j.data);
+    }).catch(()=>sel.innerHTML='<option>Gagal load</option>');
+  }
+}
+
+function renderOrtu(sel, data) {
+  sel.innerHTML='<option value="">-- Pilih Nama Ortu --</option>';
+  data.forEach(o=>sel.innerHTML+=`<option value="${o.nama}">${o.nama} → ${o.namaSiswa}</option>`);
+}
+
 async function loginSiswa(){
- const nama=document.getElementById('selectSiswa').value; const pass=document.getElementById('passSiswa').value;
- if(!nama) return document.getElementById('msgSiswa').innerText='Pilih nama dulu!';
- document.getElementById('msgSiswa').innerText='Proses...';
- try{ const r=await fetch(`${API_URL}?action=loginSiswa&nama=${encodeURIComponent(nama)}&password=${encodeURIComponent(pass)}`); const j=await r.json();
- if(j.status==='success'){ localStorage.setItem('ez_siswa', JSON.stringify(j.data)); window.location='siswa.html'; } else { document.getElementById('msgSiswa').innerText=j.message; }
- }catch(e){ document.getElementById('msgSiswa').innerText='Gagal koneksi'; }
+  const nama=document.getElementById('selectSiswa').value; const pass=document.getElementById('passSiswa').value;
+  if(!nama) return document.getElementById('msgSiswa').innerText='Pilih nama dulu!';
+  const btn = document.getElementById('btnLoginSiswa');
+  btn.innerHTML='<span class="spinner"></span> Proses...'; btn.disabled=true;
+  try{ 
+    const r=await fetch(`${API_URL}?action=loginSiswa&nama=${encodeURIComponent(nama)}&password=${encodeURIComponent(pass)}`);
+    const j=await r.json();
+    if(j.status==='success'){ localStorage.setItem('ez_siswa', JSON.stringify(j.data)); window.location='siswa.html'; } 
+    else { document.getElementById('msgSiswa').innerText=j.message; btn.innerHTML='MASUK'; btn.disabled=false; }
+  }catch(e){ document.getElementById('msgSiswa').innerText='Gagal koneksi'; btn.innerHTML='MASUK'; btn.disabled=false; }
 }
+
 async function loginOrtu(){
- const nama=document.getElementById('selectOrtu').value; const kode=document.getElementById('kodeOrtu').value;
- if(!nama) return document.getElementById('msgOrtu').innerText='Pilih nama dulu!';
- document.getElementById('msgOrtu').innerText='Proses...';
- try{ const r=await fetch(`${API_URL}?action=loginOrtu&nama=${encodeURIComponent(nama)}&kode=${encodeURIComponent(kode)}`); const j=await r.json();
- if(j.status==='success'){ localStorage.setItem('ez_ortu', JSON.stringify(j.data)); window.location='orangtua.html'; } else { document.getElementById('msgOrtu').innerText=j.message; }
- }catch(e){ document.getElementById('msgOrtu').innerText='Gagal koneksi'; }
+  const nama=document.getElementById('selectOrtu').value; const kode=document.getElementById('kodeOrtu').value;
+  if(!nama) return document.getElementById('msgOrtu').innerText='Pilih nama dulu!';
+  const btn = document.getElementById('btnLoginOrtu');
+  btn.innerHTML='<span class="spinner"></span> Proses...'; btn.disabled=true;
+  try{ 
+    const r=await fetch(`${API_URL}?action=loginOrtu&nama=${encodeURIComponent(nama)}&kode=${encodeURIComponent(kode)}`);
+    const j=await r.json();
+    if(j.status==='success'){ localStorage.setItem('ez_ortu', JSON.stringify(j.data)); window.location='orangtua.html'; }
+    else { document.getElementById('msgOrtu').innerText=j.message; btn.innerHTML='MASUK'; btn.disabled=false; }
+  }catch(e){ document.getElementById('msgOrtu').innerText='Gagal koneksi'; btn.innerHTML='MASUK'; btn.disabled=false; }
 }
 </script>
 </body>
