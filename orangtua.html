@@ -1,146 +1,232 @@
 <!DOCTYPE html>
 <html lang="id">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Dashboard Orang Tua - E-Presensi</title>
-    <link rel="stylesheet" href="css/style.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-auth-compat.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore-compat.js"></script>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Dashboard Orang Tua - EZ</title>
+<script src="https://cdn.tailwindcss.com"></script>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+<style>
+body{font-family:'Poppins',sans-serif}
+.font-luxury{font-family:'Playfair Display',serif}
+.btn-red{background:linear-gradient(to right,#8B0000,#FF0000);color:white}
+.tab-active{background:#8B0000;color:white}
+</style>
 </head>
-<body>
-    <!-- Header -->
-    <header class="app-header header-ortu">
-        <div class="header-left">
-            <i class="fas fa-users"></i>
-            <h2>Portal Orang Tua</h2>
-        </div>
-        <div class="header-right">
-            <span id="namaOrtu" class="user-name"></span>
-            <button onclick="logoutOrtu()" class="btn-logout">
-                <i class="fas fa-sign-out-alt"></i>
-            </button>
-        </div>
-    </header>
+<body class="bg-gray-50 min-h-screen">
 
-    <main class="dashboard">
-        <!-- Info Anak -->
-        <div class="welcome-card card-ortu">
-            <div class="welcome-info">
-                <h2>Data Anak</h2>
-                <p><strong>Nama:</strong> <span id="namaAnak"></span></p>
-                <p><strong>NIS:</strong> <span id="nisAnak"></span></p>
-                <p><strong>Kelas:</strong> <span id="kelasAnak"></span></p>
-            </div>
-            <div class="welcome-avatar">
-                <i class="fas fa-child"></i>
-            </div>
-        </div>
+<!-- NAVBAR -->
+<nav class="bg-red-900 text-white p-4 flex justify-between items-center shadow-lg sticky top-0 z-40">
+  <div class="flex items-center">
+    <img src="images/logo-ez.png" class="h-10 mr-3 bg-white rounded p-1" onerror="this.style.display='none'">
+    <div>
+      <div class="font-bold text-lg">DASHBOARD ORANG TUA</div>
+      <div class="text-xs opacity-80" id="navNama">Loading...</div>
+    </div>
+  </div>
+  <button onclick="logout()" class="bg-yellow-500 text-red-900 px-4 py-2 rounded-full font-bold text-sm">LOGOUT</button>
+</nav>
 
-        <!-- Summary Cards -->
-        <div class="summary-grid">
-            <div class="summary-card">
-                <div class="summary-icon bg-green">
-                    <i class="fas fa-calendar-check"></i>
-                </div>
-                <div class="summary-info">
-                    <h4 id="totalKehadiran">0%</h4>
-                    <p>Kehadiran</p>
-                </div>
-            </div>
-            <div class="summary-card">
-                <div class="summary-icon bg-blue">
-                    <i class="fas fa-pen-fancy"></i>
-                </div>
-                <div class="summary-info">
-                    <h4 id="totalQuizDikerjakan">0</h4>
-                    <p>Quiz Dikerjakan</p>
-                </div>
-            </div>
-            <div class="summary-card">
-                <div class="summary-icon bg-purple">
-                    <i class="fas fa-star"></i>
-                </div>
-                <div class="summary-info">
-                    <h4 id="rataRataNilai">0</h4>
-                    <p>Rata-rata Nilai</p>
-                </div>
-            </div>
-        </div>
+<!-- PROFIL CARD -->
+<div class="container mx-auto px-4 py-6">
+  <div class="bg-gradient-to-r from-red-900 to-red-700 text-white p-6 rounded-2xl shadow-xl">
+    <div class="flex items-center mb-4">
+      <div class="text-5xl mr-4">👨‍👩‍👧</div>
+      <div>
+        <div class="text-sm opacity-80">Selamat datang,</div>
+        <div class="font-bold text-xl" id="profilNamaOrtu">-</div>
+      </div>
+    </div>
+    <div class="bg-white/20 p-3 rounded-xl">
+      <div class="text-xs opacity-80">Data Anak Anda:</div>
+      <div class="font-bold text-lg" id="profilNamaAnak">-</div>
+      <div class="text-sm" id="profilIDAnak">-</div>
+    </div>
+  </div>
+</div>
 
-        <!-- Menu -->
-        <div class="menu-grid">
-            <div class="menu-card" onclick="showOrtuSection('presensiAnak')">
-                <div class="menu-icon" style="background: linear-gradient(135deg, #667eea, #764ba2);">
-                    <i class="fas fa-calendar-check"></i>
-                </div>
-                <h3>Presensi Anak</h3>
-                <p>Riwayat kehadiran</p>
-            </div>
-            <div class="menu-card" onclick="showOrtuSection('nilaiAnak')">
-                <div class="menu-icon" style="background: linear-gradient(135deg, #f093fb, #f5576c);">
-                    <i class="fas fa-chart-line"></i>
-                </div>
-                <h3>Nilai & Kemajuan</h3>
-                <p>Hasil belajar anak</p>
-            </div>
-        </div>
+<!-- RINGKASAN -->
+<div class="container mx-auto px-4 mb-4">
+  <div class="grid grid-cols-3 gap-3">
+    <div class="bg-white p-4 rounded-2xl shadow text-center">
+      <div class="text-2xl">📅</div>
+      <div class="font-bold text-2xl text-red-900" id="totalJadwal">-</div>
+      <div class="text-xs text-gray-500">Jadwal</div>
+    </div>
+    <div class="bg-white p-4 rounded-2xl shadow text-center">
+      <div class="text-2xl">✅</div>
+      <div class="font-bold text-2xl text-green-600" id="totalPresensi">-</div>
+      <div class="text-xs text-gray-500">Hadir</div>
+    </div>
+    <div class="bg-white p-4 rounded-2xl shadow text-center">
+      <div class="text-2xl">📊</div>
+      <div class="font-bold text-2xl text-yellow-600" id="rataNilai">-</div>
+      <div class="text-xs text-gray-500">Rata Nilai</div>
+    </div>
+  </div>
+</div>
 
-        <!-- Presensi Anak Section -->
-        <div id="presensiAnak" class="section hidden">
-            <div class="section-header">
-                <h3><i class="fas fa-calendar-check"></i> Riwayat Presensi Anak</h3>
-                <button onclick="hideOrtuSection('presensiAnak')" class="btn-close">
-                    <i class="fas fa-times"></i>
-                </button>
-            </div>
-            <div class="stats-row">
-                <div class="stat-box hadir">
-                    <i class="fas fa-check-circle"></i>
-                    <span id="anakHadir">0</span>
-                    <small>Hadir</small>
-                </div>
-                <div class="stat-box izin">
-                    <i class="fas fa-envelope"></i>
-                    <span id="anakIzin">0</span>
-                    <small>Izin</small>
-                </div>
-                <div class="stat-box sakit">
-                    <i class="fas fa-briefcase-medical"></i>
-                    <span id="anakSakit">0</span>
-                    <small>Sakit</small>
-                </div>
-                <div class="stat-box alpha">
-                    <i class="fas fa-times-circle"></i>
-                    <span id="anakAlpha">0</span>
-                    <small>Alpha</small>
-                </div>
-            </div>
-            <div id="listPresensiAnak" class="list-container">
-                <!-- Diisi JavaScript -->
-            </div>
-        </div>
+<!-- TABS -->
+<div class="container mx-auto px-4">
+  <div class="flex bg-white rounded-2xl shadow-md overflow-hidden mb-4">
+    <button onclick="showTab('presensi')" id="tabPresensi" class="tab-active flex-1 py-3 font-bold text-sm">✅ PRESENSI</button>
+    <button onclick="showTab('nilai')" id="tabNilai" class="flex-1 py-3 font-bold text-sm text-gray-600">📊 NILAI</button>
+    <button onclick="showTab('jadwal')" id="tabJadwal" class="flex-1 py-3 font-bold text-sm text-gray-600">📅 JADWAL</button>
+  </div>
 
-        <!-- Nilai Anak Section -->
-        <div id="nilaiAnak" class="section hidden">
-            <div class="section-header">
-                <h3><i class="fas fa-chart-line"></i> Nilai & Kemajuan Belajar</h3>
-                <button onclick="hideOrtuSection('nilaiAnak')" class="btn-close">
-                    <i class="fas fa-times"></i>
-                </button>
-            </div>
-            <div id="listNilaiAnak" class="list-container">
-                <!-- Diisi JavaScript -->
-            </div>
-            <!-- Grafik Kemajuan -->
-            <div class="chart-container">
-                <h4>📊 Grafik Kemajuan Belajar</h4>
-                <canvas id="chartKemajuan"></canvas>
-            </div>
-        </div>
+  <!-- TAB PRESENSI -->
+  <div id="contentPresensi" class="bg-white rounded-2xl shadow-md p-4">
+    <h3 class="font-bold text-red-900 mb-3 border-l-4 border-yellow-500 pl-3">Riwayat Kehadiran Anak</h3>
+    <div id="listPresensi" class="space-y-2"><p class="text-gray-400 text-center py-8">Loading...</p></div>
+  </div>
 
-        <!-- Presensi Hari Ini Notification -->
-        <div class="today-status">
-            <h4>📋 
+  <!-- TAB NILAI -->
+  <div id="contentNilai" class="hidden bg-white rounded-2xl shadow-md p-4">
+    <h3 class="font-bold text-red-900 mb-3 border-l-4 border-yellow-500 pl-3">Nilai Quiz Anak</h3>
+    <div id="listNilai" class="space-y-2"><p class="text-gray-400 text-center py-8">Loading...</p></div>
+  </div>
+
+  <!-- TAB JADWAL -->
+  <div id="contentJadwal" class="hidden bg-white rounded-2xl shadow-md p-4">
+    <h3 class="font-bold text-red-900 mb-3 border-l-4 border-yellow-500 pl-3">Jadwal Les Anak</h3>
+    <div id="listJadwal" class="space-y-3"><p class="text-gray-400 text-center py-8">Loading...</p></div>
+  </div>
+</div>
+
+<div class="h-20"></div>
+
+<script>
+const API_URL = "https://script.google.com/macros/s/AKfycbzsWmRDZQnf680vmXKcF7s-BxDxXdelv3K6MWG0fRfqpxYv7azBWnldN6UrjUIqdvLG/exec";
+let ortu = null;
+
+// CEK LOGIN
+window.onload = function() {
+  const data = localStorage.getItem('ez_ortu');
+  if(!data) { alert('Silakan login dulu!'); window.location='index.html'; return; }
+  ortu = JSON.parse(data);
+  document.getElementById('navNama').innerText = ortu.nama;
+  document.getElementById('profilNamaOrtu').innerText = ortu.nama;
+  document.getElementById('profilNamaAnak').innerText = ortu.namaSiswa;
+  document.getElementById('profilIDAnak').innerText = 'ID: ' + ortu.idSiswa;
+  loadPresensi();
+  loadJadwalCount();
+  loadNilaiCount();
+};
+
+function logout() {
+  if(confirm('Yakin mau logout?')) {
+    localStorage.removeItem('ez_ortu');
+    window.location = 'index.html';
+  }
+}
+
+// TABS
+function showTab(tab) {
+  ['presensi','nilai','jadwal'].forEach(t => {
+    document.getElementById('content'+t.charAt(0).toUpperCase()+t.slice(1)).classList.add('hidden');
+    document.getElementById('tab'+t.charAt(0).toUpperCase()+t.slice(1)).classList.remove('tab-active');
+    document.getElementById('tab'+t.charAt(0).toUpperCase()+t.slice(1)).classList.add('text-gray-600');
+  });
+  document.getElementById('content'+tab.charAt(0).toUpperCase()+tab.slice(1)).classList.remove('hidden');
+  document.getElementById('tab'+tab.charAt(0).toUpperCase()+tab.slice(1)).classList.add('tab-active');
+  document.getElementById('tab'+tab.charAt(0).toUpperCase()+tab.slice(1)).classList.remove('text-gray-600');
+  
+  if(tab==='nilai') loadNilai();
+  if(tab==='jadwal') loadJadwal();
+}
+
+// LOAD PRESENSI
+async function loadPresensi() {
+  const el = document.getElementById('listPresensi');
+  try {
+    const r = await fetch(`${API_URL}?action=getPresensiSiswa&idSiswa=${ortu.idSiswa}`);
+    const j = await r.json();
+    document.getElementById('totalPresensi').innerText = j.data.length;
+    
+    if(j.data.length === 0) { 
+      el.innerHTML = '<p class="text-gray-400 text-center py-8">Anak belum pernah presensi</p>'; 
+      return; 
+    }
+    el.innerHTML = j.data.map(x => `
+      <div class="flex items-center bg-green-50 p-3 rounded-lg border-l-4 border-green-500">
+        <div class="text-2xl mr-3">✅</div>
+        <div class="flex-1">
+          <div class="font-bold text-sm">${x.keterangan || 'Kelas'}</div>
+          <div class="text-xs text-gray-600">${x.timestamp}</div>
+          <div class="text-xs text-gray-500">${x.hari} • ${x.jam}</div>
+        </div>
+        <div class="text-xs bg-green-600 text-white px-2 py-1 rounded">${x.status}</div>
+      </div>
+    `).join('');
+  } catch(e) { el.innerHTML = '<p class="text-red-500 text-center">Gagal load data</p>'; }
+}
+
+// LOAD NILAI
+async function loadNilai() {
+  const el = document.getElementById('listNilai');
+  el.innerHTML = '<p class="text-gray-400 text-center py-8">Loading...</p>';
+  try {
+    const r = await fetch(`${API_URL}?action=getNilaiSiswa&idSiswa=${ortu.idSiswa}`);
+    const j = await r.json();
+    
+    if(j.data.length === 0) { 
+      el.innerHTML = '<p class="text-gray-400 text-center py-8">Belum ada nilai quiz</p>'; 
+      return; 
+    }
+    el.innerHTML = j.data.map(x => {
+      const nilai = parseInt(x.nilai100) || 0;
+      const warna = nilai >= 80 ? 'green' : nilai >= 60 ? 'yellow' : 'red';
+      return `
+      <div class="flex items-center bg-${warna}-50 p-3 rounded-lg border-l-4 border-${warna}-500">
+        <div class="flex-1">
+          <div class="font-bold">${x.judulSoal}</div>
+          <div class="text-xs text-gray-500">${x.jenisQuiz} • ${x.keterangan||''}</div>
+        </div>
+        <div class="text-3xl font-bold text-${warna}-600">${nilai}</div>
+      </div>`;
+    }).join('');
+  } catch(e) { el.innerHTML = '<p class="text-red-500 text-center">Gagal load data</p>'; }
+}
+
+async function loadNilaiCount() {
+  try {
+    const r = await fetch(`${API_URL}?action=getNilaiSiswa&idSiswa=${ortu.idSiswa}`);
+    const j = await r.json();
+    if(j.data.length === 0) { document.getElementById('rataNilai').innerText = '-'; return; }
+    const total = j.data.reduce((s,x) => s + (parseInt(x.nilai100)||0), 0);
+    document.getElementById('rataNilai').innerText = Math.round(total / j.data.length);
+  } catch(e) {}
+}
+
+// LOAD JADWAL
+async function loadJadwal() {
+  const el = document.getElementById('listJadwal');
+  el.innerHTML = '<p class="text-gray-400 text-center py-8">Loading...</p>';
+  try {
+    const r = await fetch(`${API_URL}?action=getJadwalSiswa&idSiswa=${ortu.idSiswa}`);
+    const j = await r.json();
+    
+    if(j.data.length === 0) { 
+      el.innerHTML = '<p class="text-gray-400 text-center py-8">Anak belum terdaftar di jadwal manapun</p>'; 
+      return; 
+    }
+    el.innerHTML = j.data.map(x => `
+      <div class="border-l-4 border-red-700 bg-red-50 p-3 rounded-r-lg">
+        <div class="font-bold text-red-900">${x.hari} • ${x.jam}</div>
+        <div class="text-sm text-gray-700">${x.sesi}</div>
+        <div class="text-xs text-gray-500 mt-1">📍 ${x.kelompok}</div>
+      </div>
+    `).join('');
+  } catch(e) { el.innerHTML = '<p class="text-red-500 text-center">Gagal load data</p>'; }
+}
+
+async function loadJadwalCount() {
+  try {
+    const r = await fetch(`${API_URL}?action=getJadwalSiswa&idSiswa=${ortu.idSiswa}`);
+    const j = await r.json();
+    document.getElementById('totalJadwal').innerText = j.data.length;
+  } catch(e) {}
+}
+</script>
+</body>
+</html>
