@@ -2,369 +2,277 @@
 <html lang="id">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 <meta name="theme-color" content="#8B0000">
-<title>Dashboard Siswa - EZ</title>
+<title>Dashboard Siswa</title>
 <script src="https://cdn.tailwindcss.com"></script>
 <script src="https://unpkg.com/html5-qrcode@2.3.8/html5-qrcode.min.js"></script>
-<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Poppins:wght@400;600;700;800&display=swap" rel="stylesheet">
 <style>
-*{-webkit-tap-highlight-color:transparent}
-body{font-family:'Poppins',sans-serif;-webkit-font-smoothing:antialiased}
+*{-webkit-tap-highlight-color:transparent;box-sizing:border-box}
+html,body{margin:0;padding:0;font-family:'Poppins',sans-serif;-webkit-font-smoothing:antialiased;font-size:17px}
 .font-luxury{font-family:'Playfair Display',serif}
 .btn-red{background:linear-gradient(to right,#8B0000,#FF0000);color:white}
 .tab-active{background:#8B0000;color:white}
-.card-hover{transition:transform 0.2s}
-.card-hover:active{transform:scale(0.97)}
+.card-tap{transition:transform 0.15s}.card-tap:active{transform:scale(0.97)}
 
-/* SCANNER FULLSCREEN */
-#modalScan {
-  position: fixed; inset: 0; z-index: 100;
-  background: #000; display: none;
-}
-#modalScan.active { display: block; }
-#qr-reader {
-  width: 100vw !important; height: 100vh !important;
-  border: none !important;
-}
-#qr-reader video {
-  width: 100vw !important; height: 100vh !important;
-  object-fit: cover !important;
-}
-#qr-reader__scan_region {
-  background: transparent !important; min-height: 100vh !important;
-}
-#qr-reader__dashboard { display: none !important; }
-.scan-overlay {
-  position: fixed; inset: 0; z-index: 101;
-  pointer-events: none;
-  display: flex; flex-direction: column;
-}
-.scan-header {
-  background: linear-gradient(to bottom, rgba(0,0,0,0.8), transparent);
-  padding: 20px; padding-top: 40px; color: white;
-  pointer-events: auto;
-}
-.scan-frame-wrap {
-  flex: 1; display: flex; align-items: center; justify-content: center;
-}
-.scan-frame {
-  width: 70vw; height: 70vw; max-width: 320px; max-height: 320px;
-  border: 4px solid rgba(255,255,255,0.5); border-radius: 20px;
-  position: relative;
-  box-shadow: 0 0 0 9999px rgba(0,0,0,0.4);
-}
-.scan-frame::before, .scan-frame::after,
-.scan-frame > span::before, .scan-frame > span::after {
-  content:''; position:absolute; width:40px; height:40px;
-  border: 6px solid #FFD700;
-}
-.scan-frame::before { top:-4px; left:-4px; border-right:none; border-bottom:none; border-radius:20px 0 0 0; }
-.scan-frame::after { top:-4px; right:-4px; border-left:none; border-bottom:none; border-radius:0 20px 0 0; }
-.scan-frame > span::before { content:''; position:absolute; bottom:-4px; left:-4px; border-right:none; border-top:none; border-radius:0 0 0 20px; }
-.scan-frame > span::after { content:''; position:absolute; bottom:-4px; right:-4px; border-left:none; border-top:none; border-radius:0 0 20px 0; }
-.scan-footer {
-  background: linear-gradient(to top, rgba(0,0,0,0.8), transparent);
-  padding: 30px 20px; color: white; text-align: center;
-  pointer-events: auto;
-}
-.spinner{border:3px solid #f3f3f3;border-top:3px solid #8B0000;border-radius:50%;width:24px;height:24px;animation:spin 0.8s linear infinite;display:inline-block}
+/* SCANNER - CUMA 1 FRAME BERSIH */
+#modalScan{position:fixed;inset:0;z-index:100;background:#000;display:none}
+#modalScan.active{display:block}
+#qr-reader{width:100vw !important;height:100vh !important;border:none !important;position:absolute !important;inset:0}
+#qr-reader video{width:100vw !important;height:100vh !important;object-fit:cover !important}
+#qr-reader__scan_region{background:transparent !important;min-height:100vh !important;padding:0 !important}
+#qr-reader__scan_region > img,#qr-reader__scan_region canvas{display:none !important}
+#qr-reader__dashboard{display:none !important}
+/* HAPUS KOTAK QR DEFAULT DARI LIBRARY */
+#qr-reader div[style*="border"]{border:none !important;box-shadow:none !important}
+#qr-shaded-region{display:none !important}
+
+.scan-overlay{position:fixed;inset:0;z-index:101;pointer-events:none;display:flex;flex-direction:column}
+.scan-header{background:linear-gradient(to bottom,rgba(0,0,0,0.85),transparent);padding:20px 20px 40px;color:white;pointer-events:auto}
+.scan-frame-wrap{flex:1;display:flex;align-items:center;justify-content:center}
+.scan-frame{width:75vw;height:75vw;max-width:340px;max-height:340px;position:relative;box-shadow:0 0 0 9999px rgba(0,0,0,0.5)}
+.scan-frame::before,.scan-frame::after,.scan-frame > span::before,.scan-frame > span::after{content:'';position:absolute;width:50px;height:50px;border:7px solid #FFD700}
+.scan-frame::before{top:0;left:0;border-right:none;border-bottom:none;border-radius:15px 0 0 0}
+.scan-frame::after{top:0;right:0;border-left:none;border-bottom:none;border-radius:0 15px 0 0}
+.scan-frame > span::before{content:'';position:absolute;bottom:0;left:0;border-right:none;border-top:none;border-radius:0 0 0 15px}
+.scan-frame > span::after{content:'';position:absolute;bottom:0;right:0;border-left:none;border-top:none;border-radius:0 0 15px 0}
+.scan-footer{background:linear-gradient(to top,rgba(0,0,0,0.85),transparent);padding:40px 20px 30px;color:white;text-align:center;pointer-events:auto}
+
+.spinner{border:3px solid #f3f3f3;border-top:3px solid #8B0000;border-radius:50%;width:22px;height:22px;animation:spin 0.7s linear infinite;display:inline-block;vertical-align:middle}
 @keyframes spin{100%{transform:rotate(360deg)}}
-.skeleton{background:linear-gradient(90deg,#f0f0f0 25%,#e0e0e0 50%,#f0f0f0 75%);background-size:200% 100%;animation:shim 1.2s infinite;border-radius:8px}
+.skeleton{background:linear-gradient(90deg,#f0f0f0 25%,#e0e0e0 50%,#f0f0f0 75%);background-size:200% 100%;animation:shim 1.2s infinite;border-radius:12px}
 @keyframes shim{0%{background-position:200% 0}100%{background-position:-200% 0}}
 </style>
 </head>
 <body class="bg-gray-50 min-h-screen">
 
-<!-- NAVBAR -->
-<nav class="bg-red-900 text-white p-3 flex justify-between items-center shadow-lg sticky top-0 z-40">
-  <div class="flex items-center">
-    <img src="images/logo-ez.png" class="h-10 mr-2 bg-white rounded p-1" onerror="this.style.display='none'">
-    <div>
-      <div class="font-bold text-base">DASHBOARD SISWA</div>
-      <div class="text-xs opacity-80" id="navNama">Loading...</div>
+<nav class="bg-red-900 text-white px-3 py-3 flex justify-between items-center shadow-md sticky top-0 z-40">
+  <div class="flex items-center flex-1 min-w-0">
+    <img src="images/logo-ez.png" class="h-11 mr-2 bg-white rounded p-1 flex-shrink-0" onerror="this.style.display='none'">
+    <div class="min-w-0">
+      <div class="font-extrabold text-lg leading-none">DASHBOARD SISWA</div>
+      <div class="text-sm opacity-90 truncate" id="navNama">Loading...</div>
     </div>
   </div>
-  <button onclick="logout()" class="bg-yellow-500 text-red-900 px-3 py-2 rounded-full font-bold text-xs">LOGOUT</button>
+  <button onclick="logout()" class="bg-yellow-500 text-red-900 px-3 py-2 rounded-full font-extrabold text-sm flex-shrink-0 ml-2">LOGOUT</button>
 </nav>
 
-<!-- PROFIL -->
-<div class="container mx-auto px-4 py-4">
-  <div class="bg-gradient-to-r from-red-900 to-red-700 text-white p-5 rounded-2xl shadow-xl">
+<div class="px-3 pt-3">
+  <div class="bg-gradient-to-r from-red-900 to-red-700 text-white p-5 rounded-2xl shadow-lg">
     <div class="flex items-center">
-      <div class="text-5xl mr-3">👨‍🎓</div>
+      <div class="text-6xl mr-3">👨‍🎓</div>
       <div class="flex-1 min-w-0">
-        <div class="text-xs opacity-80">Selamat datang,</div>
-        <div class="font-bold text-xl truncate" id="profilNama">-</div>
-        <div class="text-sm mt-1" id="profilKelas">-</div>
+        <div class="text-sm opacity-90">Selamat datang,</div>
+        <div class="font-extrabold text-2xl leading-tight truncate" id="profilNama">-</div>
+        <div class="text-base mt-1" id="profilKelas">-</div>
       </div>
     </div>
   </div>
 </div>
 
-<!-- TOMBOL SCAN BESAR -->
-<div class="container mx-auto px-4 mb-4">
-  <button onclick="openScanner()" class="card-hover w-full bg-gradient-to-r from-yellow-400 to-yellow-600 text-red-900 py-6 rounded-3xl shadow-xl font-bold flex items-center justify-center">
+<div class="px-3 mt-3">
+  <button onclick="openScanner()" class="card-tap w-full bg-gradient-to-r from-yellow-400 to-yellow-600 text-red-900 py-5 rounded-2xl shadow-lg font-extrabold flex items-center justify-center">
     <span class="text-5xl mr-3">📷</span>
     <div class="text-left">
-      <div class="text-xl">SCAN QR PRESENSI</div>
-      <div class="text-xs opacity-80 font-normal">Ketuk untuk buka kamera</div>
+      <div class="text-2xl leading-tight">SCAN QR PRESENSI</div>
+      <div class="text-sm font-semibold opacity-90">Ketuk untuk buka kamera</div>
     </div>
   </button>
 </div>
 
-<!-- TABS -->
-<div class="container mx-auto px-4">
-  <div class="flex bg-white rounded-2xl shadow-md overflow-hidden mb-4">
-    <button onclick="showTab('jadwal')" id="tabJadwal" class="tab-active flex-1 py-4 font-bold text-sm">📅 JADWAL</button>
-    <button onclick="showTab('presensi')" id="tabPresensi" class="flex-1 py-4 font-bold text-sm text-gray-600">✅ PRESENSI</button>
-    <button onclick="showTab('nilai')" id="tabNilai" class="flex-1 py-4 font-bold text-sm text-gray-600">📊 NILAI</button>
+<div class="px-3 mt-3">
+  <div class="flex bg-white rounded-2xl shadow overflow-hidden mb-3">
+    <button onclick="showTab('jadwal')" id="tabJadwal" class="tab-active flex-1 py-4 font-extrabold text-base">📅 JADWAL</button>
+    <button onclick="showTab('presensi')" id="tabPresensi" class="flex-1 py-4 font-extrabold text-base text-gray-600">✅ ABSEN</button>
+    <button onclick="showTab('nilai')" id="tabNilai" class="flex-1 py-4 font-extrabold text-base text-gray-600">📊 NILAI</button>
   </div>
 
-  <div id="contentJadwal" class="bg-white rounded-2xl shadow-md p-4">
-    <h3 class="font-bold text-red-900 mb-3 border-l-4 border-yellow-500 pl-3">Jadwal Les Saya</h3>
+  <div id="contentJadwal" class="bg-white rounded-2xl shadow p-4">
+    <h3 class="font-extrabold text-xl text-red-900 mb-3 border-l-4 border-yellow-500 pl-3">Jadwal Les Saya</h3>
     <div id="listJadwal" class="space-y-3">
-      <div class="skeleton h-16"></div><div class="skeleton h-16"></div>
+      <div class="skeleton h-20"></div><div class="skeleton h-20"></div>
     </div>
   </div>
 
-  <div id="contentPresensi" class="hidden bg-white rounded-2xl shadow-md p-4">
-    <h3 class="font-bold text-red-900 mb-3 border-l-4 border-yellow-500 pl-3">Riwayat Presensi</h3>
-    <div id="listPresensi" class="space-y-2"><div class="skeleton h-16"></div></div>
+  <div id="contentPresensi" class="hidden bg-white rounded-2xl shadow p-4">
+    <h3 class="font-extrabold text-xl text-red-900 mb-3 border-l-4 border-yellow-500 pl-3">Riwayat Presensi</h3>
+    <div id="listPresensi" class="space-y-3"><div class="skeleton h-20"></div><div class="skeleton h-20"></div></div>
   </div>
 
-  <div id="contentNilai" class="hidden bg-white rounded-2xl shadow-md p-4">
-    <h3 class="font-bold text-red-900 mb-3 border-l-4 border-yellow-500 pl-3">Nilai Quiz Saya</h3>
-    <div id="listNilai" class="space-y-2"><div class="skeleton h-16"></div></div>
+  <div id="contentNilai" class="hidden bg-white rounded-2xl shadow p-4">
+    <h3 class="font-extrabold text-xl text-red-900 mb-3 border-l-4 border-yellow-500 pl-3">Nilai Quiz Saya</h3>
+    <div id="listNilai" class="space-y-3"><div class="skeleton h-20"></div><div class="skeleton h-20"></div></div>
   </div>
 </div>
 
-<div class="h-20"></div>
+<div class="h-8"></div>
 
-<!-- SCANNER FULLSCREEN -->
+<!-- SCANNER FULLSCREEN - HANYA 1 FRAME -->
 <div id="modalScan">
   <div id="qr-reader"></div>
   <div class="scan-overlay">
     <div class="scan-header flex justify-between items-center">
       <div>
-        <div class="font-bold text-xl">📷 Scan QR Kelas</div>
-        <div class="text-xs opacity-80">Arahkan kamera ke QR</div>
+        <div class="font-extrabold text-2xl">📷 Scan QR Kelas</div>
+        <div class="text-base opacity-90 mt-1">Arahkan ke QR Code</div>
       </div>
-      <button onclick="closeScanner()" class="bg-white/20 backdrop-blur w-12 h-12 rounded-full text-2xl">✕</button>
+      <button onclick="closeScanner()" class="bg-white/25 backdrop-blur w-14 h-14 rounded-full text-3xl font-bold">✕</button>
     </div>
     <div class="scan-frame-wrap"><div class="scan-frame"><span></span></div></div>
     <div class="scan-footer">
-      <div class="text-sm mb-3">Posisikan QR di dalam kotak</div>
-      <button onclick="closeScanner()" class="bg-white/20 backdrop-blur text-white px-8 py-3 rounded-full font-bold">Tutup Scanner</button>
+      <div class="text-lg font-bold mb-4">Posisikan QR dalam kotak kuning</div>
+      <button onclick="closeScanner()" class="bg-white text-red-900 px-10 py-4 rounded-full font-extrabold text-lg">TUTUP</button>
     </div>
   </div>
 </div>
 
-<!-- NOTIFIKASI -->
-<div id="modalNotif" class="hidden fixed inset-0 bg-black/80 z-[200] flex items-center justify-center p-4">
-  <div class="bg-white rounded-3xl p-8 w-full max-w-md text-center">
-    <div id="notifIcon" class="text-7xl mb-3">✅</div>
-    <div id="notifTitle" class="font-bold text-2xl text-red-900 mb-2">Berhasil!</div>
-    <div id="notifMsg" class="text-gray-600 mb-4 text-lg">-</div>
-    <div id="notifDetail" class="bg-gray-50 p-4 rounded-xl text-sm mb-4"></div>
-    <button onclick="closeNotif()" class="w-full btn-red py-4 rounded-full font-bold text-lg">OK</button>
+<!-- NOTIF -->
+<div id="modalNotif" class="hidden fixed inset-0 bg-black/85 z-[200] flex items-center justify-center p-4">
+  <div class="bg-white rounded-3xl p-7 w-full max-w-md text-center">
+    <div id="notifIcon" class="text-8xl mb-3">✅</div>
+    <div id="notifTitle" class="font-extrabold text-3xl text-red-900 mb-2">Berhasil!</div>
+    <div id="notifMsg" class="text-gray-700 mb-4 text-xl font-semibold">-</div>
+    <div id="notifDetail" class="bg-yellow-50 p-4 rounded-xl text-base mb-4 font-semibold text-gray-800"></div>
+    <button onclick="closeNotif()" class="w-full btn-red py-4 rounded-full font-extrabold text-xl">OK</button>
   </div>
 </div>
 
 <script>
-const API_URL = "https://script.google.com/macros/s/AKfycbzsWmRDZQnf680vmXKcF7s-BxDxXdelv3K6MWG0fRfqpxYv7azBWnldN6UrjUIqdvLG/exec";
-let siswa = null;
-let html5QrCode = null;
-
-// Cache
-let cacheJadwal = null, cachePresensi = null, cacheNilai = null;
+const API_URL="https://script.google.com/macros/s/AKfycbzsWmRDZQnf680vmXKcF7s-BxDxXdelv3K6MWG0fRfqpxYv7azBWnldN6UrjUIqdvLG/exec";
+let siswa=null, html5QrCode=null;
+let cacheJadwal=null, cachePresensi=null, cacheNilai=null;
 
 window.onload = function() {
   const data = localStorage.getItem('ez_siswa');
-  if(!data) { alert('Silakan login dulu!'); window.location='index.html'; return; }
+  if(!data){alert('Login dulu!');window.location='index.html';return;}
   siswa = JSON.parse(data);
   document.getElementById('navNama').innerText = siswa.nama;
   document.getElementById('profilNama').innerText = siswa.nama;
   document.getElementById('profilKelas').innerText = siswa.kelas + ' • ID: ' + siswa.id;
-  loadJadwal();
-  // preload
-  setTimeout(loadPresensi, 500);
-  setTimeout(loadNilai, 1000);
   
-  // Auto scan jika ada param
-  if(location.search.includes('autoscan=1')) {
-    setTimeout(openScanner, 500);
-  }
+  // PARALEL LOAD SEMUA - langsung tampil semua tab
+  Promise.all([
+    fetch(`${API_URL}?action=getJadwalSiswa&idSiswa=${siswa.id}`).then(r=>r.json()),
+    fetch(`${API_URL}?action=getPresensiSiswa&idSiswa=${siswa.id}`).then(r=>r.json()),
+    fetch(`${API_URL}?action=getNilaiSiswa&idSiswa=${siswa.id}`).then(r=>r.json())
+  ]).then(([jd, pr, nl]) => {
+    cacheJadwal = jd.data; renderJadwal(jd.data);
+    cachePresensi = pr.data; renderPresensi(pr.data);
+    cacheNilai = nl.data; renderNilai(nl.data);
+  }).catch(e=>console.log('load error',e));
+  
+  if(location.search.includes('autoscan=1')) setTimeout(openScanner, 400);
 };
 
-function logout() {
-  if(confirm('Yakin mau logout?')) {
-    localStorage.removeItem('ez_siswa');
-    window.location = 'index.html';
-  }
-}
+function logout(){ if(confirm('Yakin logout?')){localStorage.removeItem('ez_siswa');window.location='index.html';} }
 
 function showTab(tab) {
-  ['jadwal','presensi','nilai'].forEach(t => {
-    const cap = t.charAt(0).toUpperCase()+t.slice(1);
-    document.getElementById('content'+cap).classList.add('hidden');
-    document.getElementById('tab'+cap).classList.remove('tab-active');
-    document.getElementById('tab'+cap).classList.add('text-gray-600');
+  ['jadwal','presensi','nilai'].forEach(t=>{
+    const c = t.charAt(0).toUpperCase()+t.slice(1);
+    document.getElementById('content'+c).classList.add('hidden');
+    document.getElementById('tab'+c).classList.remove('tab-active');
+    document.getElementById('tab'+c).classList.add('text-gray-600');
   });
-  const cap = tab.charAt(0).toUpperCase()+tab.slice(1);
-  document.getElementById('content'+cap).classList.remove('hidden');
-  document.getElementById('tab'+cap).classList.add('tab-active');
-  document.getElementById('tab'+cap).classList.remove('text-gray-600');
+  const c = tab.charAt(0).toUpperCase()+tab.slice(1);
+  document.getElementById('content'+c).classList.remove('hidden');
+  document.getElementById('tab'+c).classList.add('tab-active');
+  document.getElementById('tab'+c).classList.remove('text-gray-600');
 }
 
-async function loadJadwal() {
+function renderJadwal(d) {
   const el = document.getElementById('listJadwal');
-  try {
-    const r = await fetch(`${API_URL}?action=getJadwalSiswa&idSiswa=${siswa.id}`);
-    const j = await r.json();
-    cacheJadwal = j.data;
-    renderJadwal(j.data);
-  } catch(e) { el.innerHTML = '<p class="text-red-500 text-center py-4">Gagal load jadwal</p>'; }
-}
-
-function renderJadwal(data) {
-  const el = document.getElementById('listJadwal');
-  if(!data || data.length === 0) { el.innerHTML = '<p class="text-gray-400 text-center py-8">Belum ada jadwal untuk Anda</p>'; return; }
-  el.innerHTML = data.map(x => `
+  if(!d||d.length===0){el.innerHTML='<p class="text-gray-400 text-center py-8 text-lg">Belum ada jadwal</p>';return;}
+  el.innerHTML = d.map(x=>`
     <div class="border-l-4 border-red-700 bg-red-50 p-4 rounded-r-xl">
-      <div class="font-bold text-red-900 text-lg">${x.hari} • ${x.jam}</div>
-      <div class="text-sm text-gray-700 mt-1">${x.sesi}</div>
-      <div class="text-xs text-gray-500 mt-1">📍 ${x.kelompok}</div>
-    </div>
-  `).join('');
+      <div class="font-extrabold text-red-900 text-xl">${x.hari}</div>
+      <div class="text-lg font-bold text-red-700">🕐 ${x.jam}</div>
+      <div class="text-base text-gray-700 mt-1 font-semibold">${x.sesi}</div>
+      <div class="text-sm text-gray-500 mt-1">📍 ${x.kelompok}</div>
+    </div>`).join('');
 }
 
-async function loadPresensi() {
+function renderPresensi(d) {
   const el = document.getElementById('listPresensi');
-  try {
-    const r = await fetch(`${API_URL}?action=getPresensiSiswa&idSiswa=${siswa.id}`);
-    const j = await r.json();
-    cachePresensi = j.data;
-    renderPresensi(j.data);
-  } catch(e) { el.innerHTML = '<p class="text-red-500 text-center py-4">Gagal load</p>'; }
-}
-
-function renderPresensi(data) {
-  const el = document.getElementById('listPresensi');
-  if(!data || data.length === 0) { el.innerHTML = '<p class="text-gray-400 text-center py-8">Belum ada riwayat presensi</p>'; return; }
-  el.innerHTML = data.map(x => `
+  if(!d||d.length===0){el.innerHTML='<p class="text-gray-400 text-center py-8 text-lg">Belum ada presensi</p>';return;}
+  el.innerHTML = d.map(x=>`
     <div class="flex items-center bg-green-50 p-4 rounded-xl border-l-4 border-green-500">
-      <div class="text-3xl mr-3">✅</div>
+      <div class="text-4xl mr-3">✅</div>
       <div class="flex-1 min-w-0">
-        <div class="font-bold text-sm truncate">${x.keterangan || 'Kelas'}</div>
-        <div class="text-xs text-gray-600">${x.timestamp}</div>
-        <div class="text-xs text-gray-500">${x.hari} • ${x.jam}</div>
+        <div class="font-extrabold text-lg truncate">${x.keterangan||'Kelas'}</div>
+        <div class="text-base text-gray-700 font-semibold">${x.timestamp}</div>
+        <div class="text-sm text-gray-500">${x.hari} • ${x.jam}</div>
       </div>
-      <div class="text-xs bg-green-600 text-white px-3 py-1 rounded-full">${x.status}</div>
-    </div>
-  `).join('');
+      <div class="text-sm bg-green-600 text-white px-3 py-1.5 rounded-full font-bold">${x.status}</div>
+    </div>`).join('');
 }
 
-async function loadNilai() {
+function renderNilai(d) {
   const el = document.getElementById('listNilai');
-  try {
-    const r = await fetch(`${API_URL}?action=getNilaiSiswa&idSiswa=${siswa.id}`);
-    const j = await r.json();
-    cacheNilai = j.data;
-    renderNilai(j.data);
-  } catch(e) { el.innerHTML = '<p class="text-red-500 text-center py-4">Gagal load</p>'; }
-}
-
-function renderNilai(data) {
-  const el = document.getElementById('listNilai');
-  if(!data || data.length === 0) { el.innerHTML = '<p class="text-gray-400 text-center py-8">Belum ada nilai</p>'; return; }
-  el.innerHTML = data.map(x => {
-    const nilai = parseInt(x.nilai100) || 0;
-    const warna = nilai >= 80 ? 'green' : nilai >= 60 ? 'yellow' : 'red';
-    return `
-    <div class="flex items-center bg-${warna}-50 p-4 rounded-xl border-l-4 border-${warna}-500">
+  if(!d||d.length===0){el.innerHTML='<p class="text-gray-400 text-center py-8 text-lg">Belum ada nilai</p>';return;}
+  el.innerHTML = d.map(x=>{
+    const n=parseInt(x.nilai100)||0;
+    const w=n>=80?'green':n>=60?'yellow':'red';
+    return `<div class="flex items-center bg-${w}-50 p-4 rounded-xl border-l-4 border-${w}-500">
       <div class="flex-1 min-w-0">
-        <div class="font-bold truncate">${x.judulSoal}</div>
-        <div class="text-xs text-gray-500">${x.jenisQuiz} • ${x.keterangan||''}</div>
+        <div class="font-extrabold text-lg truncate">${x.judulSoal}</div>
+        <div class="text-base text-gray-600 font-semibold">${x.jenisQuiz}</div>
+        <div class="text-sm text-gray-500">${x.keterangan||''}</div>
       </div>
-      <div class="text-4xl font-bold text-${warna}-600 ml-2">${nilai}</div>
+      <div class="text-5xl font-extrabold text-${w}-600 ml-2">${n}</div>
     </div>`;
   }).join('');
 }
 
-// SCANNER FULLSCREEN
 function openScanner() {
   document.getElementById('modalScan').classList.add('active');
-  document.body.style.overflow = 'hidden';
-  
-  html5QrCode = new Html5Qrcode("qr-reader");
-  const config = {
-    fps: 15,
-    qrbox: function(w, h) { 
-      const size = Math.min(w, h) * 0.7;
-      return { width: size, height: size };
-    },
-    aspectRatio: window.innerHeight / window.innerWidth
-  };
-  
+  document.body.style.overflow='hidden';
+  html5QrCode = new Html5Qrcode("qr-reader", {verbose: false});
   html5QrCode.start(
     { facingMode: "environment" },
-    config,
+    { fps: 15, qrbox: 0, disableFlip: false }, // qrbox:0 supaya tidak ada kotak default
     onScanSuccess,
-    () => {}
-  ).catch(err => {
-    alert('Gagal buka kamera! Pastikan izin kamera diberikan.');
-    closeScanner();
-  });
+    ()=>{}
+  ).catch(err => { alert('Gagal buka kamera! Cek izin kamera.'); closeScanner(); });
 }
 
 function closeScanner() {
-  if(html5QrCode) {
-    html5QrCode.stop().catch(()=>{});
-    html5QrCode = null;
-  }
+  if(html5QrCode){ html5QrCode.stop().catch(()=>{}); html5QrCode=null; }
   document.getElementById('modalScan').classList.remove('active');
-  document.body.style.overflow = '';
+  document.body.style.overflow='';
 }
 
 async function onScanSuccess(kodeQR) {
-  if(html5QrCode) { await html5QrCode.stop().catch(()=>{}); html5QrCode = null; }
+  if(html5QrCode){ await html5QrCode.stop().catch(()=>{}); html5QrCode=null; }
   document.getElementById('modalScan').classList.remove('active');
-  document.body.style.overflow = '';
-  
-  // getar (kalau HP support)
+  document.body.style.overflow='';
   if(navigator.vibrate) navigator.vibrate(200);
   
-  showNotif('⏳', 'Memproses...', 'Mengirim data presensi', '');
+  showNotif('⏳','Memproses...','Sedang mengirim data','');
   try {
     const r = await fetch(`${API_URL}?action=scanQR&idSiswa=${siswa.id}&kodeQR=${encodeURIComponent(kodeQR)}`);
     const j = await r.json();
-    
-    if(j.status === 'success') {
-      showNotif('✅', 'BERHASIL PRESENSI!', `${j.namaSiswa}`, `📅 ${j.hari} • 🕐 ${j.jam}<br>📚 ${j.mapel}`);
-      loadPresensi();
-    } else if(j.status === 'warning') {
-      showNotif('⚠️', 'Sudah Presensi', j.message, '');
+    if(j.status==='success'){
+      showNotif('✅','BERHASIL PRESENSI!', j.namaSiswa, `📅 ${j.hari} • 🕐 ${j.jam}<br>📚 ${j.mapel}`);
+      // reload presensi cache
+      fetch(`${API_URL}?action=getPresensiSiswa&idSiswa=${siswa.id}`).then(r=>r.json()).then(p=>{cachePresensi=p.data;renderPresensi(p.data);});
+    } else if(j.status==='warning'){
+      showNotif('⚠️','Sudah Presensi', j.message, '');
     } else {
-      showNotif('❌', 'Gagal', j.message, `Kode QR: ${kodeQR}`);
+      showNotif('❌','Gagal', j.message, `Kode: ${kodeQR}`);
     }
-  } catch(e) {
-    showNotif('❌', 'Error', 'Gagal terhubung ke server', '');
-  }
+  } catch(e){ showNotif('❌','Error','Gagal koneksi server',''); }
 }
 
-function showNotif(icon, title, msg, detail) {
-  document.getElementById('notifIcon').innerText = icon;
-  document.getElementById('notifTitle').innerText = title;
-  document.getElementById('notifMsg').innerText = msg;
-  document.getElementById('notifDetail').innerHTML = detail;
-  document.getElementById('notifDetail').style.display = detail ? 'block' : 'none';
+function showNotif(icon,title,msg,detail) {
+  document.getElementById('notifIcon').innerText=icon;
+  document.getElementById('notifTitle').innerText=title;
+  document.getElementById('notifMsg').innerText=msg;
+  document.getElementById('notifDetail').innerHTML=detail;
+  document.getElementById('notifDetail').style.display=detail?'block':'none';
   document.getElementById('modalNotif').classList.remove('hidden');
 }
-
-function closeNotif() {
-  document.getElementById('modalNotif').classList.add('hidden');
-}
+function closeNotif(){ document.getElementById('modalNotif').classList.add('hidden'); }
 </script>
 </body>
 </html>
