@@ -1,148 +1,72 @@
 <!DOCTYPE html>
 <html lang="id">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>EXPERT ZEALOUS (EZ) - 2026</title>
-    <script src="https://cdn.tailwindcss.com"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
-    <style>
-        html { scroll-behavior: smooth; }
-        body { font-family: 'Poppins', sans-serif; }
-        .font-luxury { font-family: 'Playfair Display', serif; }
-        .text-gold { color: #D4AF37; }
-        .bg-gold { background: linear-gradient(45deg, #B8860B, #FFD700); }
-        .btn-red { background: linear-gradient(to right, #8B0000, #FF0000); color: white; }
-        section { scroll-margin-top: 80px; }
-    </style>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>EXPERT ZEALOUS - Portal Les</title>
+<script src="https://cdn.tailwindcss.com"></script>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+<style>
+body{font-family:'Poppins',sans-serif}.font-luxury{font-family:'Playfair Display',serif}
+.btn-red{background:linear-gradient(to right,#8B0000,#FF0000);color:white}
+</style>
 </head>
 <body class="bg-white text-gray-800">
+<nav class="p-4 flex justify-between items-center shadow-lg border-b-4 border-yellow-600 sticky top-0 bg-white z-50">
+<div class="flex items-center"><img src="images/logo-ez.png" class="h-10 mr-3" onerror="this.src='https://via.placeholder.com/40'"><span class="font-bold text-red-800 text-xl">EXPERT ZEALOUS</span></div>
+<div class="hidden md:flex space-x-4 font-bold text-sm"><a href="#portal">PORTAL</a><a href="#materi">MATERI</a><a href="#soal">SOAL</a><a href="#jadwal">JADWAL</a></div>
+</nav>
 
-    <!-- NAVBAR -->
-    <nav class="p-4 flex justify-between items-center shadow-lg border-b-4 border-yellow-600 sticky top-0 bg-white z-50">
-        <div class="flex items-center">
-            <img src="images/logo-ez.png" alt="EZ" class="h-10 mr-3"> 
-            <span class="font-bold text-red-800 text-lg md:text-xl">EXPERT ZEALOUS</span>
-        </div>
-        <div class="hidden md:flex space-x-6 font-bold text-sm">
-            <a href="#materi" class="hover:text-red-600">MATERI</a>
-            <a href="#soal" class="hover:text-red-600">SOAL LATIHAN</a>
-            <a href="#jadwal" class="hover:text-red-600">JADWAL</a>
-        </div>
-    </nav>
+<section id="portal" class="container mx-auto px-6 py-16 text-center">
+<h1 class="text-5xl font-luxury text-red-900 mb-4">Portal Belajar <span class="text-yellow-600 italic">Eksklusif</span></h1>
+<p class="text-gray-600 mb-10">Silahkan login sesuai akun Anda untuk akses jadwal, presensi & nilai</p>
+<div class="grid grid-cols-1 md:grid-cols-3 gap-6 max-w-4xl mx-auto">
+<div class="bg-red-900 text-white p-8 rounded-2xl shadow-xl hover:scale-105 transition cursor-pointer" onclick="openModalSiswa()"><div class="text-5xl mb-4">👨‍🎓</div><h3 class="font-bold text-xl">LOGIN SISWA</h3><p class="text-sm opacity-80 mt-2">Akses jadwal, nilai & absen QR</p><button class="mt-4 bg-yellow-500 text-red-900 px-6 py-2 rounded-full font-bold">MASUK</button></div>
+<div class="bg-white border-2 border-yellow-500 p-8 rounded-2xl shadow-xl hover:scale-105 transition cursor-pointer" onclick="openModalOrtu()"><div class="text-5xl mb-4">👨‍👩‍👧</div><h3 class="font-bold text-xl text-red-900">LOGIN ORANG TUA</h3><p class="text-sm text-gray-500 mt-2">Pantau presensi & nilai anak</p><button class="mt-4 bg-gray-800 text-white px-6 py-2 rounded-full font-bold">MASUK</button></div>
+<div class="bg-gradient-to-br from-yellow-400 to-yellow-600 p-8 rounded-2xl shadow-xl hover:scale-105 transition cursor-pointer" onclick="openModalScan()"><div class="text-5xl mb-4">📷</div><h3 class="font-bold text-xl text-red-900">SCAN QR KELAS</h3><p class="text-sm text-red-900 mt-2">Presensi cepat saat masuk les</p><button class="mt-4 bg-red-900 text-white px-6 py-2 rounded-full font-bold">SCAN SEKARANG</button></div>
+</div>
+</section>
 
-    <!-- HERO SECTION -->
-    <div class="container mx-auto px-6 py-16 flex flex-col md:flex-row items-center">
-        <div class="md:w-1/2 text-center md:text-left mb-10">
-            <h1 class="text-5xl font-luxury text-red-900 mb-4">Belajar Lebih <span class="text-gold italic">Eksklusif</span></h1>
-            <p class="text-gray-600 mb-8 text-lg">Akses bank soal terlengkap dan materi premium tahun 2026 langsung dari browser Anda.</p>
-            <a href="#soal" class="btn-red px-10 py-4 rounded-full font-bold shadow-xl hover:scale-105 transition inline-block">MULAI LATIHAN</a>
-        </div>
-        <div class="md:w-1/2 flex justify-center">
-            <div class="relative p-2 bg-yellow-500 rounded-2xl shadow-2xl">
-                <img src="images/belajar.jpg" alt="Siswa" class="rounded-xl w-full max-w-sm">
-            </div>
-        </div>
-    </div>
+<section id="materi" class="bg-red-900 py-16 text-white"><div class="container mx-auto px-6 text-center"><h2 class="text-3xl font-luxury mb-8 text-yellow-400">Kurikulum Merdeka</h2><div class="grid grid-cols-1 md:grid-cols-3 gap-6"><div class="bg-red-800 p-6 rounded-xl border border-yellow-600"><h3 class="font-bold">Modul Teori</h3><p class="text-sm opacity-80 mt-2">Materi PDF interaktif</p></div><div class="bg-red-800 p-6 rounded-xl border border-yellow-600"><h3 class="font-bold">Video Pembahasan</h3><p class="text-sm opacity-80 mt-2">Penjelasan visual topik sulit</p></div><div class="bg-red-800 p-6 rounded-xl border border-yellow-600"><h3 class="font-bold">Update Mingguan</h3><p class="text-sm opacity-80 mt-2">Konten update setiap Minggu</p></div></div></div></section>
 
-    <!-- MATERI SECTION -->
-    <section id="materi" class="bg-red-900 py-20 text-white">
-        <div class="container mx-auto px-6 text-center">
-            <h2 class="text-3xl font-luxury mb-10 text-yellow-400">Kurikulum Merdeka</h2>
-            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
-                <div class="bg-red-800 p-6 rounded-xl border border-yellow-600">
-                    <h3 class="font-bold text-xl mb-3">Modul Teori</h3>
-                    <p class="text-sm opacity-80">Materi PDF interaktif yang mudah dipahami oleh semua jenjang.</p>
-                </div>
-                <div class="bg-red-800 p-6 rounded-xl border border-yellow-600">
-                    <h3 class="font-bold text-xl mb-3">Video Pembahasan</h3>
-                    <p class="text-sm opacity-80">Penjelasan mendalam untuk setiap topik sulit secara visual.</p>
-                </div>
-                <div class="bg-red-800 p-6 rounded-xl border border-yellow-600">
-                    <h3 class="font-bold text-xl mb-3">Update Mingguan</h3>
-                    <p class="text-sm opacity-80">Konten materi yang selalu diperbarui setiap hari Minggu.</p>
-                </div>
-            </div>
-        </div>
-    </section>
+<section id="soal" class="container mx-auto px-6 py-16"><h2 class="text-3xl font-luxury text-red-900 mb-6 text-center">Bank Soal</h2><div class="grid grid-cols-1 md:grid-cols-3 gap-6"><div class="border p-6 rounded-2xl"><h4 class="font-bold mb-4">Latihan Soal Paket A</h4><a href="pdf/soal-a.pdf" target="_blank" class="block text-center bg-gray-800 text-white py-2 rounded-lg mb-2">Buka Soal</a><a href="pdf/soal-a.pdf" download class="block text-center border py-2 rounded-lg text-sm">Download</a></div><div class="border p-6 rounded-2xl"><h4 class="font-bold mb-4">Latihan Soal Paket B</h4><a href="pdf/soal-b.pdf" target="_blank" class="block text-center bg-gray-800 text-white py-2 rounded-lg mb-2">Buka Soal</a><a href="pdf/soal-b.pdf" download class="block text-center border py-2 rounded-lg text-sm">Download</a></div><div class="border p-6 rounded-2xl"><h4 class="font-bold mb-4">UTS 2026</h4><a href="pdf/uts-2026.pdf" target="_blank" class="block text-center bg-gray-800 text-white py-2 rounded-lg mb-2">Buka Soal</a><a href="pdf/uts-2026.pdf" download class="block text-center border py-2 rounded-lg text-sm">Download</a></div></div></section>
 
-    <!-- SOAL LATIHAN SECTION -->
-    <section id="soal" class="container mx-auto px-6 py-20">
-        <div class="text-center mb-12">
-            <h2 class="text-4xl font-luxury text-red-900 mb-2">Bank Soal & Kuis</h2>
-            <p class="text-gray-500">Pilih soal yang ingin Anda kerjakan di bawah ini</p>
-        </div>
+<div id="modalSiswa" class="hidden fixed inset-0 bg-black/60 flex items-center justify-center z-50 p-4"><div class="bg-white rounded-2xl p-8 w-full max-w-md"><h3 class="text-2xl font-bold text-red-900 mb-4">Login Siswa</h3><label class="text-sm">Pilih Nama</label><select id="selectSiswa" class="w-full border p-3 rounded-lg mt-1 mb-4"></select><label class="text-sm">Password</label><input id="passSiswa" type="password" value="1234" class="w-full border p-3 rounded-lg mt-1 mb-4"><div id="msgSiswa" class="text-sm text-red-600 mb-2"></div><button onclick="loginSiswa()" class="w-full btn-red py-3 rounded-full font-bold">MASUK</button><button onclick="closeModals()" class="w-full mt-2 py-2 text-gray-500">Batal</button></div></div>
 
-        <!-- 1. AREA FILE PDF -->
-        <h3 class="text-xl font-bold text-red-800 mb-6 border-l-4 border-yellow-500 pl-3">File PDF (Download & Baca)</h3>
-        <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-16">
-            
-            <!-- Soal 1 -->
-            <div class="bg-white border-2 border-gray-100 p-6 rounded-2xl shadow-sm hover:shadow-lg transition">
-                <div class="text-red-700 font-bold mb-1 uppercase text-xs">PDF File</div>
-                <h4 class="text-lg font-bold mb-4">Latihan Soal Paket A</h4>
-                <a href="pdf/soal-a.pdf" target="_blank" class="block text-center bg-gray-800 text-white py-2 rounded-lg mb-2 hover:bg-black transition">Buka Soal</a>
-                <a href="pdf/soal-a.pdf" download class="block text-center border border-gray-300 py-2 rounded-lg text-sm font-semibold hover:bg-gray-50">Download</a>
-            </div>
+<div id="modalOrtu" class="hidden fixed inset-0 bg-black/60 flex items-center justify-center z-50 p-4"><div class="bg-white rounded-2xl p-8 w-full max-w-md"><h3 class="text-2xl font-bold text-red-900 mb-4">Login Orang Tua</h3><label class="text-sm">Pilih Nama Ortu</label><select id="selectOrtu" class="w-full border p-3 rounded-lg mt-1 mb-4"></select><label class="text-sm">Kode Login</label><input id="kodeOrtu" type="password" value="4321" class="w-full border p-3 rounded-lg mt-1 mb-4"><div id="msgOrtu" class="text-sm text-red-600 mb-2"></div><button onclick="loginOrtu()" class="w-full bg-gray-800 text-white py-3 rounded-full font-bold">MASUK</button><button onclick="closeModals()" class="w-full mt-2 py-2 text-gray-500">Batal</button></div></div>
 
-            <!-- Soal 2 -->
-            <div class="bg-white border-2 border-gray-100 p-6 rounded-2xl shadow-sm hover:shadow-lg transition">
-                <div class="text-red-700 font-bold mb-1 uppercase text-xs">PDF File</div>
-                <h4 class="text-lg font-bold mb-4">Latihan Soal Paket B</h4>
-                <a href="pdf/soal-b.pdf" target="_blank" class="block text-center bg-gray-800 text-white py-2 rounded-lg mb-2 hover:bg-black transition">Buka Soal</a>
-                <a href="pdf/soal-b.pdf" download class="block text-center border border-gray-300 py-2 rounded-lg text-sm font-semibold hover:bg-gray-50">Download</a>
-            </div>
+<div id="modalScan" class="hidden fixed inset-0 bg-black/60 flex items-center justify-center z-50 p-4"><div class="bg-white rounded-2xl p-8 w-full max-w-md text-center"><h3 class="text-2xl font-bold text-red-900 mb-2">Scan QR Presensi</h3><p class="text-sm text-gray-500 mb-4">Login dulu sebagai siswa, lalu scan di dashboard siswa agar tercatat.</p><a href="#" onclick="openModalSiswa();closeModal('modalScan')" class="block w-full btn-red py-3 rounded-full font-bold">LOGIN SISWA DULU</a><button onclick="closeModals()" class="w-full mt-2 py-2 text-gray-500">Tutup</button></div></div>
 
-            <!-- Soal 3 -->
-            <div class="bg-white border-2 border-gray-100 p-6 rounded-2xl shadow-sm hover:shadow-lg transition">
-                <div class="text-red-700 font-bold mb-1 uppercase text-xs">PDF File</div>
-                <h4 class="text-lg font-bold mb-4">Ujian Tengah Semester</h4>
-                <a href="pdf/uts-2026.pdf" target="_blank" class="block text-center bg-gray-800 text-white py-2 rounded-lg mb-2 hover:bg-black transition">Buka Soal</a>
-                <a href="pdf/uts-2026.pdf" download class="block text-center border border-gray-300 py-2 rounded-lg text-sm font-semibold hover:bg-gray-50">Download</a>
-            </div>
-        </div>
-
-        <!-- 2. AREA LINK ONLINE (GOOGLE FORM) -->
-        <h3 class="text-xl font-bold text-red-800 mb-6 border-l-4 border-yellow-500 pl-3">Soal Online</h3>
-        <div class="bg-white p-2 rounded-2xl shadow-2xl border-2 border-yellow-500 overflow-hidden">
-            <iframe 
-                src="https://docs.google.com/forms/d/e/1FAIpQLSc8YOiG_BxKUy17yVc1LI2wW7GA9Twesu4rCV2Rh7La2bSLLQ/viewform?embedded=true" 
-                width="100%" 
-                height="700" 
-                frameborder="0" 
-                marginheight="0" 
-                marginwidth="0">
-                Memuat Google Form...
-            </iframe>
-        </div>
-    </section>
-
-    <!-- JADWAL SECTION -->
-    <section id="jadwal" class="bg-gray-50 py-20">
-        <div class="container mx-auto px-6 max-w-4xl">
-            <h2 class="text-3xl font-luxury text-red-900 mb-10 text-center">Jadwal Kelas Januari 2026</h2>
-            <div class="bg-white rounded-3xl overflow-hidden shadow-xl">
-                <table class="w-full text-left">
-                    <thead class="bg-red-900 text-white">
-                        <tr>
-                            <th class="p-4">Hari</th>
-                            <th class="p-4">Jam</th>
-                            <th class="p-4">Sesi</th>
-                        </tr>
-                    </thead>
-                    <tbody class="divide-y divide-gray-100">
-                        <tr><td class="p-4 font-bold">Jumat</td><td class="p-4">13.00 - 14.30</td><td class="p-4 italic text-gray-600">TKA Matematika</td></tr>
-                        <tr><td class="p-4 font-bold">Sabtu</td><td class="p-4">10.00 - 18.00</td><td class="p-4 italic text-gray-600">TKA Matematika</td></tr>
-                        <tr><td class="p-4 font-bold text-red-700">Minggu</td><td class="p-4">10.00 - 18.00</td><td class="p-4 font-bold text-red-800">Kuis Online & Pembahasannya</td></tr>
-                    </tbody>
-                </table>
-            </div>
-        </div>
-    </section>
-
-    <footer class="py-10 text-center text-gray-400 text-sm border-t border-gray-100">
-        &copy; 2026 EXPERT ZEALOUS (EZ). Semua Hak Cipta Dilindungi.
-    </footer>
-
+<script>
+const API_URL = "https://script.google.com/macros/s/AKfycbzsWmRDZQnf680vmXKcF7s-BxDxXdelv3K6MWG0fRfqpxYv7azBWnldN6UrjUIqdvLG/exec";
+function openModalSiswa(){document.getElementById('modalSiswa').classList.remove('hidden'); loadSiswa();}
+function openModalOrtu(){document.getElementById('modalOrtu').classList.remove('hidden'); loadOrtu();}
+function openModalScan(){document.getElementById('modalScan').classList.remove('hidden');}
+function closeModal(id){document.getElementById(id).classList.add('hidden');}
+function closeModals(){['modalSiswa','modalOrtu','modalScan'].forEach(id=>document.getElementById(id).classList.add('hidden'))}
+async function loadSiswa(){
+ const sel=document.getElementById('selectSiswa'); sel.innerHTML='<option>Loading...</option>';
+ try{ const r=await fetch(API_URL+'?action=getDaftarSiswa'); const j=await r.json(); sel.innerHTML='<option value="">-- Pilih Nama --</option>'; j.data.forEach(s=>sel.innerHTML+=`<option value="${s.nama}">${s.nama} - ${s.kelas}</option>`);}catch(e){sel.innerHTML='<option>Gagal load</option>'}
+}
+async function loadOrtu(){
+ const sel=document.getElementById('selectOrtu'); sel.innerHTML='<option>Loading...</option>';
+ try{ const r=await fetch(API_URL+'?action=getDaftarOrtu'); const j=await r.json(); sel.innerHTML='<option value="">-- Pilih Nama Ortu --</option>'; j.data.forEach(o=>sel.innerHTML+=`<option value="${o.nama}">${o.nama} - Anak: ${o.namaSiswa}</option>`);}catch(e){sel.innerHTML='<option>Gagal load</option>'}
+}
+async function loginSiswa(){
+ const nama=document.getElementById('selectSiswa').value; const pass=document.getElementById('passSiswa').value;
+ if(!nama) return document.getElementById('msgSiswa').innerText='Pilih nama dulu!';
+ document.getElementById('msgSiswa').innerText='Proses...';
+ try{ const r=await fetch(`${API_URL}?action=loginSiswa&nama=${encodeURIComponent(nama)}&password=${encodeURIComponent(pass)}`); const j=await r.json();
+ if(j.status==='success'){ localStorage.setItem('ez_siswa', JSON.stringify(j.data)); window.location='siswa.html'; } else { document.getElementById('msgSiswa').innerText=j.message; }
+ }catch(e){ document.getElementById('msgSiswa').innerText='Gagal koneksi'; }
+}
+async function loginOrtu(){
+ const nama=document.getElementById('selectOrtu').value; const kode=document.getElementById('kodeOrtu').value;
+ if(!nama) return document.getElementById('msgOrtu').innerText='Pilih nama dulu!';
+ document.getElementById('msgOrtu').innerText='Proses...';
+ try{ const r=await fetch(`${API_URL}?action=loginOrtu&nama=${encodeURIComponent(nama)}&kode=${encodeURIComponent(kode)}`); const j=await r.json();
+ if(j.status==='success'){ localStorage.setItem('ez_ortu', JSON.stringify(j.data)); window.location='orangtua.html'; } else { document.getElementById('msgOrtu').innerText=j.message; }
+ }catch(e){ document.getElementById('msgOrtu').innerText='Gagal koneksi'; }
+}
+</script>
 </body>
 </html>
