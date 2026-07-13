@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard Orang Tua - E-Presensi</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-auth-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore-compat.js"></script>
+</head>
+<body>
+    <!-- Header -->
+    <header class="app-header header-ortu">
+        <div class="header-left">
+            <i class="fas fa-users"></i>
+            <h2>Portal Orang Tua</h2>
+        </div>
+        <div class="header-right">
+            <span id="namaOrtu" class="user-name"></span>
+            <button onclick="logoutOrtu()" class="btn-logout">
+                <i class="fas fa-sign-out-alt"></i>
+            </button>
+        </div>
+    </header>
+
+    <main class="dashboard">
+        <!-- Info Anak -->
+        <div class="welcome-card card-ortu">
+            <div class="welcome-info">
+                <h2>Data Anak</h2>
+                <p><strong>Nama:</strong> <span id="namaAnak"></span></p>
+                <p><strong>NIS:</strong> <span id="nisAnak"></span></p>
+                <p><strong>Kelas:</strong> <span id="kelasAnak"></span></p>
+            </div>
+            <div class="welcome-avatar">
+                <i class="fas fa-child"></i>
+            </div>
+        </div>
+
+        <!-- Summary Cards -->
+        <div class="summary-grid">
+            <div class="summary-card">
+                <div class="summary-icon bg-green">
+                    <i class="fas fa-calendar-check"></i>
+                </div>
+                <div class="summary-info">
+                    <h4 id="totalKehadiran">0%</h4>
+                    <p>Kehadiran</p>
+                </div>
+            </div>
+            <div class="summary-card">
+                <div class="summary-icon bg-blue">
+                    <i class="fas fa-pen-fancy"></i>
+                </div>
+                <div class="summary-info">
+                    <h4 id="totalQuizDikerjakan">0</h4>
+                    <p>Quiz Dikerjakan</p>
+                </div>
+            </div>
+            <div class="summary-card">
+                <div class="summary-icon bg-purple">
+                    <i class="fas fa-star"></i>
+                </div>
+                <div class="summary-info">
+                    <h4 id="rataRataNilai">0</h4>
+                    <p>Rata-rata Nilai</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Menu -->
+        <div class="menu-grid">
+            <div class="menu-card" onclick="showOrtuSection('presensiAnak')">
+                <div class="menu-icon" style="background: linear-gradient(135deg, #667eea, #764ba2);">
+                    <i class="fas fa-calendar-check"></i>
+                </div>
+                <h3>Presensi Anak</h3>
+                <p>Riwayat kehadiran</p>
+            </div>
+            <div class="menu-card" onclick="showOrtuSection('nilaiAnak')">
+                <div class="menu-icon" style="background: linear-gradient(135deg, #f093fb, #f5576c);">
+                    <i class="fas fa-chart-line"></i>
+                </div>
+                <h3>Nilai & Kemajuan</h3>
+                <p>Hasil belajar anak</p>
+            </div>
+        </div>
+
+        <!-- Presensi Anak Section -->
+        <div id="presensiAnak" class="section hidden">
+            <div class="section-header">
+                <h3><i class="fas fa-calendar-check"></i> Riwayat Presensi Anak</h3>
+                <button onclick="hideOrtuSection('presensiAnak')" class="btn-close">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <div class="stats-row">
+                <div class="stat-box hadir">
+                    <i class="fas fa-check-circle"></i>
+                    <span id="anakHadir">0</span>
+                    <small>Hadir</small>
+                </div>
+                <div class="stat-box izin">
+                    <i class="fas fa-envelope"></i>
+                    <span id="anakIzin">0</span>
+                    <small>Izin</small>
+                </div>
+                <div class="stat-box sakit">
+                    <i class="fas fa-briefcase-medical"></i>
+                    <span id="anakSakit">0</span>
+                    <small>Sakit</small>
+                </div>
+                <div class="stat-box alpha">
+                    <i class="fas fa-times-circle"></i>
+                    <span id="anakAlpha">0</span>
+                    <small>Alpha</small>
+                </div>
+            </div>
+            <div id="listPresensiAnak" class="list-container">
+                <!-- Diisi JavaScript -->
+            </div>
+        </div>
+
+        <!-- Nilai Anak Section -->
+        <div id="nilaiAnak" class="section hidden">
+            <div class="section-header">
+                <h3><i class="fas fa-chart-line"></i> Nilai & Kemajuan Belajar</h3>
+                <button onclick="hideOrtuSection('nilaiAnak')" class="btn-close">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <div id="listNilaiAnak" class="list-container">
+                <!-- Diisi JavaScript -->
+            </div>
+            <!-- Grafik Kemajuan -->
+            <div class="chart-container">
+                <h4>📊 Grafik Kemajuan Belajar</h4>
+                <canvas id="chartKemajuan"></canvas>
+            </div>
+        </div>
+
+        <!-- Presensi Hari Ini Notification -->
+        <div class="today-status">
+            <h4>📋 
