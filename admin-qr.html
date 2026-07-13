@@ -37,9 +37,15 @@ body{font-family:'Poppins',sans-serif}
   nav { display: none !important; }
 }
 </style>
+<script>
+// ============ PROTEKSI HALAMAN ADMIN ============
+if(sessionStorage.getItem('ez_admin') !== 'true') {
+  alert('⚠️ Akses ditolak! Halaman ini hanya untuk admin.');
+  window.location = 'index.html';
+}
+</script>
 </head>
 <body class="bg-gray-100 min-h-screen">
-
 <!-- NAVBAR -->
 <nav class="no-print bg-red-900 text-white p-4 flex justify-between items-center shadow-lg sticky top-0 z-40">
   <div class="flex items-center">
