@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Admin QR Code - EZ</title>
 <script src="https://cdn.tailwindcss.com"></script>
-<script src="https://cdn.jsdelivr.net/npm/qrcode@1.5.3/build/qrcode.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
 <style>
 body{font-family:'Poppins',sans-serif}
@@ -20,6 +20,13 @@ body{font-family:'Poppins',sans-serif}
   text-align: center;
   page-break-inside: avoid;
   box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+}
+
+.qr-canvas-wrap {
+  display: flex;
+  justify-content: center;
+  padding: 10px;
+  background: white;
 }
 
 @media print {
@@ -95,9 +102,10 @@ async function loadQR() {
     
     grid.innerHTML = '';
     
-    for(const qr of j.data) {
-      if(qr.status !== 'AKTIF') continue;
+    j.data.forEach((qr, index) => {
+      if(qr.status !== 'AKTIF') return;
       
+      const cardId = 'qrbox-' + index;
       const card = document.createElement('div');
       card.className = 'qr-card';
       card.innerHTML = `
@@ -107,21 +115,24 @@ async function loadQR() {
           <div class="text-lg text-red-700 font-bold">${qr.jam}</div>
           <div class="text-xs text-gray-500 mt-1">${qr.mapel}</div>
         </div>
-        <canvas id="qr-${qr.kode}" class="mx-auto"></canvas>
+        <div id="${cardId}" class="qr-canvas-wrap"></div>
         <div class="mt-3">
           <div class="text-xs text-gray-400">Kode: ${qr.kode}</div>
         </div>
-        <button onclick="downloadQR('${qr.kode}', '${qr.hari}', '${qr.jam}')" class="no-print mt-3 bg-gray-800 text-white text-xs px-4 py-2 rounded-full">💾 Download PNG</button>
+        <button data-cardid="${cardId}" data-hari="${qr.hari}" data-jam="${qr.jam}" onclick="downloadQR(this)" class="no-print mt-3 bg-gray-800 text-white text-xs px-4 py-2 rounded-full">💾 Download PNG</button>
       `;
       grid.appendChild(card);
       
-      // Generate QR
-      await QRCode.toCanvas(
-        document.getElementById(`qr-${qr.kode}`),
-        qr.kode,
-        { width: 250, margin: 2, color: { dark: '#8B0000', light: '#FFFFFF' } }
-      );
-    }
+      // Generate QR pakai library qrcodejs
+      new QRCode(document.getElementById(cardId), {
+        text: qr.kode,
+        width: 220,
+        height: 220,
+        colorDark: "#8B0000",
+        colorLight: "#FFFFFF",
+        correctLevel: QRCode.CorrectLevel.H
+      });
+    });
     
     if(grid.children.length === 0) {
       grid.innerHTML = '<div class="col-span-full text-center py-12 text-gray-400">Tidak ada QR Code aktif</div>';
@@ -132,11 +143,25 @@ async function loadQR() {
   }
 }
 
-function downloadQR(kode, hari, jam) {
-  const canvas = document.getElementById(`qr-${kode}`);
+function downloadQR(btn) {
+  const cardId = btn.dataset.cardid;
+  const hari = btn.dataset.hari;
+  const jam = btn.dataset.jam;
+  
+  const img = document.querySelector('#' + cardId + ' img');
+  const canvas = document.querySelector('#' + cardId + ' canvas');
+  
   const link = document.createElement('a');
   link.download = `QR_EZ_${hari}_${jam.replace(/[.: ]/g,'')}.png`;
-  link.href = canvas.toDataURL('image/png');
+  
+  if(img && img.src) {
+    link.href = img.src;
+  } else if(canvas) {
+    link.href = canvas.toDataURL('image/png');
+  } else {
+    alert('QR belum siap, coba lagi'); 
+    return;
+  }
   link.click();
 }
 </script>
