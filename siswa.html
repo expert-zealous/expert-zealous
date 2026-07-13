@@ -206,26 +206,21 @@ function showTab(tab) {
 
 // ============ CEK STATUS JADWAL BERDASARKAN PRESENSI HARI INI ============
 function cekStatusJadwal(jadwal) {
-  // Ambil hari ini dalam bahasa Indonesia
   const now = new Date();
   const hariIni = HARI_LIST[now.getDay()];
   const tglIni = String(now.getDate()).padStart(2,'0') + '/' + String(now.getMonth()+1).padStart(2,'0') + '/' + now.getFullYear();
   
-  // Cek apakah jadwal ini hari ini
   const isHariIni = (jadwal.hari === hariIni);
   
-  // Cek apakah SUDAH ada presensi HARI INI dengan hari & jam yang cocok
+  // Cek apakah SUDAH ada presensi HARI INI dengan hari & jam awal yang cocok
   let sudahAbsen = false;
   cachePresensi.forEach(p => {
-    // p.timestamp format: dd/MM/yyyy HH:mm
     const tglPresensi = p.timestamp.substring(0,10);
     if(tglPresensi === tglIni && p.hari === jadwal.hari) {
-      // Cek jam juga - ambil awal jam jadwal (contoh "13.00 - 14.30" -> "13.00")
-      const jamJadwal = jadwal.jam.split('-')[0].trim().substring(0,5);
-      const jamPresensi = String(p.jam).substring(0,5);
-      // Cek toleransi 3 jam (siswa scan sebelum atau di dalam jam kelas)
-      if(jamJadwal.substring(0,2) === jamPresensi.substring(0,2) || 
-         Math.abs(parseInt(jamJadwal.replace(/[.:]/g,''))-parseInt(jamPresensi.replace(/[.:]/g,''))) < 200) {
+      // Ambil jam awal jadwal dari string "12.30 - 14.00"
+      const jamJadwal = jadwal.jam.split('-')[0].trim().replace(/[.:]/g,'');
+      // Cek keterangan presensi ada jam jadwalnya (kita catat di keterangan format "TKA Matematika (12.30 - 14.00)")
+      if(p.keterangan && p.keterangan.includes(jadwal.jam.trim())) {
         sudahAbsen = true;
       }
     }
@@ -235,7 +230,6 @@ function cekStatusJadwal(jadwal) {
   if(isHariIni) return 'kuning';
   return 'merah';
 }
-
 function renderJadwal() {
   const el = document.getElementById('listJadwal');
   const d = cacheJadwal;
@@ -337,25 +331,25 @@ async function onScanSuccess(kodeQR) {
     const j = await r.json();
     if(j.status==='success'){
       showNotif('✅','BERHASIL!', j.namaSiswa, `📅 ${j.hari} • 🕐 ${j.jam}<br>📚 ${j.mapel}`);
-      // Refresh data presensi & re-render jadwal (biar warna berubah jadi hijau)
       loadAll();
     } else if(j.status==='warning'){ 
       showNotif('⚠️','Sudah Presensi', j.message, ''); 
     } else { 
-      showNotif('❌','Gagal', j.message, `Kode: ${kodeQR}`); 
+      // Tampilkan pesan error dengan line breaks
+      const pesan = j.message.replace(/\n/g, '<br>');
+      showNotif('❌','QR Ditolak', '', pesan); 
     }
   } catch(e){ showNotif('❌','Error','Gagal koneksi',''); }
 }
-
 function showNotif(icon,title,msg,detail) {
   document.getElementById('notifIcon').innerText=icon;
   document.getElementById('notifTitle').innerText=title;
-  document.getElementById('notifMsg').innerText=msg;
+  document.getElementById('notifMsg').innerHTML=msg; // ganti innerText → innerHTML supaya bisa <br>
   document.getElementById('notifDetail').innerHTML=detail;
   document.getElementById('notifDetail').style.display=detail?'block':'none';
   document.getElementById('modalNotif').classList.remove('hidden');
 }
-function closeNotif(){ document.getElementById('modalNotif').classList.add('hidden'); }
+  function closeNotif(){ document.getElementById('modalNotif').classList.add('hidden'); }
 </script>
 </body>
 </html>
