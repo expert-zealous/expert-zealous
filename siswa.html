@@ -1,295 +1,270 @@
 <!DOCTYPE html>
 <html lang="id">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Dashboard Siswa - E-Presensi</title>
-    <link rel="stylesheet" href="css/style.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-auth-compat.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore-compat.js"></script>
-    <!-- QR Scanner Library -->
-    <script src="https://unpkg.com/html5-qrcode@2.3.8/html5-qrcode.min.js"></script>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Dashboard Siswa - EZ</title>
+<script src="https://cdn.tailwindcss.com"></script>
+<script src="https://unpkg.com/html5-qrcode@2.3.8/html5-qrcode.min.js"></script>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+<style>
+body{font-family:'Poppins',sans-serif}
+.font-luxury{font-family:'Playfair Display',serif}
+.btn-red{background:linear-gradient(to right,#8B0000,#FF0000);color:white}
+.tab-active{background:#8B0000;color:white}
+#qr-reader{border-radius:12px;overflow:hidden}
+</style>
 </head>
-<body>
-    <!-- Header -->
-    <header class="app-header">
-        <div class="header-left">
-            <i class="fas fa-graduation-cap"></i>
-            <h2>E-Presensi</h2>
-        </div>
-        <div class="header-right">
-            <span id="namaUser" class="user-name"></span>
-            <button onclick="logout()" class="btn-logout">
-                <i class="fas fa-sign-out-alt"></i>
-            </button>
-        </div>
-    </header>
+<body class="bg-gray-50 min-h-screen">
 
-    <!-- Main Content -->
-    <main class="dashboard">
-        <!-- Welcome Card -->
-        <div class="welcome-card">
-            <div class="welcome-info">
-                <h2>Selamat Datang, <span id="welcomeName"></span>! 👋</h2>
-                <p>Kelas: <span id="kelasUser"></span></p>
-                <p id="tanggalHari"></p>
-            </div>
-            <div class="welcome-avatar">
-                <i class="fas fa-user-circle"></i>
-            </div>
-        </div>
-
-        <!-- Menu Grid -->
-        <div class="menu-grid">
-            <!-- Scan QR Presensi -->
-            <div class="menu-card scan-card" onclick="openScanner()">
-                <div class="menu-icon" style="background: linear-gradient(135deg, #667eea, #764ba2);">
-                    <i class="fas fa-qrcode"></i>
-                </div>
-                <h3>Scan Presensi</h3>
-                <p>Scan QR Code kelas</p>
-            </div>
-
-            <!-- Riwayat Presensi -->
-            <div class="menu-card" onclick="showSection('riwayatPresensi')">
-                <div class="menu-icon" style="background: linear-gradient(135deg, #f093fb, #f5576c);">
-                    <i class="fas fa-calendar-check"></i>
-                </div>
-                <h3>Riwayat Presensi</h3>
-                <p>Lihat kehadiran</p>
-            </div>
-
-            <!-- Quiz -->
-            <div class="menu-card" onclick="showSection('quizSection')">
-                <div class="menu-icon" style="background: linear-gradient(135deg, #4facfe, #00f2fe);">
-                    <i class="fas fa-pen-fancy"></i>
-                </div>
-                <h3>Kerjakan Quiz</h3>
-                <p>Quiz tersedia</p>
-            </div>
-
-            <!-- Nilai -->
-            <div class="menu-card" onclick="showSection('nilaiSection')">
-                <div class="menu-icon" style="background: linear-gradient(135deg, #43e97b, #38f9d7);">
-                    <i class="fas fa-chart-bar"></i>
-                </div>
-                <h3>Nilai Quiz</h3>
-                <p>Lihat hasil quiz</p>
-            </div>
-        </div>
-
-        <!-- QR Scanner Section -->
-        <div id="scannerSection" class="section hidden">
-            <div class="section-header">
-                <h3><i class="fas fa-qrcode"></i> Scan QR Presensi</h3>
-                <button onclick="closeScanner()" class="btn-close">
-                    <i class="fas fa-times"></i>
-                </button>
-            </div>
-            <div class="scanner-container">
-                <div id="qr-reader" class="qr-reader"></div>
-                <p class="scanner-info">Arahkan kamera ke QR Code kelas</p>
-            </div>
-        </div>
-
-        <!-- Riwayat Presensi Section -->
-        <div id="riwayatPresensi" class="section hidden">
-            <div class="section-header">
-                <h3><i class="fas fa-calendar-check"></i> Riwayat Presensi</h3>
-                <button onclick="hideSection('riwayatPresensi')" class="btn-close">
-                    <i class="fas fa-times"></i>
-                </button>
-            </div>
-            <div class="filter-bar">
-                <select id="filterBulan" onchange="filterPresensi()">
-                    <option value="">Semua Bulan</option>
-                    <option value="01">Januari</option>
-                    <option value="02">Februari</option>
-                    <option value="03">Maret</option>
-                    <option value="04">April</option>
-                    <option value="05">Mei</option>
-                    <option value="06">Juni</option>
-                    <option value="07">Juli</option>
-                    <option value="08">Agustus</option>
-                    <option value="09">September</option>
-                    <option value="10">Oktober</option>
-                    <option value="11">November</option>
-                    <option value="12">Desember</option>
-                </select>
-            </div>
-            <!-- Statistik Presensi -->
-            <div class="stats-row">
-                <div class="stat-box hadir">
-                    <i class="fas fa-check-circle"></i>
-                    <span id="totalHadir">0</span>
-                    <small>Hadir</small>
-                </div>
-                <div class="stat-box izin">
-                    <i class="fas fa-envelope"></i>
-                    <span id="totalIzin">0</span>
-                    <small>Izin</small>
-                </div>
-                <div class="stat-box sakit">
-                    <i class="fas fa-briefcase-medical"></i>
-                    <span id="totalSakit">0</span>
-                    <small>Sakit</small>
-                </div>
-                <div class="stat-box alpha">
-                    <i class="fas fa-times-circle"></i>
-                    <span id="totalAlpha">0</span>
-                    <small>Alpha</small>
-                </div>
-            </div>
-            <div id="listPresensi" class="list-container">
-                <!-- Diisi JavaScript -->
-            </div>
-        </div>
-
-        <!-- Quiz Section -->
-        <div id="quizSection" class="section hidden">
-            <div class="section-header">
-                <h3><i class="fas fa-pen-fancy"></i> Quiz Tersedia</h3>
-                <button onclick="hideSection('quizSection')" class="btn-close">
-                    <i class="fas fa-times"></i>
-                </button>
-            </div>
-            <div id="listQuiz" class="list-container">
-                <!-- Diisi JavaScript -->
-            </div>
-        </div>
-
-        <!-- Quiz Play Section -->
-        <div id="quizPlaySection" class="section hidden">
-            <div class="section-header">
-                <h3 id="quizTitle"><i class="fas fa-pen-fancy"></i> Quiz</h3>
-                <button onclick="hideSection('quizPlaySection')" class="btn-close">
-                    <i class="fas fa-times"></i>
-                </button>
-            </div>
-            <div class="quiz-progress">
-                <div class="progress-bar">
-                    <div id="progressFill" class="progress-fill"></div>
-                </div>
-                <span id="progressText">Soal 1/10</span>
-            </div>
-            <div id="quizContent" class="quiz-content">
-                <!-- Diisi JavaScript -->
-            </div>
-            <div class="quiz-nav">
-                <button id="btnPrev" onclick="prevQuestion()" class="btn-quiz" disabled>
-                    <i class="fas fa-arrow-left"></i> Sebelumnya
-                </button>
-                <button id="btnNext" onclick="nextQuestion()" class="btn-quiz">
-                    Selanjutnya <i class="fas fa-arrow-right"></i>
-                </button>
-                <button id="btnSubmit" onclick="submitQuiz()" class="btn-quiz btn-submit hidden">
-                    <i class="fas fa-paper-plane"></i> Kirim Jawaban
-                </button>
-            </div>
-        </div>
-
-        <!-- Nilai Section -->
-        <div id="nilaiSection" class="section hidden">
-            <div class="section-header">
-                <h3><i class="fas fa-chart-bar"></i> Nilai Quiz</h3>
-                <button onclick="hideSection('nilaiSection')" class="btn-close">
-                    <i class="fas fa-times"></i>
-                </button>
-            </div>
-            <div id="listNilai" class="list-container">
-                <!-- Diisi JavaScript -->
-            </div>
-        </div>
-    </main>
-
-    <!-- Success Modal Presensi -->
-    <div id="modalPresensi" class="modal hidden">
-        <div class="modal-content success-modal">
-            <div class="success-animation">
-                <div class="checkmark-circle">
-                    <i class="fas fa-check"></i>
-                </div>
-            </div>
-            <h2>Presensi Berhasil! ✅</h2>
-            <p id="presensiMessage"></p>
-            <div class="presensi-detail">
-                <div class="detail-item">
-                    <i class="fas fa-user"></i>
-                    <span id="presensiNama"></span>
-                </div>
-                <div class="detail-item">
-                    <i class="fas fa-school"></i>
-                    <span id="presensiKelas"></span>
-                </div>
-                <div class="detail-item">
-                    <i class="fas fa-book"></i>
-                    <span id="presensiMapel"></span>
-                </div>
-                <div class="detail-item">
-                    <i class="fas fa-clock"></i>
-                    <span id="presensiWaktu"></span>
-                </div>
-            </div>
-            <button onclick="closeModal('modalPresensi')" class="btn-login">
-                <i class="fas fa-thumbs-up"></i> OK, Terima Kasih!
-            </button>
-        </div>
+<!-- NAVBAR -->
+<nav class="bg-red-900 text-white p-4 flex justify-between items-center shadow-lg sticky top-0 z-40">
+  <div class="flex items-center">
+    <img src="images/logo-ez.png" class="h-10 mr-3 bg-white rounded p-1" onerror="this.style.display='none'">
+    <div>
+      <div class="font-bold text-lg">DASHBOARD SISWA</div>
+      <div class="text-xs opacity-80" id="navNama">Loading...</div>
     </div>
+  </div>
+  <button onclick="logout()" class="bg-yellow-500 text-red-900 px-4 py-2 rounded-full font-bold text-sm">LOGOUT</button>
+</nav>
 
-    <!-- Quiz Result Modal -->
-    <div id="modalQuizResult" class="modal hidden">
-        <div class="modal-content">
-            <div class="result-animation">
-                <div id="resultIcon" class="result-icon">
-                    <i class="fas fa-trophy"></i>
-                </div>
-            </div>
-            <h2 id="resultTitle">Hasil Quiz</h2>
-            <div class="result-score">
-                <span id="resultScore">0</span>
-                <small>/100</small>
-            </div>
-            <p id="resultMessage"></p>
-            <div class="result-detail">
-                <div class="detail-item">
-                    <span>Benar:</span>
-                    <span id="resultBenar">0</span>
-                </div>
-                <div class="detail-item">
-                    <span>Salah:</span>
-                    <span id="resultSalah">0</span>
-                </div>
-            </div>
-            <button onclick="closeModal('modalQuizResult')" class="btn-login">
-                <i class="fas fa-check"></i> Selesai
-            </button>
-        </div>
+<!-- PROFIL CARD -->
+<div class="container mx-auto px-4 py-6">
+  <div class="bg-gradient-to-r from-red-900 to-red-700 text-white p-6 rounded-2xl shadow-xl">
+    <div class="flex items-center">
+      <div class="text-5xl mr-4">👨‍🎓</div>
+      <div>
+        <div class="text-sm opacity-80">Selamat datang,</div>
+        <div class="font-bold text-2xl" id="profilNama">-</div>
+        <div class="text-sm mt-1" id="profilKelas">-</div>
+      </div>
     </div>
+  </div>
+</div>
 
-    <!-- Bottom Navigation -->
-    <nav class="bottom-nav">
-        <button class="nav-item active" onclick="goHome()">
-            <i class="fas fa-home"></i>
-            <span>Beranda</span>
-        </button>
-        <button class="nav-item" onclick="openScanner()">
-            <i class="fas fa-qrcode"></i>
-            <span>Scan QR</span>
-        </button>
-        <button class="nav-item" onclick="showSection('quizSection')">
-            <i class="fas fa-pen-fancy"></i>
-            <span>Quiz</span>
-        </button>
-        <button class="nav-item" onclick="showSection('nilaiSection')">
-            <i class="fas fa-chart-bar"></i>
-            <span>Nilai</span>
-        </button>
-    </nav>
+<!-- TOMBOL SCAN QR -->
+<div class="container mx-auto px-4 mb-4">
+  <button onclick="openScanner()" class="w-full bg-gradient-to-r from-yellow-400 to-yellow-600 text-red-900 py-4 rounded-2xl shadow-lg font-bold text-lg flex items-center justify-center">
+    <span class="text-3xl mr-3">📷</span> SCAN QR PRESENSI KELAS
+  </button>
+</div>
 
-    <script src="js/app.js"></script>
-    <script src="js/presensi.js"></script>
-    <script src="js/quiz.js"></script>
+<!-- TABS -->
+<div class="container mx-auto px-4">
+  <div class="flex bg-white rounded-2xl shadow-md overflow-hidden mb-4">
+    <button onclick="showTab('jadwal')" id="tabJadwal" class="tab-active flex-1 py-3 font-bold text-sm">📅 JADWAL</button>
+    <button onclick="showTab('presensi')" id="tabPresensi" class="flex-1 py-3 font-bold text-sm text-gray-600">✅ PRESENSI</button>
+    <button onclick="showTab('nilai')" id="tabNilai" class="flex-1 py-3 font-bold text-sm text-gray-600">📊 NILAI</button>
+  </div>
+
+  <!-- TAB JADWAL -->
+  <div id="contentJadwal" class="bg-white rounded-2xl shadow-md p-4">
+    <h3 class="font-bold text-red-900 mb-3 border-l-4 border-yellow-500 pl-3">Jadwal Les Saya</h3>
+    <div id="listJadwal" class="space-y-3"><p class="text-gray-400 text-center py-8">Loading...</p></div>
+  </div>
+
+  <!-- TAB PRESENSI -->
+  <div id="contentPresensi" class="hidden bg-white rounded-2xl shadow-md p-4">
+    <h3 class="font-bold text-red-900 mb-3 border-l-4 border-yellow-500 pl-3">Riwayat Presensi</h3>
+    <div id="listPresensi" class="space-y-2"><p class="text-gray-400 text-center py-8">Loading...</p></div>
+  </div>
+
+  <!-- TAB NILAI -->
+  <div id="contentNilai" class="hidden bg-white rounded-2xl shadow-md p-4">
+    <h3 class="font-bold text-red-900 mb-3 border-l-4 border-yellow-500 pl-3">Nilai Quiz Saya</h3>
+    <div id="listNilai" class="space-y-2"><p class="text-gray-400 text-center py-8">Loading...</p></div>
+  </div>
+</div>
+
+<div class="h-20"></div>
+
+<!-- MODAL SCAN QR -->
+<div id="modalScan" class="hidden fixed inset-0 bg-black/80 z-50 flex items-center justify-center p-4">
+  <div class="bg-white rounded-2xl p-6 w-full max-w-md">
+    <div class="flex justify-between items-center mb-4">
+      <h3 class="font-bold text-lg text-red-900">📷 Scan QR Kelas</h3>
+      <button onclick="closeScanner()" class="text-2xl">&times;</button>
+    </div>
+    <div id="qr-reader" style="width:100%"></div>
+    <div id="scanResult" class="mt-4"></div>
+    <button onclick="closeScanner()" class="w-full mt-3 py-2 bg-gray-200 rounded-lg">Tutup</button>
+  </div>
+</div>
+
+<!-- MODAL NOTIFIKASI -->
+<div id="modalNotif" class="hidden fixed inset-0 bg-black/70 z-[60] flex items-center justify-center p-4">
+  <div class="bg-white rounded-2xl p-8 w-full max-w-md text-center">
+    <div id="notifIcon" class="text-6xl mb-3">✅</div>
+    <div id="notifTitle" class="font-bold text-2xl text-red-900 mb-2">Berhasil!</div>
+    <div id="notifMsg" class="text-gray-600 mb-4">-</div>
+    <div id="notifDetail" class="bg-gray-50 p-3 rounded-lg text-sm mb-4"></div>
+    <button onclick="closeNotif()" class="w-full btn-red py-3 rounded-full font-bold">OK</button>
+  </div>
+</div>
+
+<script>
+const API_URL = "https://script.google.com/macros/s/AKfycbzsWmRDZQnf680vmXKcF7s-BxDxXdelv3K6MWG0fRfqpxYv7azBWnldN6UrjUIqdvLG/exec";
+let siswa = null;
+let html5QrCode = null;
+
+// CEK LOGIN
+window.onload = function() {
+  const data = localStorage.getItem('ez_siswa');
+  if(!data) { alert('Silakan login dulu!'); window.location='index.html'; return; }
+  siswa = JSON.parse(data);
+  document.getElementById('navNama').innerText = siswa.nama;
+  document.getElementById('profilNama').innerText = siswa.nama;
+  document.getElementById('profilKelas').innerText = siswa.kelas + ' • ID: ' + siswa.id;
+  loadJadwal();
+};
+
+function logout() {
+  if(confirm('Yakin mau logout?')) {
+    localStorage.removeItem('ez_siswa');
+    window.location = 'index.html';
+  }
+}
+
+// TABS
+function showTab(tab) {
+  ['jadwal','presensi','nilai'].forEach(t => {
+    document.getElementById('content'+t.charAt(0).toUpperCase()+t.slice(1)).classList.add('hidden');
+    document.getElementById('tab'+t.charAt(0).toUpperCase()+t.slice(1)).classList.remove('tab-active');
+    document.getElementById('tab'+t.charAt(0).toUpperCase()+t.slice(1)).classList.add('text-gray-600');
+  });
+  document.getElementById('content'+tab.charAt(0).toUpperCase()+tab.slice(1)).classList.remove('hidden');
+  document.getElementById('tab'+tab.charAt(0).toUpperCase()+tab.slice(1)).classList.add('tab-active');
+  document.getElementById('tab'+tab.charAt(0).toUpperCase()+tab.slice(1)).classList.remove('text-gray-600');
+  
+  if(tab==='presensi') loadPresensi();
+  if(tab==='nilai') loadNilai();
+}
+
+// LOAD JADWAL
+async function loadJadwal() {
+  const el = document.getElementById('listJadwal');
+  try {
+    const r = await fetch(`${API_URL}?action=getJadwalSiswa&idSiswa=${siswa.id}`);
+    const j = await r.json();
+    if(j.data.length === 0) { el.innerHTML = '<p class="text-gray-400 text-center py-8">Belum ada jadwal untuk Anda</p>'; return; }
+    el.innerHTML = j.data.map(x => `
+      <div class="border-l-4 border-red-700 bg-red-50 p-3 rounded-r-lg">
+        <div class="font-bold text-red-900">${x.hari} • ${x.jam}</div>
+        <div class="text-sm text-gray-700">${x.sesi}</div>
+        <div class="text-xs text-gray-500 mt-1">📍 ${x.kelompok}</div>
+      </div>
+    `).join('');
+  } catch(e) { el.innerHTML = '<p class="text-red-500 text-center">Gagal load jadwal</p>'; }
+}
+
+// LOAD PRESENSI
+async function loadPresensi() {
+  const el = document.getElementById('listPresensi');
+  el.innerHTML = '<p class="text-gray-400 text-center py-8">Loading...</p>';
+  try {
+    const r = await fetch(`${API_URL}?action=getPresensiSiswa&idSiswa=${siswa.id}`);
+    const j = await r.json();
+    if(j.data.length === 0) { el.innerHTML = '<p class="text-gray-400 text-center py-8">Belum ada riwayat presensi</p>'; return; }
+    el.innerHTML = j.data.map(x => `
+      <div class="flex items-center bg-green-50 p-3 rounded-lg border-l-4 border-green-500">
+        <div class="text-2xl mr-3">✅</div>
+        <div class="flex-1">
+          <div class="font-bold text-sm">${x.keterangan || 'Kelas'}</div>
+          <div class="text-xs text-gray-600">${x.timestamp}</div>
+          <div class="text-xs text-gray-500">${x.hari} • ${x.jam}</div>
+        </div>
+        <div class="text-xs bg-green-600 text-white px-2 py-1 rounded">${x.status}</div>
+      </div>
+    `).join('');
+  } catch(e) { el.innerHTML = '<p class="text-red-500 text-center">Gagal load presensi</p>'; }
+}
+
+// LOAD NILAI
+async function loadNilai() {
+  const el = document.getElementById('listNilai');
+  el.innerHTML = '<p class="text-gray-400 text-center py-8">Loading...</p>';
+  try {
+    const r = await fetch(`${API_URL}?action=getNilaiSiswa&idSiswa=${siswa.id}`);
+    const j = await r.json();
+    if(j.data.length === 0) { el.innerHTML = '<p class="text-gray-400 text-center py-8">Belum ada nilai</p>'; return; }
+    el.innerHTML = j.data.map(x => {
+      const nilai = parseInt(x.nilai100) || 0;
+      const warna = nilai >= 80 ? 'green' : nilai >= 60 ? 'yellow' : 'red';
+      return `
+      <div class="flex items-center bg-${warna}-50 p-3 rounded-lg border-l-4 border-${warna}-500">
+        <div class="flex-1">
+          <div class="font-bold">${x.judulSoal}</div>
+          <div class="text-xs text-gray-500">${x.jenisQuiz} • ${x.keterangan||''}</div>
+        </div>
+        <div class="text-3xl font-bold text-${warna}-600">${nilai}</div>
+      </div>`;
+    }).join('');
+  } catch(e) { el.innerHTML = '<p class="text-red-500 text-center">Gagal load nilai</p>'; }
+}
+
+// SCAN QR
+function openScanner() {
+  document.getElementById('modalScan').classList.remove('hidden');
+  document.getElementById('scanResult').innerHTML = '<p class="text-center text-sm text-gray-500">Arahkan kamera ke QR Code kelas</p>';
+  
+  html5QrCode = new Html5Qrcode("qr-reader");
+  html5QrCode.start(
+    { facingMode: "environment" },
+    { fps: 10, qrbox: { width: 250, height: 250 } },
+    onScanSuccess,
+    onScanError
+  ).catch(err => {
+    document.getElementById('scanResult').innerHTML = '<p class="text-red-500 text-sm text-center">Gagal buka kamera. Pastikan izin kamera diberikan!</p>';
+  });
+}
+
+function closeScanner() {
+  if(html5QrCode) {
+    html5QrCode.stop().catch(()=>{});
+    html5QrCode = null;
+  }
+  document.getElementById('modalScan').classList.add('hidden');
+}
+
+function onScanError(err) { /* diam saja */ }
+
+async function onScanSuccess(kodeQR) {
+  // Stop scanner supaya tidak scan ulang
+  if(html5QrCode) { await html5QrCode.stop().catch(()=>{}); html5QrCode = null; }
+  document.getElementById('modalScan').classList.add('hidden');
+  
+  // Kirim ke API
+  showNotif('⏳', 'Memproses...', 'Mengirim data presensi', '');
+  try {
+    const r = await fetch(`${API_URL}?action=scanQR&idSiswa=${siswa.id}&kodeQR=${encodeURIComponent(kodeQR)}`);
+    const j = await r.json();
+    
+    if(j.status === 'success') {
+      showNotif('✅', 'BERHASIL PRESENSI!', `${j.namaSiswa} berhasil presensi`, `📅 ${j.hari} • 🕐 ${j.jam}<br>📚 ${j.mapel}`);
+    } else if(j.status === 'warning') {
+      showNotif('⚠️', 'Sudah Presensi', j.message, '');
+    } else {
+      showNotif('❌', 'Gagal', j.message, `Kode QR: ${kodeQR}`);
+    }
+  } catch(e) {
+    showNotif('❌', 'Error', 'Gagal terhubung ke server', '');
+  }
+}
+
+function showNotif(icon, title, msg, detail) {
+  document.getElementById('notifIcon').innerText = icon;
+  document.getElementById('notifTitle').innerText = title;
+  document.getElementById('notifMsg').innerText = msg;
+  document.getElementById('notifDetail').innerHTML = detail;
+  document.getElementById('notifDetail').style.display = detail ? 'block' : 'none';
+  document.getElementById('modalNotif').classList.remove('hidden');
+}
+
+function closeNotif() {
+  document.getElementById('modalNotif').classList.add('hidden');
+  loadPresensi(); // refresh presensi
+}
+</script>
 </body>
 </html>
