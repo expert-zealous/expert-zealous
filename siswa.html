@@ -209,7 +209,7 @@ body{margin:0;padding:0;font-family:'Poppins',sans-serif;-webkit-font-smoothing:
 <div class="px-3 mt-3">
   <div class="flex bg-white rounded-2xl shadow overflow-hidden mb-3">
     <button onclick="showTab('jadwal')" id="tabJadwal" class="tab-active flex-1 py-5 font-black txt-big">📅 JADWAL</button>
-    <button onclick="showTab('presensi')" id="tabPresensi" class="flex-1 py-5 font-black txt-big text-gray-600">✅ ABSEN</button>
+    <button onclick="showTab('presensi')" id="tabPresensi" class="flex-1 py-5 font-black txt-big text-gray-600">✅ KEHADIRAN</button>
     <button onclick="showTab('nilai')" id="tabNilai" class="flex-1 py-5 font-black txt-big text-gray-600">📊 NILAI</button>
   </div>
 
@@ -217,9 +217,9 @@ body{margin:0;padding:0;font-family:'Poppins',sans-serif;-webkit-font-smoothing:
     <h3 class="txt-huge text-red-900 mb-3 border-l-4 border-yellow-500 pl-3">Jadwal Les Saya</h3>
     <!-- LEGENDA WARNA -->
     <div class="flex flex-wrap gap-2 mb-4 text-xs">
-      <span class="badge badge-hijau" style="font-size:0.85rem;padding:4px 10px">✓ Sudah Absen</span>
+      <span class="badge badge-hijau" style="font-size:0.85rem;padding:4px 10px">✓ Sudah Presensi</span>
       <span class="badge badge-kuning" style="font-size:0.85rem;padding:4px 10px">⏰ Hari Ini</span>
-      <span class="badge badge-merah" style="font-size:0.85rem;padding:4px 10px">○ Belum</span>
+      <span class="badge badge-merah" style="font-size:0.85rem;padding:4px 10px">○ Belum Presensi</span>
     </div>
     <div id="listJadwal" class="space-y-3">
       <div class="skeleton h-24"></div><div class="skeleton h-24"></div>
@@ -355,7 +355,7 @@ function renderJadwal() {
       bgClass = 'bg-green-50';
       borderClass = 'border-green-600';
       textColor = 'text-green-900';
-      badge = '<span class="badge badge-hijau">✓ SUDAH ABSEN</span>';
+      badge = '<span class="badge badge-hijau">✓ SUDAH PRESENSI</span>';
     } else if(status === 'kuning') {
       bgClass = 'bg-yellow-50';
       borderClass = 'border-yellow-500';
@@ -365,7 +365,7 @@ function renderJadwal() {
       bgClass = 'bg-red-50';
       borderClass = 'border-red-700';
       textColor = 'text-red-900';
-      badge = '<span class="badge badge-merah">○ Belum Absen</span>';
+      badge = '<span class="badge badge-merah">○ Belum Presensi</span>';
     }
     
     return `
