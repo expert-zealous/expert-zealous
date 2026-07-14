@@ -56,6 +56,113 @@ body{margin:0;padding:0;font-family:'Poppins',sans-serif;-webkit-font-smoothing:
 .badge-kuning{background:#eab308;color:#78350f;animation:blink 2s infinite}
 .badge-merah{background:#dc2626;color:white}
 @keyframes blink{50%{opacity:0.6}}
+  /* ==================================================
+   UKURAN DASHBOARD KHUSUS MODE NORMAL HP
+================================================== */
+@media screen and (max-width: 600px) {
+  html {
+    font-size: 14px !important;
+  }
+
+  body {
+    font-size: 1rem !important;
+  }
+
+  nav {
+    padding: 10px 12px !important;
+  }
+
+  nav img {
+    height: 42px !important;
+  }
+
+  .txt-jumbo {
+    font-size: 2rem !important;
+    line-height: 1.12 !important;
+  }
+
+  .txt-huge {
+    font-size: 1.55rem !important;
+    line-height: 1.2 !important;
+  }
+
+  .txt-big {
+    font-size: 1.2rem !important;
+    line-height: 1.35 !important;
+  }
+
+  .txt-med {
+    font-size: 1rem !important;
+    line-height: 1.4 !important;
+  }
+
+  .txt-sml {
+    font-size: 0.9rem !important;
+  }
+
+  /* Tab tetap mudah disentuh tetapi tidak terlalu besar */
+  #tabJadwal,
+  #tabPresensi,
+  #tabNilai {
+    padding: 14px 4px !important;
+    font-size: 1.05rem !important;
+  }
+
+  /* Kartu jadwal dan presensi lebih proporsional */
+  #contentJadwal,
+  #contentPresensi,
+  #contentNilai {
+    padding: 14px !important;
+  }
+
+  /* Scanner tetap besar, tidak mengikuti pengecilan halaman */
+  .scan-frame {
+    width: 90vw !important;
+    height: 90vw !important;
+    max-width: 500px !important;
+    max-height: 500px !important;
+  }
+
+  .scan-header {
+    padding: 16px 16px 45px !important;
+  }
+
+  .scan-footer {
+    padding: 40px 16px 24px !important;
+  }
+
+  .scan-header .font-black {
+    font-size: 1.55rem !important;
+  }
+
+  .scan-footer .txt-big {
+    font-size: 1.1rem !important;
+  }
+
+  /* Notifikasi hasil scan tetap jelas */
+  #notifTitle {
+    font-size: 1.8rem !important;
+  }
+
+  #notifMsg {
+    font-size: 1.25rem !important;
+  }
+
+  #notifDetail {
+    font-size: 1.05rem !important;
+  }
+}
+
+@media screen and (max-width: 360px) {
+  html {
+    font-size: 13px !important;
+  }
+
+  .scan-frame {
+    width: 92vw !important;
+    height: 92vw !important;
+  }
+}
 </style>
 </head>
 <body class="bg-gray-50 min-h-screen">
