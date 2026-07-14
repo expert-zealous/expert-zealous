@@ -349,7 +349,7 @@ button{font-size:1.2rem}
   <div class="bg-white rounded-t-3xl p-6 w-full">
     <div class="w-16 h-2 bg-gray-300 rounded-full mx-auto mb-5"></div>
     <h3 class="txt-jumbo text-red-900 mb-5">👨‍👩‍👧 Login Ortu</h3>
-    <label class="txt-big text-gray-700 block mb-2">Nama Ortu</label>
+    <label class="txt-big text-gray-700 block mb-2">Pilih Nama Anak</label>
     <select id="selectOrtu" class="w-full border-2 border-gray-300 p-5 rounded-2xl mb-4"></select>
     <label class="txt-big text-gray-700 block mb-2">Kode Login</label>
     <input id="kodeOrtu" type="password" value="4321" class="w-full border-2 border-gray-300 p-5 rounded-2xl mb-3">
@@ -472,7 +472,12 @@ function loadOrtu(){
   if(cacheOrtu){renderOrtu(sel,cacheOrtu);}
   else{sel.innerHTML='<option>Loading...</option>';fetch(API_URL+'?action=getDaftarOrtu').then(r=>r.json()).then(j=>{cacheOrtu=j.data;renderOrtu(sel,j.data);});}
 }
-function renderOrtu(sel,d){sel.innerHTML='<option value="">-- Pilih Nama Ortu --</option>';d.forEach(o=>sel.innerHTML+=`<option value="${o.nama}">${o.nama}</option>`);}
+function renderOrtu(sel,d){
+  sel.innerHTML='<option value="">-- Pilih Nama Anak Anda --</option>';
+  d.forEach(o => {
+    sel.innerHTML += `<option value="${o.idSiswa}">${o.namaSiswa} — Ortu: ${o.nama}</option>`;
+  });
+}
 
 async function loginSiswa(){
   const nama=document.getElementById('selectSiswa').value; const pass=document.getElementById('passSiswa').value;
@@ -486,15 +491,25 @@ async function loginSiswa(){
   }catch(e){document.getElementById('msgSiswa').innerText='Gagal koneksi';btn.innerHTML='MASUK';btn.disabled=false;}
 }
 async function loginOrtu(){
-  const nama=document.getElementById('selectOrtu').value; const kode=document.getElementById('kodeOrtu').value;
-  if(!nama) return document.getElementById('msgOrtu').innerText='Pilih nama dulu!';
-  const btn=document.getElementById('btnLoginOrtu'); btn.innerHTML='<span class="spinner"></span> Proses...'; btn.disabled=true;
+  const idSiswa = document.getElementById('selectOrtu').value;
+  const kode = document.getElementById('kodeOrtu').value;
+  if(!idSiswa) return document.getElementById('msgOrtu').innerText='Pilih nama anak dulu!';
+  const btn = document.getElementById('btnLoginOrtu');
+  btn.innerHTML='<span class="spinner"></span> Proses...'; btn.disabled=true;
   try{
-    const r=await fetch(`${API_URL}?action=loginOrtu&nama=${encodeURIComponent(nama)}&kode=${encodeURIComponent(kode)}`);
-    const j=await r.json();
-    if(j.status==='success'){localStorage.setItem('ez_ortu',JSON.stringify(j.data));window.location='orangtua.html';}
-    else{document.getElementById('msgOrtu').innerText=j.message;btn.innerHTML='MASUK';btn.disabled=false;}
-  }catch(e){document.getElementById('msgOrtu').innerText='Gagal koneksi';btn.innerHTML='MASUK';btn.disabled=false;}
+    const r = await fetch(`${API_URL}?action=loginOrtu&idSiswa=${encodeURIComponent(idSiswa)}&kode=${encodeURIComponent(kode)}`);
+    const j = await r.json();
+    if(j.status==='success'){
+      localStorage.setItem('ez_ortu', JSON.stringify(j.data));
+      window.location='orangtua.html';
+    } else {
+      document.getElementById('msgOrtu').innerText = j.message;
+      btn.innerHTML='MASUK'; btn.disabled=false;
+    }
+  } catch(e){
+    document.getElementById('msgOrtu').innerText='Gagal koneksi';
+    btn.innerHTML='MASUK'; btn.disabled=false;
+  }
 }
 </script>
 </body>
