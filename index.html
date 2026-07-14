@@ -131,14 +131,31 @@ button{font-size:1.2rem}
   </button>
 
   <button onclick="openModalSiswa()" class="card-tap w-full bg-gradient-to-br from-red-900 to-red-700 p-5 rounded-3xl shadow-xl text-white flex items-center">
-    <div style="font-size:5rem" class="mr-4">👨‍🎓</div>
+    <div class="mr-4 flex items-center justify-center bg-white rounded-2xl p-2" style="min-width:90px;height:90px">
+      <!-- Icon Siswa Cowok + Cewek -->
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" style="width:75px;height:75px">
+        <!-- Siswa Cewek (kiri) -->
+        <circle cx="22" cy="20" r="8" fill="#FFCCBC"/>
+        <path d="M14 18 Q14 10 22 10 Q30 10 30 18 L30 22 Q26 20 22 20 Q18 20 14 22 Z" fill="#4A148C"/>
+        <path d="M12 45 Q12 30 22 30 Q32 30 32 45 L32 55 L12 55 Z" fill="#8B0000"/>
+        <rect x="18" y="35" width="8" height="3" fill="#FFD700"/>
+        <!-- Siswa Cowok (kanan) -->
+        <circle cx="44" cy="20" r="8" fill="#FFCCBC"/>
+        <path d="M36 15 Q36 10 44 10 Q52 10 52 15 L52 18 Q48 16 44 16 Q40 16 36 18 Z" fill="#3E2723"/>
+        <path d="M34 45 Q34 30 44 30 Q54 30 54 45 L54 55 L34 55 Z" fill="#1565C0"/>
+        <rect x="40" y="35" width="8" height="3" fill="#FFD700"/>
+        <!-- Topi Wisuda mini di atas -->
+        <polygon points="28,4 36,4 40,8 32,10 24,8" fill="#FFD700"/>
+        <line x1="32" y1="10" x2="32" y2="14" stroke="#FFD700" stroke-width="1"/>
+      </svg>
+    </div>
     <div class="text-left flex-1">
       <div class="txt-jumbo">LOGIN SISWA</div>
       <div class="txt-med opacity-90">Jadwal • Nilai • Absen</div>
     </div>
     <div style="font-size:3.5rem;font-weight:900" class="ml-2">›</div>
   </button>
-
+    
   <button onclick="openModalOrtu()" class="card-tap w-full bg-white border-4 border-red-900 p-5 rounded-3xl shadow-xl text-red-900 flex items-center">
     <div style="font-size:5rem" class="mr-4">👨‍👩‍👧</div>
     <div class="text-left flex-1">
