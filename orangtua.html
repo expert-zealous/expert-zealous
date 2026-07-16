@@ -203,7 +203,11 @@ window.onload = function() {
     renderNilai(nl.data);
     const totalN = nl.data.reduce((s,x)=>s+(parseInt(x.nilai100)||0),0);
     document.getElementById('rataNilai').innerText = nl.data.length ? Math.round(totalN/nl.data.length) : '-';
-    renderJadwal(jd.data); document.getElementById('totalJadwal').innerText=jd.data.length;
+    renderJadwal(jd.data);
+const namaHari = ['Minggu','Senin','Selasa','Rabu','Kamis','Jumat','Sabtu'];
+const hariIni = namaHari[new Date().getDay()];
+const jadwalHariIni = jd.data.filter(x => (x.hari||'').trim().toLowerCase() === hariIni.toLowerCase());
+document.getElementById('totalJadwal').innerText = jadwalHariIni.length;
   });
 };
 
