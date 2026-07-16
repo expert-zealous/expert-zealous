@@ -125,10 +125,14 @@ body{margin:0;padding:0;font-family:'Poppins',sans-serif}
 <div class="px-3 mt-3">
   <div class="grid grid-cols-3 gap-2">
     <div class="bg-white p-4 rounded-2xl shadow text-center">
-      <div style="font-size:2.5rem">📅</div>
-      <div class="font-black text-red-900" style="font-size:2.5rem" id="totalJadwal">-</div>
-      <div class="txt-med text-gray-600">Jadwal</div>
-    </div>
+  <div class="mx-auto mb-1 bg-red-100 rounded-lg border-2 border-red-700 overflow-hidden" style="width:50px">
+    <div class="bg-red-700 text-white font-black text-center" style="font-size:0.7rem;padding:2px">HARI INI</div>
+    <div id="tglHariIni" class="font-black text-red-900 text-center" style="font-size:1.5rem;line-height:1">-</div>
+    <div id="bulanHariIni" class="text-red-700 text-center font-bold" style="font-size:0.6rem;padding-bottom:2px">-</div>
+  </div>
+  <div class="font-black text-red-900" style="font-size:2.5rem" id="totalJadwal">-</div>
+  <div class="txt-med text-gray-600">Jadwal</div>
+</div>
     <div class="bg-white p-4 rounded-2xl shadow text-center">
       <div style="font-size:2.5rem">✅</div>
       <div class="font-black text-green-600" style="font-size:2.5rem" id="totalPresensi">-</div>
@@ -146,7 +150,12 @@ body{margin:0;padding:0;font-family:'Poppins',sans-serif}
   <div class="flex bg-white rounded-2xl shadow overflow-hidden mb-3">
     <button onclick="showTab('presensi')" id="tabPresensi" class="tab-active flex-1 py-5 font-black txt-big">✅ KEHADIRAN</button>
     <button onclick="showTab('nilai')" id="tabNilai" class="flex-1 py-5 font-black txt-big text-gray-600">📊 NILAI</button>
-    <button onclick="showTab('jadwal')" id="tabJadwal" class="flex-1 py-5 font-black txt-big text-gray-600">📅 JADWAL</button>
+    <button onclick="showTab('jadwal')" id="tabJadwal" class="flex-1 py-5 font-black txt-big text-gray-600">
+  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="display:inline-block;vertical-align:middle;margin-right:4px">
+    <rect width="18" height="18" x="3" y="4" rx="2"/>
+    <path d="M16 2v4M8 2v4M3 10h18"/>
+  </svg>JADWAL
+</button>
   </div>
 
   <div id="contentPresensi" class="bg-white rounded-2xl shadow p-4">
@@ -175,6 +184,11 @@ window.onload = function() {
   const d = localStorage.getItem('ez_ortu');
   if(!d){alert('Login dulu!');window.location='index.html';return;}
   ortu = JSON.parse(d);
+    // Tampilkan tanggal hari ini di icon kalender
+  const now = new Date();
+  const bulanList = ['JAN','FEB','MAR','APR','MEI','JUN','JUL','AGU','SEP','OKT','NOV','DES'];
+  document.getElementById('tglHariIni').innerText = now.getDate();
+  document.getElementById('bulanHariIni').innerText = bulanList[now.getMonth()];
   document.getElementById('navNama').innerText = ortu.nama;
   document.getElementById('profilNamaOrtu').innerText = ortu.nama;
   document.getElementById('profilNamaAnak').innerText = ortu.namaSiswa;
