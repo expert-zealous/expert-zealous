@@ -100,6 +100,11 @@ button{font-size:1.2rem}
     font-size: 13px !important;
   }
 }
+/* ===== MENU MATEMATIKA DROPDOWN ===== */
+.math-dropdown{max-height:0;overflow:hidden;transition:max-height 0.35s ease}
+.math-dropdown.open{max-height:500px}
+.math-chevron{transition:transform 0.3s ease;display:inline-block}
+.math-chevron.open{transform:rotate(180deg)}
 </style>
 </head>
 <body class="bg-gray-50 text-gray-800">
@@ -328,7 +333,112 @@ button{font-size:1.2rem}
     </iframe>
   </div>
 </section>
+<!-- ===== MENU PLATFORM MATEMATIKA ===== -->
+<section class="px-4 py-8 bg-red-900 text-white mt-4">
+  <h2 class="font-luxury mb-2 text-yellow-400 text-center" style="font-size:2.4rem">Platform Matematika</h2>
+  <p class="text-center mb-5 txt-med opacity-90">Pilih menu untuk mengakses</p>
 
+  <div class="space-y-3">
+
+    <!-- 1. Terampil Matematika Dasar -->
+    <a href="https://LINK-TERAMPIL-MATEMATIKA-DASAR.com" target="_blank" rel="noopener"
+       class="card-tap w-full bg-red-800 p-5 rounded-2xl border-2 border-yellow-600 flex items-center no-underline text-white">
+      <div style="font-size:3rem" class="mr-4">📘</div>
+      <div class="flex-1 text-left">
+        <div class="txt-huge">Terampil Matematika Dasar</div>
+        <div class="txt-med opacity-90">Kuasai fondasi matematika dari dasar</div>
+      </div>
+      <div style="font-size:2rem;font-weight:900" class="ml-2 text-yellow-400">›</div>
+    </a>
+
+    <!-- 2. Quiz CBT -->
+    <a href="https://LINK-QUIZ-CBT.com" target="_blank" rel="noopener"
+       class="card-tap w-full bg-red-800 p-5 rounded-2xl border-2 border-yellow-600 flex items-center no-underline text-white">
+      <div style="font-size:3rem" class="mr-4">📝</div>
+      <div class="flex-1 text-left">
+        <div class="txt-huge">Quiz CBT</div>
+        <div class="txt-med opacity-90">Latihan soal berbasis Computer Based Test</div>
+      </div>
+      <div style="font-size:2rem;font-weight:900" class="ml-2 text-yellow-400">›</div>
+    </a>
+
+    <!-- 3. Try Out CBT (Dropdown) -->
+    <div>
+      <button type="button" onclick="toggleTryOut()" id="btnTryOut"
+              class="card-tap w-full bg-gradient-to-br from-yellow-400 to-yellow-600 p-5 rounded-2xl shadow-xl text-red-900 flex items-center border-0 cursor-pointer">
+        <div style="font-size:3rem" class="mr-4">📄</div>
+        <div class="flex-1 text-left">
+          <div class="txt-huge">Try Out CBT</div>
+          <div class="txt-med opacity-90">ASAS • TKA • AAFD Matematika</div>
+        </div>
+        <div style="font-size:1.8rem;font-weight:900" class="ml-2">
+          <span id="chevronTryOut" class="math-chevron">▼</span>
+        </div>
+      </button>
+
+      <!-- Isi Dropdown -->
+      <div id="dropdownTryOut" class="math-dropdown mt-2 space-y-2 pl-2 pr-2">
+
+        <!-- Try Out ASAS -->
+        <a href="https://LINK-TRYOUT-ASAS.com" target="_blank" rel="noopener"
+           class="card-tap w-full bg-red-800 p-4 rounded-2xl border-2 border-yellow-500 flex items-center no-underline text-white">
+          <div style="font-size:2.2rem" class="mr-3">🚀</div>
+          <div class="flex-1 text-left">
+            <div class="txt-big">Try Out ASAS Matematika</div>
+            <div class="txt-sml opacity-90">Uji kemampuan dasar matematika</div>
+          </div>
+          <div style="font-size:1.5rem;font-weight:900" class="ml-2 text-yellow-400">›</div>
+        </a>
+
+        <!-- Try Out TKA -->
+        <a href="https://LINK-TRYOUT-TKA.com" target="_blank" rel="noopener"
+           class="card-tap w-full bg-red-800 p-4 rounded-2xl border-2 border-yellow-500 flex items-center no-underline text-white">
+          <div style="font-size:2.2rem" class="mr-3">🧠</div>
+          <div class="flex-1 text-left">
+            <div class="txt-big">Try Out TKA Matematika</div>
+            <div class="txt-sml opacity-90">Latihan soal TKA Matematika intensif</div>
+          </div>
+          <div style="font-size:1.5rem;font-weight:900" class="ml-2 text-yellow-400">›</div>
+        </a>
+
+        <!-- Try Out AAFD -->
+        <a href="https://LINK-TRYOUT-AAFD.com" target="_blank" rel="noopener"
+           class="card-tap w-full bg-red-800 p-4 rounded-2xl border-2 border-yellow-500 flex items-center no-underline text-white">
+          <div style="font-size:2.2rem" class="mr-3">🏆</div>
+          <div class="flex-1 text-left">
+            <div class="txt-big">Try Out AAFD Matematika</div>
+            <div class="txt-sml opacity-90">Persiapan AAFD Matematika terlengkap</div>
+          </div>
+          <div style="font-size:1.5rem;font-weight:900" class="ml-2 text-yellow-400">›</div>
+        </a>
+
+      </div>
+    </div>
+
+    <!-- 4. Math Legend Arena Live -->
+    <a href="https://LINK-MATH-LEGEND-ARENA-LIVE.com" target="_blank" rel="noopener"
+       class="card-tap w-full bg-red-800 p-5 rounded-2xl border-2 border-yellow-600 flex items-center no-underline text-white">
+      <div style="font-size:3rem" class="mr-4">⚡</div>
+      <div class="flex-1 text-left">
+        <div class="txt-huge">Math Legend Arena Live</div>
+        <div class="txt-med opacity-90">Kompetisi matematika live bersama peserta</div>
+      </div>
+      <div style="font-size:2rem;font-weight:900" class="ml-2 text-yellow-400">›</div>
+    </a>
+
+    <!-- 5. Math Legend -->
+    <a href="https://LINK-MATH-LEGEND.com" target="_blank" rel="noopener"
+       class="card-tap w-full bg-gradient-to-r from-red-800 to-red-600 p-5 rounded-2xl border-2 border-yellow-600 flex items-center no-underline text-white">
+      <div style="font-size:3rem" class="mr-4">👑</div>
+      <div class="flex-1 text-left">
+        <div class="txt-huge">Math Legend</div>
+        <div class="txt-med opacity-90">Jadilah legenda matematika!</div>
+      </div>
+      <div style="font-size:2rem;font-weight:900" class="ml-2 text-yellow-400">›</div>
+    </a>
+
+  </div>
+</section>
 <footer class="py-6 text-center text-gray-500 txt-med border-t">&copy; 2026 EXPERT ZEALOUS</footer>
 
 <!-- MODAL LOGIN SISWA -->
@@ -512,6 +622,13 @@ async function loginOrtu(){
     document.getElementById('msgOrtu').innerText='Gagal koneksi';
     btn.innerHTML='MASUK'; btn.disabled=false;
   }
+}
+// ===== TOGGLE DROPDOWN TRY OUT CBT =====
+function toggleTryOut(){
+  var dd = document.getElementById('dropdownTryOut');
+  var ch = document.getElementById('chevronTryOut');
+  dd.classList.toggle('open');
+  ch.classList.toggle('open');
 }
 </script>
 </body>
