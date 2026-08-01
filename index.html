@@ -5,6 +5,15 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 <meta name="theme-color" content="#8B0000">
+
+<link rel="manifest" href="manifest.json">
+
+<meta name="mobile-web-app-capable" content="yes">
+
+<meta name="apple-mobile-web-app-capable" content="yes">
+
+<meta name="apple-mobile-web-app-status-bar-style"
+content="default">
 <title>EXPERT ZEALOUS</title>
 
 <!-- FAVICON EXPERT ZEALOUS - KODE BENAR -->
@@ -667,6 +676,29 @@ function toggleTryOut(){
   var ch = document.getElementById('chevronTryOut');
   dd.classList.toggle('open');
   ch.classList.toggle('open');
+}
+</script>
+<script>
+if ('serviceWorker' in navigator) {
+
+window.addEventListener('load', function () {
+
+navigator.serviceWorker.register('./service-worker.js')
+
+.then(function(reg){
+
+console.log("Service Worker berhasil:", reg.scope);
+
+})
+
+.catch(function(err){
+
+console.log("Service Worker gagal:", err);
+
+});
+
+});
+
 }
 </script>
 </body>
