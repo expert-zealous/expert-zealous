@@ -14,7 +14,7 @@
 
 <meta name="apple-mobile-web-app-status-bar-style"
 content="default">
-<title>EXPERT ZEALOUS</title>
+<title>EXPERT ZEALOUS - GAME EDUKASI</title>
 
 <!-- FAVICON EXPERT ZEALOUS - KODE BENAR -->
 <link rel="icon" type="image/svg+xml" href="images/favicon-ez.svg?v=3">
@@ -120,6 +120,95 @@ button{font-size:1.2rem}
 .math-dropdown.open{max-height:500px}
 .math-chevron{transition:transform 0.3s ease;display:inline-block}
 .math-chevron.open{transform:rotate(180deg)}
+
+/* ============================================================
+   GAME EDUKASI - CSS MANDIRI, RESPONSIF
+   ============================================================ */
+.game-education-section{
+  width:100%;
+  padding:32px 16px;
+  margin-top:16px;
+  background:linear-gradient(135deg,#160b2d 0%,#3b0a52 45%,#7f1d1d 100%);
+  color:#fff;
+}
+.game-education-title{
+  width:100%;
+  max-width:1100px;
+  margin:0 auto 22px;
+  display:flex;
+  align-items:center;
+  gap:14px;
+}
+.game-education-icon{
+  width:62px;height:62px;min-width:62px;
+  display:flex;align-items:center;justify-content:center;
+  background:#fff;border:3px solid #facc15;border-radius:16px;
+  font-size:34px;
+}
+.game-education-title h2{
+  margin:0;color:#facc15;
+  font-family:'Playfair Display',serif;
+  font-size:2.2rem;line-height:1.1;
+}
+.game-education-title p{
+  margin:5px 0 0;font-size:1rem;color:rgba(255,255,255,.85);
+}
+.game-education-grid{
+  width:100%;max-width:1100px;margin:0 auto;
+  display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px;
+}
+.game-card{
+  min-width:0;display:flex;align-items:center;padding:15px;gap:13px;
+  border-radius:18px;border:2px solid #d4af37;color:#fff;
+  text-decoration:none;box-shadow:0 8px 20px rgba(0,0,0,.30);
+  transition:transform .15s ease,box-shadow .15s ease;
+}
+.game-card:active{transform:scale(.97)}
+.game-card:hover{transform:translateY(-2px);box-shadow:0 12px 26px rgba(0,0,0,.40)}
+.arena-card{background:linear-gradient(135deg,#7f1d1d,#991b1b)}
+.legend-card{background:linear-gradient(135deg,#991b1b,#dc2626)}
+.magic-chess-card{background:linear-gradient(135deg,#4c1d95,#7f1d1d)}
+.game-logo-box{
+  width:72px;height:72px;min-width:72px;
+  display:flex;align-items:center;justify-content:center;
+  background:#fff;border:2px solid #facc15;border-radius:14px;overflow:hidden;
+}
+.game-logo-box img{width:100%;height:100%;object-fit:contain;padding:4px}
+.game-fallback-icon{font-size:38px}
+.game-info{flex:1;min-width:0}
+.game-name{font-size:1.15rem;line-height:1.15;font-weight:900;color:#fff}
+.game-description{margin-top:5px;font-size:.82rem;line-height:1.25;color:rgba(255,255,255,.85)}
+.game-arrow{flex:0 0 auto;color:#facc15;font-size:2rem;font-weight:900;line-height:1}
+
+@media screen and (max-width:850px){
+  .game-education-grid{grid-template-columns:1fr}
+  .game-card{padding:16px}
+  .game-logo-box{width:76px;height:76px;min-width:76px}
+  .game-name{font-size:1.25rem}
+  .game-description{font-size:.9rem}
+}
+@media screen and (max-width:600px){
+  .game-education-section{padding:25px 12px}
+  .game-education-title{margin-bottom:16px}
+  .game-education-icon{width:52px;height:52px;min-width:52px;font-size:28px}
+  .game-education-title h2{font-size:1.7rem}
+  .game-education-title p{font-size:.82rem}
+  .game-education-grid{gap:10px}
+  .game-card{padding:12px;gap:10px;border-radius:15px}
+  .game-logo-box{width:64px;height:64px;min-width:64px;border-radius:12px}
+  .game-name{font-size:1rem}
+  .game-description{font-size:.75rem}
+  .game-arrow{font-size:1.7rem}
+}
+@media screen and (max-width:360px){
+  .game-education-section{padding-left:9px;padding-right:9px}
+  .game-card{padding:10px}
+  .game-logo-box{width:58px;height:58px;min-width:58px}
+  .game-name{font-size:.92rem}
+  .game-description{font-size:.68rem}
+  .game-arrow{font-size:1.5rem}
+}
+
 </style>
 </head>
 <body class="bg-gray-50 text-gray-800">
@@ -131,7 +220,7 @@ button{font-size:1.2rem}
   </div>
   <!-- Tombol Admin TERSEMBUNYI - hanya bisa diakses lewat ketuk logo 5x -->
   <div id="adminCount" class="hidden bg-gray-100 px-3 py-1 rounded-full text-xs" style="font-size:0.7rem"></div>
-  <button onclick="tapLogoSecret()" class="text-gray-400 text-sm px-2 py-1" style="font-size:0.8rem">v1.0</button>
+  <button onclick="tapLogoSecret()" class="text-gray-400 text-sm px-2 py-1" style="font-size:0.8rem">v2.0</button>
 </nav>
 
 <section class="px-4 py-6">
@@ -430,86 +519,77 @@ button{font-size:1.2rem}
       </div>
     </div>
 
-    <!-- MATH LEGEND ARENA LIVE -->
-<a href="https://expert-zealous.github.io/math-legends-arena-live/"
-   target="_blank"
-   rel="noopener"
-   class="card-tap w-full bg-red-800 p-5 rounded-2xl border-2 border-yellow-600 flex items-center no-underline text-white">
+<!-- =========================================================
+     GAME EDUKASI
+     ========================================================= -->
+<section class="game-education-section">
 
-  <!-- Logo Arena Live -->
-  <div class="mr-4 flex items-center justify-center bg-white rounded-2xl border-2 border-yellow-500 overflow-hidden shrink-0"
-       style="width:90px;height:90px;min-width:90px">
-    <img src="images/logo-math-legend-arena.png"
-         alt="Logo Math Legend Arena Live"
-         class="w-full h-full object-contain p-1">
-  </div>
-
-  <div class="flex-1 text-left">
-    <div class="txt-huge">Math Legend Arena Live</div>
-    <div class="txt-med opacity-90">
-      Saksikan leaderboard math legend secara live
+  <div class="game-education-title">
+    <div class="game-education-icon">🎮</div>
+    <div>
+      <h2>GAME EDUKASI</h2>
+      <p>Belajar matematika sambil bermain</p>
     </div>
   </div>
 
-  <div style="font-size:2rem;font-weight:900"
-       class="ml-2 text-yellow-400">
-    ›
-  </div>
-</a>
+  <div class="game-education-grid">
 
-    <!-- MATH LEGEND -->
-<a href="https://www.mediafire.com/file/qqneigv58obs20m/MathLegend.zip/file"
-   target="_blank"
-   rel="noopener"
-   class="card-tap w-full bg-gradient-to-r from-red-800 to-red-600 p-5 rounded-2xl border-2 border-yellow-600 flex items-center no-underline text-white">
+    <a href="https://expert-zealous.github.io/math-legends-arena-live/"
+       target="_blank" rel="noopener noreferrer"
+       class="game-card arena-card">
 
-  <!-- Logo Math Legend -->
-  <div class="mr-4 flex items-center justify-center bg-white rounded-2xl border-2 border-yellow-500 overflow-hidden shrink-0"
-       style="width:90px;height:90px;min-width:90px">
-    <img src="images/logo-math-legend.png"
-         alt="Logo Math Legend"
-         class="w-full h-full object-contain p-1">
-  </div>
+      <div class="game-logo-box">
+        <img src="images/logo-math-legend-arena.png"
+             alt="Math Legend Arena"
+             onerror="this.style.display='none';this.parentElement.insertAdjacentHTML('beforeend','<span class=&quot;game-fallback-icon&quot;>🏆</span>')">
+      </div>
 
-  <div class="flex-1 text-left">
-    <div class="txt-huge">Math Legend</div>
-    <div class="txt-med opacity-90">
-      Jadilah legenda dengan score terbaikmu!
-    </div>
-  </div>
+      <div class="game-info">
+        <div class="game-name">Math Legend Arena</div>
+        <div class="game-description">Arena matematika dan leaderboard</div>
+      </div>
 
-  <div style="font-size:2rem;font-weight:900"
-       class="ml-2 text-yellow-400">
-    ›
-  </div>
-</a>
-<!-- ===== MATH MAGIC CHESS ===== -->
-<a href="https://expert-zealous.github.io/Math-Magic-Chess/"
-   target="_blank"
-   rel="noopener"
-   class="card-tap w-full bg-gradient-to-r from-purple-900 to-red-800 p-5 rounded-2xl border-2 border-yellow-600 flex items-center no-underline text-white">
+      <div class="game-arrow">›</div>
+    </a>
 
-  <!-- Logo Math Magic Chess -->
-  <div class="mr-4 flex items-center justify-center bg-white rounded-2xl border-2 border-yellow-500 overflow-hidden shrink-0"
-       style="width:90px;height:90px;min-width:90px">
-    <img src="images/logo-math-magic-chess.png"
-         alt="Logo Math Magic Chess"
-         class="w-full h-full object-contain p-1"
-         onerror="this.style.display='none';this.parentElement.insertAdjacentHTML('beforeend','<span style=&quot;font-size:2.8rem&quot;>♛</span>')">
-  </div>
+    <a href="https://www.mediafire.com/file/qqneigv58obs20m/MathLegend.zip/file"
+       target="_blank" rel="noopener noreferrer"
+       class="game-card legend-card">
 
-  <div class="flex-1 text-left">
-    <div class="txt-huge">Math Magic Chess</div>
-    <div class="txt-med opacity-90">
-      Main catur sambil asah hitung dasar matematika
-    </div>
-  </div>
+      <div class="game-logo-box">
+        <img src="images/logo-math-legend.png"
+             alt="Math Legend"
+             onerror="this.style.display='none';this.parentElement.insertAdjacentHTML('beforeend','<span class=&quot;game-fallback-icon&quot;>🧠</span>')">
+      </div>
 
-  <div style="font-size:2rem;font-weight:900"
-       class="ml-2 text-yellow-400">
-    ›
+      <div class="game-info">
+        <div class="game-name">Math Legend</div>
+        <div class="game-description">Jadilah legenda dengan score terbaikmu!</div>
+      </div>
+
+      <div class="game-arrow">›</div>
+    </a>
+
+    <a href="https://expert-zealous.github.io/Math-Magic-Chess/"
+       target="_blank" rel="noopener noreferrer"
+       class="game-card magic-chess-card">
+
+      <div class="game-logo-box">
+        <img src="images/logo-math-magic-chess.png"
+             alt="Math Magic Chess"
+             onerror="this.style.display='none';this.parentElement.insertAdjacentHTML('beforeend','<span class=&quot;game-fallback-icon&quot;>♛</span>')">
+      </div>
+
+      <div class="game-info">
+        <div class="game-name">Math Magic Chess</div>
+        <div class="game-description">Catur strategi sambil mengasah matematika</div>
+      </div>
+
+      <div class="game-arrow">›</div>
+    </a>
+
   </div>
-</a>
+</section>
 
   </div>
 </section>
@@ -708,23 +788,62 @@ function toggleTryOut(){
 <script>
 if ('serviceWorker' in navigator) {
 
-window.addEventListener('load', function () {
+  window.addEventListener('load', async function () {
 
-navigator.serviceWorker.register('./service-worker.js')
+    try {
 
-.then(function(reg){
+      const registration =
+        await navigator.serviceWorker.register(
+          './service-worker.js?v=2',
+          { updateViaCache: 'none' }
+        );
 
-console.log("Service Worker berhasil:", reg.scope);
+      console.log(
+        'Service Worker aktif:',
+        registration.scope
+      );
 
-})
+      registration.update();
 
-.catch(function(err){
+      registration.addEventListener(
+        'updatefound',
+        function () {
 
-console.log("Service Worker gagal:", err);
+          const newWorker = registration.installing;
 
-});
+          if (!newWorker) return;
 
-});
+          newWorker.addEventListener(
+            'statechange',
+            function () {
+
+              if (
+                newWorker.state === 'installed' &&
+                navigator.serviceWorker.controller
+              ) {
+
+                newWorker.postMessage({
+                  type: 'SKIP_WAITING'
+                });
+
+              }
+
+            }
+          );
+
+        }
+      );
+
+    } catch (error) {
+
+      console.log(
+        'Service Worker gagal:',
+        error
+      );
+
+    }
+
+  });
 
 }
 </script>
