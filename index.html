@@ -1,851 +1,3027 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="id">
-<script src="https://unpkg.com/lucide@latest"></script>
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-<meta name="theme-color" content="#8B0000">
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#7a1730">
+  <meta name="color-scheme" content="light">
+  <meta name="mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="default">
+  <meta name="description" content="Portal belajar matematika, latihan, kuis, dan game edukasi Expert Zealous.">
 
-<link rel="manifest" href="manifest.json">
+  <title>Expert Zealous — Mobile Learning</title>
 
-<meta name="mobile-web-app-capable" content="yes">
+  <!-- Plus Jakarta Sans: modern, ramah, dan tetap sangat terbaca pada layar HP. -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 
-<meta name="apple-mobile-web-app-capable" content="yes">
+  <link rel="manifest" href="manifest.json">
+  <link rel="icon" type="image/svg+xml" href="images/favicon-ez.svg?v=4">
+  <link rel="alternate icon" type="image/png" href="images/favicon-ez.png?v=4">
+  <link rel="apple-touch-icon" sizes="180x180" href="images/apple-touch-icon.png?v=4">
 
-<meta name="apple-mobile-web-app-status-bar-style"
-content="default">
-<title>EXPERT ZEALOUS - GAME EDUKASI</title>
+  <style>
+    :root {
+      --bg: #f4f6fb;
+      --surface: #ffffff;
+      --surface-2: #f8f9fc;
+      --ink: #18223a;
+      --muted: #6d7690;
+      --line: #e5e9f2;
+      --primary: #3158d4;
+      --primary-strong: #2447b7;
+      --primary-soft: #eaf0ff;
+      --sky: #e7f7ff;
+      --sky-strong: #1687ba;
+      --mint: #e7f8f1;
+      --mint-strong: #14865f;
+      --amber: #fff3d7;
+      --amber-strong: #a96600;
+      --rose: #ffebed;
+      --rose-strong: #bd3344;
+      --danger: #d92d45;
+      --shadow-sm: 0 4px 16px rgba(36, 52, 91, .06);
+      --shadow-md: 0 16px 45px rgba(36, 52, 91, .11);
+      --radius-sm: 12px;
+      --radius: 18px;
+      --radius-lg: 24px;
+      --app-width: 560px;
+      --bottom-nav: 72px;
+    }
 
-<!-- FAVICON EXPERT ZEALOUS - KODE BENAR -->
-<link rel="icon" type="image/svg+xml" href="images/favicon-ez.svg?v=3">
-<link rel="alternate icon" type="image/png" href="images/favicon-ez.png?v=3">
-<link rel="apple-touch-icon" sizes="180x180" href="images/apple-touch-icon.png?v=3">
+    * {
+      box-sizing: border-box;
+      -webkit-tap-highlight-color: transparent;
+    }
 
-<script src="https://cdn.tailwindcss.com"></script>
-<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Poppins:wght@400;600;700;800;900&display=swap" rel="stylesheet">
-<style>
-*{-webkit-tap-highlight-color:transparent;box-sizing:border-box}
-html{font-size:20px}
-body{margin:0;padding:0;font-family:'Poppins',sans-serif;-webkit-font-smoothing:antialiased;font-size:1rem}
-.font-luxury{font-family:'Playfair Display',serif}
-.btn-red{background:linear-gradient(to right,#8B0000,#FF0000);color:white}
-.card-tap{transition:transform 0.15s}.card-tap:active{transform:scale(0.96)}
-.spinner{border:3px solid #f3f3f3;border-top:3px solid #8B0000;border-radius:50%;width:26px;height:26px;animation:spin 0.7s linear infinite;display:inline-block;vertical-align:middle}
-@keyframes spin{100%{transform:rotate(360deg)}}
+    html {
+      scroll-behavior: smooth;
+      background: var(--bg);
+    }
 
-.txt-jumbo{font-size:2.4rem;line-height:1.1;font-weight:900}
-.txt-huge{font-size:1.9rem;line-height:1.15;font-weight:800}
-.txt-big{font-size:1.5rem;line-height:1.3;font-weight:700}
-.txt-med{font-size:1.15rem;line-height:1.4;font-weight:600}
-.txt-sml{font-size:1rem}
+    body {
+      min-width: 320px;
+      margin: 0;
+      background: var(--bg);
+      color: var(--ink);
+      font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+      font-size: 14px;
+      line-height: 1.45;
+      -webkit-font-smoothing: antialiased;
+    }
 
-select,input{font-size:1.3rem !important;font-weight:600}
-button{font-size:1.2rem}
+    body.modal-open {
+      overflow: hidden;
+    }
 
-  /* ==================================================
-   UKURAN KHUSUS MODE NORMAL HP
-   Desktop tetap menggunakan ukuran sebelumnya
-================================================== */
-@media screen and (max-width: 600px) {
-  html {
-    font-size: 14px !important;
-  }
+    button,
+    input,
+    select {
+      font: inherit;
+    }
 
-  body {
-    font-size: 1rem !important;
-  }
+    button,
+    a {
+      touch-action: manipulation;
+    }
 
-  nav {
-    padding: 10px 12px !important;
-  }
+    button {
+      border: 0;
+      cursor: pointer;
+    }
 
-  nav img {
-    height: 42px !important;
-  }
+    a {
+      color: inherit;
+    }
 
-  .txt-jumbo {
-    font-size: 2rem !important;
-    line-height: 1.12 !important;
-  }
+    img {
+      display: block;
+      max-width: 100%;
+    }
 
-  .txt-huge {
-    font-size: 1.55rem !important;
-    line-height: 1.2 !important;
-  }
+    svg {
+      display: block;
+    }
 
-  .txt-big {
-    font-size: 1.2rem !important;
-    line-height: 1.35 !important;
-  }
+    .icon {
+      width: 20px;
+      height: 20px;
+      fill: none;
+      stroke: currentColor;
+      stroke-width: 2;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+    }
 
-  .txt-med {
-    font-size: 1rem !important;
-    line-height: 1.4 !important;
-  }
+    .app-shell {
+      width: 100%;
+      max-width: var(--app-width);
+      min-height: 100vh;
+      margin: 0 auto;
+      padding-bottom: calc(var(--bottom-nav) + 28px + env(safe-area-inset-bottom));
+      background: var(--bg);
+      overflow: clip;
+      position: relative;
+    }
 
-  .txt-sml {
-    font-size: 0.9rem !important;
-  }
-    /* Judul Portal Eksklusif jadi 1 baris pas */
-  h1.font-luxury {
-    font-size: 2rem !important;
-    line-height: 1.1 !important;
-  }
-  
-  /* Judul section (Kurikulum Merdeka, Bank Soal, Kuis Online) */
-  h2.font-luxury {
-    font-size: 1.7rem !important;
-    line-height: 1.15 !important;
-  }
+    .app-bar {
+      position: sticky;
+      top: 0;
+      z-index: 50;
+      min-height: 66px;
+      padding: calc(9px + env(safe-area-inset-top)) 16px 9px;
+      background: rgba(255, 255, 255, .92);
+      border-bottom: 1px solid rgba(229, 233, 242, .9);
+      backdrop-filter: blur(18px);
+      -webkit-backdrop-filter: blur(18px);
+    }
 
-  select,
-  input {
-    font-size: 1.1rem !important;
-  }
+    .app-bar-inner {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+    }
 
-  button,
-  a {
-    line-height: 1.25;
-  }
-}
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      min-width: 0;
+    }
 
-/* HP sangat kecil */
-@media screen and (max-width: 360px) {
-  html {
-    font-size: 13px !important;
-  }
-}
-/* ===== MENU MATEMATIKA DROPDOWN ===== */
-.math-dropdown{max-height:0;overflow:hidden;transition:max-height 0.35s ease}
-.math-dropdown.open{max-height:500px}
-.math-chevron{transition:transform 0.3s ease;display:inline-block}
-.math-chevron.open{transform:rotate(180deg)}
+    .brand-mark {
+      width: 40px;
+      height: 40px;
+      flex: 0 0 40px;
+      display: grid;
+      place-items: center;
+      overflow: hidden;
+      border: 1px solid var(--line);
+      border-radius: 13px;
+      background: #fff;
+      box-shadow: var(--shadow-sm);
+    }
 
-/* ============================================================
-   GAME EDUKASI - CSS MANDIRI, RESPONSIF
-   ============================================================ */
-.game-education-section{
-  width:100%;
-  padding:32px 16px;
-  margin-top:16px;
-  background:linear-gradient(135deg,#160b2d 0%,#3b0a52 45%,#7f1d1d 100%);
-  color:#fff;
-}
-.game-education-title{
-  width:100%;
-  max-width:1100px;
-  margin:0 auto 22px;
-  display:flex;
-  align-items:center;
-  gap:14px;
-}
-.game-education-icon{
-  width:62px;height:62px;min-width:62px;
-  display:flex;align-items:center;justify-content:center;
-  background:#fff;border:3px solid #facc15;border-radius:16px;
-  font-size:34px;
-}
-.game-education-title h2{
-  margin:0;color:#facc15;
-  font-family:'Playfair Display',serif;
-  font-size:2.2rem;line-height:1.1;
-}
-.game-education-title p{
-  margin:5px 0 0;font-size:1rem;color:rgba(255,255,255,.85);
-}
-.game-education-grid{
-  width:100%;max-width:1100px;margin:0 auto;
-  display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px;
-}
-.game-card{
-  min-width:0;display:flex;align-items:center;padding:15px;gap:13px;
-  border-radius:18px;border:2px solid #d4af37;color:#fff;
-  text-decoration:none;box-shadow:0 8px 20px rgba(0,0,0,.30);
-  transition:transform .15s ease,box-shadow .15s ease;
-}
-.game-card:active{transform:scale(.97)}
-.game-card:hover{transform:translateY(-2px);box-shadow:0 12px 26px rgba(0,0,0,.40)}
-.arena-card{background:linear-gradient(135deg,#7f1d1d,#991b1b)}
-.legend-card{background:linear-gradient(135deg,#991b1b,#dc2626)}
-.magic-chess-card{background:linear-gradient(135deg,#4c1d95,#7f1d1d)}
-.game-logo-box{
-  width:72px;height:72px;min-width:72px;
-  display:flex;align-items:center;justify-content:center;
-  background:#fff;border:2px solid #facc15;border-radius:14px;overflow:hidden;
-}
-.game-logo-box img{width:100%;height:100%;object-fit:contain;padding:4px}
-.game-fallback-icon{font-size:38px}
-.game-info{flex:1;min-width:0}
-.game-name{font-size:1.15rem;line-height:1.15;font-weight:900;color:#fff}
-.game-description{margin-top:5px;font-size:.82rem;line-height:1.25;color:rgba(255,255,255,.85)}
-.game-arrow{flex:0 0 auto;color:#facc15;font-size:2rem;font-weight:900;line-height:1}
+    .brand-mark img {
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+      padding: 3px;
+    }
 
-@media screen and (max-width:850px){
-  .game-education-grid{grid-template-columns:1fr}
-  .game-card{padding:16px}
-  .game-logo-box{width:76px;height:76px;min-width:76px}
-  .game-name{font-size:1.25rem}
-  .game-description{font-size:.9rem}
-}
-@media screen and (max-width:600px){
-  .game-education-section{padding:25px 12px}
-  .game-education-title{margin-bottom:16px}
-  .game-education-icon{width:52px;height:52px;min-width:52px;font-size:28px}
-  .game-education-title h2{font-size:1.7rem}
-  .game-education-title p{font-size:.82rem}
-  .game-education-grid{gap:10px}
-  .game-card{padding:12px;gap:10px;border-radius:15px}
-  .game-logo-box{width:64px;height:64px;min-width:64px;border-radius:12px}
-  .game-name{font-size:1rem}
-  .game-description{font-size:.75rem}
-  .game-arrow{font-size:1.7rem}
-}
-@media screen and (max-width:360px){
-  .game-education-section{padding-left:9px;padding-right:9px}
-  .game-card{padding:10px}
-  .game-logo-box{width:58px;height:58px;min-width:58px}
-  .game-name{font-size:.92rem}
-  .game-description{font-size:.68rem}
-  .game-arrow{font-size:1.5rem}
-}
+    .brand-fallback {
+      display: none;
+      color: var(--primary);
+      font-size: 12px;
+      font-weight: 900;
+      letter-spacing: -.03em;
+    }
 
-</style>
+    .brand-copy {
+      min-width: 0;
+    }
+
+    .brand-copy strong,
+    .brand-copy span {
+      display: block;
+    }
+
+    .brand-copy strong {
+      overflow: hidden;
+      color: var(--ink);
+      font-size: 14px;
+      font-weight: 850;
+      letter-spacing: .025em;
+      line-height: 1.2;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+
+    .brand-copy span {
+      margin-top: 2px;
+      color: var(--muted);
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: .08em;
+      text-transform: uppercase;
+    }
+
+    .version-button {
+      min-width: 43px;
+      height: 32px;
+      padding: 0 10px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 4px;
+      border: 1px solid var(--line);
+      border-radius: 999px;
+      background: var(--surface-2);
+      color: var(--muted);
+      font-size: 10px;
+      font-weight: 800;
+    }
+
+    #adminCount {
+      color: var(--primary);
+    }
+
+    #adminCount[hidden] {
+      display: none;
+    }
+
+    main {
+      display: block;
+    }
+
+    .screen {
+      padding: 16px;
+      scroll-margin-top: 78px;
+    }
+
+    .screen + .screen {
+      padding-top: 8px;
+    }
+
+    .hero {
+      position: relative;
+      min-height: 178px;
+      padding: 22px;
+      overflow: hidden;
+      border: 1px solid #dce6fd;
+      border-radius: var(--radius-lg);
+      background:
+        radial-gradient(circle at 88% 8%, rgba(255, 199, 71, .32), transparent 26%),
+        radial-gradient(circle at 98% 100%, rgba(72, 183, 229, .22), transparent 34%),
+        linear-gradient(145deg, #eef4ff 0%, #fbfdff 58%, #fff7e7 100%);
+      box-shadow: var(--shadow-md);
+    }
+
+    .hero-content {
+      position: relative;
+      z-index: 2;
+      width: 74%;
+    }
+
+    .eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      min-height: 24px;
+      padding: 4px 9px;
+      border-radius: 999px;
+      background: rgba(255, 255, 255, .76);
+      color: var(--primary);
+      font-size: 9px;
+      font-weight: 850;
+      letter-spacing: .08em;
+      text-transform: uppercase;
+    }
+
+    .eyebrow .dot {
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: #2eb67d;
+      box-shadow: 0 0 0 3px rgba(46, 182, 125, .14);
+    }
+
+    .hero h1 {
+      max-width: 310px;
+      margin: 12px 0 7px;
+      color: var(--ink);
+      font-size: clamp(27px, 8vw, 38px);
+      font-weight: 900;
+      letter-spacing: -.045em;
+      line-height: .99;
+    }
+
+    .hero h1 span {
+      color: var(--primary);
+    }
+
+    .hero p {
+      max-width: 280px;
+      margin: 0;
+      color: var(--muted);
+      font-size: 12px;
+      line-height: 1.55;
+    }
+
+    .math-orbit {
+      position: absolute;
+      right: -18px;
+      bottom: -12px;
+      width: 145px;
+      height: 145px;
+      border: 1px solid rgba(49, 88, 212, .13);
+      border-radius: 50%;
+      box-shadow:
+        0 0 0 18px rgba(49, 88, 212, .035),
+        0 0 0 38px rgba(49, 88, 212, .025);
+    }
+
+    .math-chip {
+      position: absolute;
+      z-index: 2;
+      width: 44px;
+      height: 44px;
+      display: grid;
+      place-items: center;
+      border: 1px solid rgba(255, 255, 255, .8);
+      border-radius: 15px;
+      box-shadow: 0 10px 20px rgba(49, 69, 115, .13);
+      color: #fff;
+      font-size: 22px;
+      font-weight: 900;
+    }
+
+    .chip-one {
+      right: 28px;
+      top: 31px;
+      background: linear-gradient(145deg, #5278e9, #3158d4);
+      transform: rotate(8deg);
+    }
+
+    .chip-two {
+      right: 78px;
+      bottom: 24px;
+      background: linear-gradient(145deg, #ffc04f, #ec8c17);
+      transform: rotate(-8deg);
+    }
+
+    .chip-three {
+      right: 14px;
+      bottom: 20px;
+      background: linear-gradient(145deg, #45c99a, #15906b);
+      transform: rotate(5deg);
+    }
+
+    .section-head {
+      display: flex;
+      align-items: flex-end;
+      justify-content: space-between;
+      gap: 12px;
+      margin: 22px 2px 11px;
+    }
+
+    .section-head-copy {
+      min-width: 0;
+    }
+
+    .section-head h2,
+    .section-head h3 {
+      margin: 0;
+      color: var(--ink);
+      font-size: 17px;
+      font-weight: 850;
+      letter-spacing: -.025em;
+      line-height: 1.2;
+    }
+
+    .section-head p {
+      margin: 4px 0 0;
+      color: var(--muted);
+      font-size: 11px;
+    }
+
+    .section-tag {
+      flex: 0 0 auto;
+      color: var(--primary);
+      font-size: 10px;
+      font-weight: 850;
+    }
+
+    .quick-grid {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 8px;
+    }
+
+    .quick-action {
+      min-width: 0;
+      min-height: 78px;
+      padding: 9px 5px 8px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 7px;
+      border: 1px solid var(--line);
+      border-radius: 16px;
+      background: var(--surface);
+      box-shadow: var(--shadow-sm);
+      color: var(--ink);
+      text-align: center;
+      text-decoration: none;
+      transition: transform .16s ease, border-color .16s ease, box-shadow .16s ease;
+    }
+
+    .quick-action:active {
+      transform: scale(.96);
+      box-shadow: none;
+    }
+
+    .quick-icon {
+      width: 35px;
+      height: 35px;
+      display: grid;
+      place-items: center;
+      border-radius: 12px;
+    }
+
+    .quick-icon .icon {
+      width: 18px;
+      height: 18px;
+    }
+
+    .quick-action:nth-child(1) .quick-icon {
+      background: var(--primary-soft);
+      color: var(--primary);
+    }
+
+    .quick-action:nth-child(2) .quick-icon {
+      background: var(--mint);
+      color: var(--mint-strong);
+    }
+
+    .quick-action:nth-child(3) .quick-icon {
+      background: var(--amber);
+      color: var(--amber-strong);
+    }
+
+    .quick-action:nth-child(4) .quick-icon {
+      background: var(--sky);
+      color: var(--sky-strong);
+    }
+
+    .quick-label {
+      overflow: hidden;
+      font-size: 10px;
+      font-weight: 800;
+      line-height: 1.2;
+      text-overflow: ellipsis;
+    }
+
+    .motivation-card {
+      margin-top: 10px;
+      padding: 13px 14px;
+      display: flex;
+      align-items: center;
+      gap: 11px;
+      border: 1px solid #f3dfae;
+      border-radius: 17px;
+      background: linear-gradient(100deg, #fff8e8, #fffdf8);
+    }
+
+    .motivation-icon {
+      width: 38px;
+      height: 38px;
+      flex: 0 0 38px;
+      display: grid;
+      place-items: center;
+      border-radius: 13px;
+      background: #ffe7a7;
+      color: #9a6405;
+    }
+
+    .motivation-card strong,
+    .motivation-card span {
+      display: block;
+    }
+
+    .motivation-card strong {
+      font-size: 11px;
+      font-weight: 850;
+    }
+
+    .motivation-card span {
+      margin-top: 2px;
+      color: #806e4a;
+      font-size: 10px;
+    }
+
+    .game-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 9px;
+    }
+
+    .game-card {
+      min-width: 0;
+      min-height: 154px;
+      padding: 10px;
+      display: flex;
+      flex-direction: column;
+      border: 1px solid var(--line);
+      border-radius: 18px;
+      background: var(--surface);
+      box-shadow: var(--shadow-sm);
+      color: var(--ink);
+      text-decoration: none;
+      transition: transform .16s ease, box-shadow .16s ease;
+    }
+
+    .game-card:active {
+      transform: scale(.975);
+      box-shadow: none;
+    }
+
+    .game-cover {
+      position: relative;
+      height: 82px;
+      display: grid;
+      place-items: center;
+      overflow: hidden;
+      border-radius: 13px;
+      background: #f2f5fb;
+    }
+
+    .game-card:nth-child(1) .game-cover {
+      background: linear-gradient(145deg, #eef3ff, #e5ecff);
+    }
+
+    .game-card:nth-child(2) .game-cover {
+      background: linear-gradient(145deg, #fff0e6, #fff7ef);
+    }
+
+    .game-card:nth-child(3) .game-cover {
+      background: linear-gradient(145deg, #f0eaff, #f7f3ff);
+    }
+
+    .game-card:nth-child(4) .game-cover {
+      background: linear-gradient(145deg, #fff2d5, #eef4ff);
+    }
+
+    .game-cover img {
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+      padding: 6px;
+    }
+
+    .game-fallback {
+      display: none;
+      font-size: 32px;
+      font-weight: 900;
+    }
+
+    .new-badge {
+      position: absolute;
+      top: 7px;
+      right: 7px;
+      z-index: 3;
+      padding: 4px 7px;
+      border-radius: 999px;
+      background: #e84b5b;
+      box-shadow: 0 4px 10px rgba(190, 42, 60, .2);
+      color: #fff;
+      font-size: 8px;
+      font-weight: 900;
+      letter-spacing: .06em;
+      text-transform: uppercase;
+    }
+
+    .game-meta {
+      min-width: 0;
+      padding: 9px 2px 1px;
+    }
+
+    .game-title-row {
+      display: flex;
+      align-items: flex-start;
+      gap: 5px;
+    }
+
+    .game-title-row strong {
+      min-width: 0;
+      flex: 1;
+      font-size: 11px;
+      font-weight: 850;
+      line-height: 1.25;
+    }
+
+    .game-title-row .icon {
+      width: 14px;
+      height: 14px;
+      flex: 0 0 14px;
+      margin-top: 1px;
+      color: var(--primary);
+    }
+
+    .game-meta p {
+      display: -webkit-box;
+      overflow: hidden;
+      margin: 4px 0 0;
+      color: var(--muted);
+      font-size: 9px;
+      line-height: 1.35;
+      -webkit-box-orient: vertical;
+      -webkit-line-clamp: 2;
+    }
+
+    .panel {
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      background: var(--surface);
+      box-shadow: var(--shadow-sm);
+    }
+
+    .panel + .panel {
+      margin-top: 10px;
+    }
+
+    .feature-row {
+      padding: 13px;
+      display: grid;
+      grid-template-columns: 38px minmax(0, 1fr);
+      align-items: center;
+      gap: 11px;
+    }
+
+    .feature-row + .feature-row {
+      border-top: 1px solid var(--line);
+    }
+
+    .feature-icon {
+      width: 38px;
+      height: 38px;
+      display: grid;
+      place-items: center;
+      border-radius: 12px;
+    }
+
+    .feature-row:nth-child(1) .feature-icon {
+      color: var(--primary);
+      background: var(--primary-soft);
+    }
+
+    .feature-row:nth-child(2) .feature-icon {
+      color: var(--rose-strong);
+      background: var(--rose);
+    }
+
+    .feature-row:nth-child(3) .feature-icon {
+      color: var(--mint-strong);
+      background: var(--mint);
+    }
+
+    .feature-copy strong,
+    .feature-copy span {
+      display: block;
+    }
+
+    .feature-copy strong {
+      font-size: 12px;
+      font-weight: 820;
+    }
+
+    .feature-copy span {
+      margin-top: 2px;
+      color: var(--muted);
+      font-size: 10px;
+    }
+
+    details.accordion {
+      overflow: hidden;
+    }
+
+    details.accordion > summary {
+      min-height: 61px;
+      padding: 12px 13px;
+      display: grid;
+      grid-template-columns: 38px minmax(0, 1fr) 20px;
+      align-items: center;
+      gap: 10px;
+      list-style: none;
+      cursor: pointer;
+    }
+
+    details.accordion > summary::-webkit-details-marker {
+      display: none;
+    }
+
+    .summary-icon {
+      width: 38px;
+      height: 38px;
+      display: grid;
+      place-items: center;
+      border-radius: 12px;
+      background: var(--primary-soft);
+      color: var(--primary);
+    }
+
+    .summary-copy {
+      min-width: 0;
+    }
+
+    .summary-copy strong,
+    .summary-copy span {
+      display: block;
+    }
+
+    .summary-copy strong {
+      font-size: 12px;
+      font-weight: 850;
+    }
+
+    .summary-copy span {
+      margin-top: 2px;
+      color: var(--muted);
+      font-size: 10px;
+    }
+
+    .summary-chevron {
+      color: #8d96aa;
+      transition: transform .2s ease;
+    }
+
+    details[open] > summary .summary-chevron {
+      transform: rotate(180deg);
+    }
+
+    .accordion-body {
+      padding: 0 13px 13px;
+      border-top: 1px solid var(--line);
+    }
+
+    .grade-tabs {
+      margin: 12px 0;
+      padding: 3px;
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 3px;
+      border-radius: 12px;
+      background: #f0f2f7;
+    }
+
+    .grade-tab {
+      min-height: 35px;
+      border-radius: 9px;
+      background: transparent;
+      color: var(--muted);
+      font-size: 11px;
+      font-weight: 850;
+    }
+
+    .grade-tab.active {
+      background: #fff;
+      box-shadow: 0 3px 10px rgba(28, 39, 70, .09);
+      color: var(--primary);
+    }
+
+    .grade-panel[hidden] {
+      display: none;
+    }
+
+    .pdf-card {
+      padding: 11px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      border: 1px solid var(--line);
+      border-radius: 13px;
+      background: var(--surface-2);
+    }
+
+    .pdf-card + .pdf-card {
+      margin-top: 7px;
+    }
+
+    .pdf-icon {
+      width: 34px;
+      height: 40px;
+      flex: 0 0 34px;
+      display: grid;
+      place-items: center;
+      border-radius: 9px;
+      background: var(--rose);
+      color: var(--rose-strong);
+    }
+
+    .pdf-icon .icon {
+      width: 17px;
+      height: 17px;
+    }
+
+    .pdf-info {
+      min-width: 0;
+      flex: 1;
+    }
+
+    .pdf-info strong,
+    .pdf-info span {
+      display: block;
+    }
+
+    .pdf-info strong {
+      overflow: hidden;
+      font-size: 11px;
+      font-weight: 820;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+
+    .pdf-info span {
+      margin-top: 2px;
+      color: var(--muted);
+      font-size: 9px;
+    }
+
+    .pdf-actions {
+      display: flex;
+      gap: 5px;
+    }
+
+    .icon-button {
+      width: 34px;
+      height: 34px;
+      display: grid;
+      place-items: center;
+      border: 1px solid var(--line);
+      border-radius: 10px;
+      background: #fff;
+      color: var(--primary);
+      text-decoration: none;
+    }
+
+    .icon-button.primary {
+      border-color: var(--primary);
+      background: var(--primary);
+      color: #fff;
+    }
+
+    .icon-button .icon {
+      width: 16px;
+      height: 16px;
+    }
+
+    .quiz-body {
+      padding-top: 12px;
+    }
+
+    .primary-button,
+    .secondary-button {
+      min-height: 44px;
+      padding: 10px 14px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      border-radius: 12px;
+      font-size: 12px;
+      font-weight: 850;
+      text-decoration: none;
+    }
+
+    .primary-button {
+      background: var(--primary);
+      box-shadow: 0 8px 18px rgba(49, 88, 212, .2);
+      color: #fff;
+    }
+
+    .primary-button:active {
+      background: var(--primary-strong);
+      box-shadow: none;
+    }
+
+    .secondary-button {
+      border: 1px solid var(--line);
+      background: #fff;
+      color: var(--ink);
+    }
+
+    .full-button {
+      width: 100%;
+    }
+
+    .embed-wrap {
+      margin-top: 10px;
+      overflow: hidden;
+      border: 1px solid var(--line);
+      border-radius: 13px;
+      background: #fff;
+    }
+
+    .embed-wrap iframe {
+      display: block;
+      width: 100%;
+      height: 560px;
+      border: 0;
+    }
+
+    .platform-list {
+      padding-top: 6px;
+    }
+
+    .platform-link {
+      min-height: 58px;
+      padding: 10px 0;
+      display: grid;
+      grid-template-columns: 38px minmax(0, 1fr) 18px;
+      align-items: center;
+      gap: 10px;
+      color: var(--ink);
+      text-decoration: none;
+    }
+
+    .platform-link + .platform-link,
+    .tryout-details {
+      border-top: 1px solid var(--line);
+    }
+
+    .platform-icon {
+      width: 38px;
+      height: 38px;
+      display: grid;
+      place-items: center;
+      border-radius: 12px;
+      background: var(--sky);
+      color: var(--sky-strong);
+    }
+
+    .platform-copy {
+      min-width: 0;
+    }
+
+    .platform-copy strong,
+    .platform-copy span {
+      display: block;
+    }
+
+    .platform-copy strong {
+      font-size: 11px;
+      font-weight: 830;
+    }
+
+    .platform-copy span {
+      overflow: hidden;
+      margin-top: 2px;
+      color: var(--muted);
+      font-size: 9px;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+
+    .platform-arrow {
+      color: #9aa2b5;
+    }
+
+    .tryout-details > summary {
+      min-height: 58px;
+      padding: 10px 0;
+      display: grid;
+      grid-template-columns: 38px minmax(0, 1fr) 18px;
+      align-items: center;
+      gap: 10px;
+      list-style: none;
+      cursor: pointer;
+    }
+
+    .tryout-details > summary::-webkit-details-marker {
+      display: none;
+    }
+
+    .tryout-details[open] > summary .summary-chevron {
+      transform: rotate(180deg);
+    }
+
+    .tryout-menu {
+      margin: 0 0 8px 48px;
+      padding-left: 10px;
+      border-left: 2px solid var(--primary-soft);
+    }
+
+    .tryout-menu a {
+      min-height: 43px;
+      padding: 8px 0;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 8px;
+      border-bottom: 1px solid var(--line);
+      color: var(--ink);
+      font-size: 10px;
+      font-weight: 750;
+      text-decoration: none;
+    }
+
+    .tryout-menu a:last-child {
+      border-bottom: 0;
+    }
+
+    .account-card {
+      overflow: hidden;
+    }
+
+    .account-hero {
+      padding: 16px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      border-bottom: 1px solid var(--line);
+      background: linear-gradient(120deg, #eef4ff, #fff);
+    }
+
+    .account-avatar {
+      width: 48px;
+      height: 48px;
+      flex: 0 0 48px;
+      display: grid;
+      place-items: center;
+      border-radius: 16px;
+      background: var(--primary);
+      color: #fff;
+    }
+
+    .account-avatar .icon {
+      width: 23px;
+      height: 23px;
+    }
+
+    .account-copy strong,
+    .account-copy span {
+      display: block;
+    }
+
+    .account-copy strong {
+      font-size: 13px;
+      font-weight: 850;
+    }
+
+    .account-copy span {
+      margin-top: 3px;
+      color: var(--muted);
+      font-size: 10px;
+    }
+
+    .account-actions {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 8px;
+      padding: 12px;
+    }
+
+    .account-button {
+      min-height: 68px;
+      padding: 10px;
+      display: flex;
+      align-items: center;
+      gap: 9px;
+      border: 1px solid var(--line);
+      border-radius: 14px;
+      background: #fff;
+      color: var(--ink);
+      text-align: left;
+    }
+
+    .account-button .small-icon {
+      width: 32px;
+      height: 32px;
+      flex: 0 0 32px;
+      display: grid;
+      place-items: center;
+      border-radius: 10px;
+      background: var(--mint);
+      color: var(--mint-strong);
+    }
+
+    .account-button:nth-child(2) .small-icon {
+      background: var(--amber);
+      color: var(--amber-strong);
+    }
+
+    .account-button strong,
+    .account-button span {
+      display: block;
+    }
+
+    .account-button strong {
+      font-size: 10px;
+      font-weight: 850;
+      line-height: 1.2;
+    }
+
+    .account-button span {
+      margin-top: 2px;
+      color: var(--muted);
+      font-size: 8px;
+      line-height: 1.3;
+    }
+
+    .footer {
+      padding: 18px 16px 4px;
+      color: #929aac;
+      font-size: 9px;
+      text-align: center;
+    }
+
+    .bottom-nav {
+      position: fixed;
+      left: 50%;
+      right: auto;
+      bottom: 0;
+      z-index: 80;
+      width: 100%;
+      max-width: var(--app-width);
+      min-height: var(--bottom-nav);
+      padding: 6px 10px calc(6px + env(safe-area-inset-bottom));
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      transform: translateX(-50%);
+      border-top: 1px solid rgba(226, 230, 239, .94);
+      background: rgba(255, 255, 255, .94);
+      box-shadow: 0 -12px 34px rgba(41, 54, 87, .08);
+      backdrop-filter: blur(18px);
+      -webkit-backdrop-filter: blur(18px);
+    }
+
+    .nav-item {
+      min-height: 55px;
+      padding: 5px 3px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 4px;
+      border-radius: 14px;
+      color: #8d95a8;
+      font-size: 9px;
+      font-weight: 780;
+      text-decoration: none;
+      transition: color .16s ease, background .16s ease;
+    }
+
+    .nav-item .icon {
+      width: 20px;
+      height: 20px;
+    }
+
+    .nav-item.active {
+      background: var(--primary-soft);
+      color: var(--primary);
+    }
+
+    .modal {
+      position: fixed;
+      inset: 0;
+      z-index: 120;
+      display: flex;
+      align-items: flex-end;
+      justify-content: center;
+      visibility: hidden;
+      padding: 12px 12px 0;
+      background: rgba(27, 36, 58, .45);
+      opacity: 0;
+      backdrop-filter: blur(4px);
+      -webkit-backdrop-filter: blur(4px);
+      transition: opacity .2s ease, visibility .2s ease;
+    }
+
+    .modal.show {
+      visibility: visible;
+      opacity: 1;
+    }
+
+    .sheet {
+      width: 100%;
+      max-width: var(--app-width);
+      max-height: calc(100vh - 20px);
+      overflow-y: auto;
+      padding: 9px 18px calc(18px + env(safe-area-inset-bottom));
+      border: 1px solid var(--line);
+      border-bottom: 0;
+      border-radius: 25px 25px 0 0;
+      background: #fff;
+      box-shadow: 0 -18px 60px rgba(26, 36, 62, .2);
+      transform: translateY(24px);
+      transition: transform .22s ease;
+    }
+
+    .modal.show .sheet {
+      transform: translateY(0);
+    }
+
+    .dialog-center {
+      align-items: center;
+      padding: 16px;
+    }
+
+    .dialog-center .sheet {
+      max-width: 410px;
+      padding: 20px;
+      border: 1px solid var(--line);
+      border-radius: 22px;
+      transform: scale(.97);
+    }
+
+    .dialog-center.show .sheet {
+      transform: scale(1);
+    }
+
+    .sheet-handle {
+      width: 42px;
+      height: 4px;
+      margin: 0 auto 16px;
+      border-radius: 99px;
+      background: #d9deea;
+    }
+
+    .sheet-head {
+      margin-bottom: 16px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+    }
+
+    .sheet-title-wrap {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .sheet-title-icon {
+      width: 40px;
+      height: 40px;
+      display: grid;
+      place-items: center;
+      border-radius: 13px;
+      background: var(--primary-soft);
+      color: var(--primary);
+    }
+
+    .sheet-head h3 {
+      margin: 0;
+      font-size: 17px;
+      font-weight: 880;
+      letter-spacing: -.025em;
+    }
+
+    .sheet-head p {
+      margin: 2px 0 0;
+      color: var(--muted);
+      font-size: 10px;
+    }
+
+    .close-button {
+      width: 36px;
+      height: 36px;
+      flex: 0 0 36px;
+      display: grid;
+      place-items: center;
+      border-radius: 12px;
+      background: var(--surface-2);
+      color: var(--muted);
+    }
+
+    .form-group {
+      margin-bottom: 12px;
+    }
+
+    .form-label {
+      display: block;
+      margin: 0 0 6px 2px;
+      color: #4c566f;
+      font-size: 10px;
+      font-weight: 820;
+    }
+
+    .form-control {
+      width: 100%;
+      height: 46px;
+      padding: 0 13px;
+      border: 1px solid #dfe4ee;
+      outline: 0;
+      border-radius: 12px;
+      background: #fff;
+      color: var(--ink);
+      font-size: 12px;
+      transition: border-color .16s ease, box-shadow .16s ease;
+    }
+
+    .form-control:focus {
+      border-color: #7895ec;
+      box-shadow: 0 0 0 3px rgba(49, 88, 212, .11);
+    }
+
+    .form-message {
+      min-height: 17px;
+      margin: 2px 0 8px;
+      color: var(--danger);
+      font-size: 10px;
+      font-weight: 750;
+    }
+
+    .spinner {
+      width: 16px;
+      height: 16px;
+      display: inline-block;
+      border: 2px solid rgba(255, 255, 255, .45);
+      border-top-color: #fff;
+      border-radius: 50%;
+      animation: spin .7s linear infinite;
+    }
+
+    @keyframes spin {
+      to { transform: rotate(360deg); }
+    }
+
+    :focus-visible {
+      outline: 3px solid rgba(49, 88, 212, .25);
+      outline-offset: 2px;
+    }
+
+    @media (min-width: 600px) {
+      body {
+        padding: 24px 0 0;
+      }
+
+      .app-shell {
+        min-height: calc(100vh - 24px);
+        border: 1px solid #e1e5ef;
+        border-bottom: 0;
+        border-radius: 28px 28px 0 0;
+        box-shadow: 0 24px 80px rgba(30, 42, 70, .13);
+      }
+
+      .app-bar {
+        border-radius: 28px 28px 0 0;
+      }
+    }
+
+    @media (max-width: 380px) {
+      .screen {
+        padding-right: 12px;
+        padding-left: 12px;
+      }
+
+      .hero {
+        min-height: 168px;
+        padding: 18px;
+      }
+
+      .hero-content {
+        width: 77%;
+      }
+
+      .quick-grid {
+        gap: 6px;
+      }
+
+      .quick-action {
+        min-height: 74px;
+        padding-right: 3px;
+        padding-left: 3px;
+      }
+
+      .game-card {
+        min-height: 148px;
+      }
+
+      .game-cover {
+        height: 77px;
+      }
+    }
+
+    /* =========================================================
+       COLORFUL LIGHT THEME — tetap terang, tidak monoton putih
+       ========================================================= */
+    body {
+      background:
+        radial-gradient(circle at 12% 8%, rgba(96, 165, 250, .20), transparent 26%),
+        radial-gradient(circle at 90% 18%, rgba(167, 139, 250, .16), transparent 24%),
+        #edf2fb;
+      font-family: "Plus Jakarta Sans", Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    }
+
+    .app-shell {
+      background:
+        linear-gradient(180deg, #f7f9ff 0%, #f0f5ff 31%, #f8f9fd 72%, #f3f7ff 100%);
+    }
+
+    .app-bar {
+      min-height: 78px;
+      padding-top: calc(10px + env(safe-area-inset-top));
+      padding-bottom: 10px;
+      background: linear-gradient(105deg, rgba(255,255,255,.96), rgba(239,246,255,.96) 55%, rgba(245,243,255,.96));
+      border-bottom-color: #dbe4f6;
+      box-shadow: 0 5px 22px rgba(59, 78, 126, .07);
+    }
+
+    .brand-mark {
+      width: 52px;
+      height: 52px;
+      flex-basis: 52px;
+      border-color: #d9e3f7;
+      border-radius: 16px;
+      box-shadow: 0 7px 18px rgba(49, 88, 212, .13);
+    }
+
+    .brand-mark img {
+      width: 100%;
+      height: 100%;
+      padding: 0;
+      object-fit: contain;
+      transform: scale(1.28);
+    }
+
+    .brand-copy strong {
+      color: #1c2b50;
+      font-size: 15px;
+      font-weight: 800;
+      letter-spacing: .02em;
+    }
+
+    .brand-copy span {
+      color: #52688f;
+      font-size: 10px;
+      font-weight: 700;
+    }
+
+    .version-button {
+      border-color: #dce5f8;
+      background: linear-gradient(135deg, #edf3ff, #f4efff);
+      color: #53699b;
+    }
+
+    .hero {
+      border-color: rgba(255,255,255,.62);
+      background:
+        radial-gradient(circle at 92% 5%, rgba(255, 230, 146, .68), transparent 25%),
+        radial-gradient(circle at 94% 98%, rgba(128, 222, 255, .42), transparent 34%),
+        linear-gradient(135deg, #5478ee 0%, #6f63e9 48%, #3ca9e7 100%);
+      box-shadow: 0 18px 40px rgba(70, 93, 188, .24);
+    }
+
+    .hero .eyebrow {
+      background: rgba(255,255,255,.18);
+      color: #fff;
+      border: 1px solid rgba(255,255,255,.25);
+    }
+
+    .hero h1,
+    .hero h1 span {
+      color: #fff;
+    }
+
+    .hero p {
+      color: rgba(255,255,255,.86);
+    }
+
+    .hero .math-orbit {
+      border-color: rgba(255,255,255,.20);
+      box-shadow: 0 0 0 18px rgba(255,255,255,.06), 0 0 0 38px rgba(255,255,255,.035);
+    }
+
+    .quick-action {
+      border-width: 1px;
+      box-shadow: 0 8px 20px rgba(51, 71, 116, .08);
+    }
+
+    .quick-action:nth-child(1) {
+      border-color: #cddaff;
+      background: linear-gradient(145deg, #e9f0ff, #f5f8ff);
+    }
+
+    .quick-action:nth-child(2) {
+      border-color: #c7ebdc;
+      background: linear-gradient(145deg, #e7f8f1, #f4fcf8);
+    }
+
+    .quick-action:nth-child(3) {
+      border-color: #f2dda9;
+      background: linear-gradient(145deg, #fff3d7, #fffaf0);
+    }
+
+    .quick-action:nth-child(4) {
+      border-color: #bfe5f7;
+      background: linear-gradient(145deg, #e7f7ff, #f4fbff);
+    }
+
+    .motivation-card {
+      border-color: #f1d78d;
+      background: linear-gradient(110deg, #fff0bd, #fff8e3 58%, #fffdf8);
+      box-shadow: 0 8px 22px rgba(176, 123, 22, .09);
+    }
+
+    #game {
+      margin: 4px 10px 0;
+      padding: 17px 8px 20px;
+      border: 1px solid #dbe5ff;
+      border-radius: 26px;
+      background:
+        radial-gradient(circle at 100% 0, rgba(167, 139, 250, .22), transparent 31%),
+        radial-gradient(circle at 0 100%, rgba(56, 189, 248, .16), transparent 30%),
+        linear-gradient(145deg, #eef3ff, #f6f3ff 58%, #eefbff);
+      box-shadow: 0 14px 34px rgba(56, 72, 116, .08);
+    }
+
+    #game .section-head {
+      margin-top: 2px;
+    }
+
+    .game-card {
+      min-height: 210px;
+      padding: 9px;
+      border-width: 1px;
+      box-shadow: 0 10px 24px rgba(55, 70, 111, .10);
+    }
+
+    .game-card:nth-child(1) {
+      border-color: #cbd8ff;
+      background: linear-gradient(150deg, #dfe8ff, #f2f6ff);
+    }
+
+    .game-card:nth-child(2) {
+      border-color: #ffd9c4;
+      background: linear-gradient(150deg, #ffeadc, #fff7f1);
+    }
+
+    .game-card:nth-child(3) {
+      border-color: #dacbff;
+      background: linear-gradient(150deg, #e9e0ff, #f8f4ff);
+    }
+
+    .game-card:nth-child(4) {
+      border-color: #f1d48c;
+      background: linear-gradient(150deg, #ffedbd, #fff7df 58%, #edf3ff);
+    }
+
+    .game-cover,
+    .game-card:nth-child(1) .game-cover,
+    .game-card:nth-child(2) .game-cover,
+    .game-card:nth-child(3) .game-cover,
+    .game-card:nth-child(4) .game-cover {
+      width: 100%;
+      height: clamp(112px, 24vw, 132px);
+      padding: 7px;
+      overflow: hidden;
+      border: 1px solid rgba(255,255,255,.88);
+      background: rgba(255,255,255,.70);
+      box-shadow: inset 0 0 0 1px rgba(58, 75, 120, .025);
+    }
+
+    .game-cover img {
+      width: auto;
+      height: auto;
+      max-width: 100%;
+      max-height: 100%;
+      padding: 0;
+      object-fit: contain;
+      object-position: center;
+    }
+
+    .game-meta {
+      padding: 10px 3px 3px;
+    }
+
+    .game-title-row strong {
+      color: #1d2b4c;
+      font-size: 11px;
+      font-weight: 800;
+    }
+
+    .game-meta p {
+      color: #68738c;
+      font-size: 9px;
+    }
+
+    #belajar > .section-head,
+    #saya > .section-head {
+      padding: 0 2px;
+    }
+
+    #belajar > .panel:first-of-type {
+      border-color: #d4e0ff;
+      background: linear-gradient(135deg, #edf3ff, #fbfdff);
+    }
+
+    #bank-soal {
+      border-color: #cfdcff;
+      background: linear-gradient(135deg, #f1f5ff, #fff);
+    }
+
+    #kuis {
+      border-color: #c8eadc;
+      background: linear-gradient(135deg, #ecfaf4, #fff);
+    }
+
+    #platform {
+      border-color: #efdba5;
+      background: linear-gradient(135deg, #fff8e6, #fff);
+    }
+
+    details.accordion > summary {
+      background: rgba(255,255,255,.30);
+    }
+
+    .grade-tabs {
+      background: #e7ecf7;
+    }
+
+    .grade-tab.active {
+      color: #fff;
+      background: linear-gradient(135deg, #5277e8, #6b5de2);
+      box-shadow: 0 5px 13px rgba(67, 88, 181, .22);
+    }
+
+    .primary-button {
+      background: linear-gradient(135deg, #4b72e8, #6c5ee4);
+      box-shadow: 0 9px 20px rgba(70, 86, 187, .23);
+    }
+
+    .account-card {
+      border-color: #d4def6;
+      background: linear-gradient(145deg, #f0f5ff, #fff 60%, #f2efff);
+    }
+
+    .account-hero {
+      background: linear-gradient(120deg, #dfeaff, #f0edff 58%, #e9f8ff);
+    }
+
+    .account-button:first-child {
+      border-color: #c8eadc;
+      background: #f1fbf7;
+    }
+
+    .account-button:nth-child(2) {
+      border-color: #efdda9;
+      background: #fff9e9;
+    }
+
+    .bottom-nav {
+      border-top-color: #d9e2f3;
+      background: rgba(250,252,255,.95);
+    }
+
+    .nav-item.active {
+      background: linear-gradient(145deg, #e3ebff, #eeeaff);
+      color: #3f5fd0;
+      box-shadow: inset 0 0 0 1px rgba(88, 104, 204, .08);
+    }
+
+    @media (max-width: 380px) {
+      #game {
+        margin-right: 7px;
+        margin-left: 7px;
+        padding-right: 5px;
+        padding-left: 5px;
+      }
+
+      .game-card {
+        min-height: 200px;
+        padding: 7px;
+      }
+
+      .game-cover,
+      .game-card:nth-child(1) .game-cover,
+      .game-card:nth-child(2) .game-cover,
+      .game-card:nth-child(3) .game-cover,
+      .game-card:nth-child(4) .game-cover {
+        height: 110px;
+      }
+    }
+
+    /* =========================================================
+       MAROON • GOLD • WHITE • YELLOW • PURPLE — versi 3.2
+       ========================================================= */
+    :root {
+      --ink: #351a27;
+      --muted: #786673;
+      --line: #eadfdc;
+      --primary: #861f3d;
+      --primary-strong: #68152e;
+      --primary-soft: #f9e8ed;
+      --amber: #fff0b8;
+      --amber-strong: #946000;
+      --rose: #fde9ed;
+      --rose-strong: #9a2442;
+      --shadow-sm: 0 5px 18px rgba(100, 31, 57, .08);
+      --shadow-md: 0 18px 46px rgba(91, 28, 55, .16);
+    }
+
+    html,
+    body {
+      background: #f8f1e9;
+    }
+
+    body {
+      background:
+        radial-gradient(circle at 8% 9%, rgba(247, 198, 68, .20), transparent 25%),
+        radial-gradient(circle at 93% 15%, rgba(117, 58, 150, .15), transparent 26%),
+        linear-gradient(135deg, #fffaf2, #f7f0ea 52%, #f5eef9);
+    }
+
+    .app-shell {
+      background:
+        radial-gradient(circle at 100% 4%, rgba(255, 211, 91, .15), transparent 20%),
+        radial-gradient(circle at 0 40%, rgba(129, 61, 157, .08), transparent 26%),
+        linear-gradient(180deg, #fffdf9 0%, #fff8ed 31%, #faf4fb 64%, #fffaf3 100%);
+    }
+
+    .app-bar {
+      min-height: 80px;
+      padding: calc(10px + env(safe-area-inset-top)) 16px 10px;
+      background: linear-gradient(105deg, rgba(255,255,255,.97), rgba(255,249,235,.97) 60%, rgba(249,240,252,.97));
+      border-bottom: 2px solid #edce75;
+      box-shadow: 0 7px 24px rgba(101, 29, 54, .09);
+    }
+
+    .brand {
+      flex: 1;
+    }
+
+    .brand-mark {
+      width: 170px;
+      height: 56px;
+      flex: 0 0 170px;
+      display: flex;
+      align-items: center;
+      justify-content: flex-start;
+      overflow: visible;
+      border: 0;
+      border-radius: 0;
+      background: transparent;
+      box-shadow: none;
+    }
+
+    .brand-mark img {
+      width: 100%;
+      height: 100%;
+      padding: 0;
+      object-fit: contain;
+      object-position: left center;
+      transform: none;
+      filter: drop-shadow(0 4px 7px rgba(99, 28, 51, .08));
+    }
+
+    .brand-fallback {
+      color: #791b37;
+      font-size: 15px;
+      font-weight: 800;
+      letter-spacing: .02em;
+    }
+
+    .version-button {
+      border-color: #e7cd84;
+      background: linear-gradient(135deg, #fff5ca, #f8e9b8);
+      color: #7c2942;
+      box-shadow: 0 4px 11px rgba(141, 90, 13, .09);
+    }
+
+    .hero {
+      min-height: 190px;
+      border-color: #e7c36c;
+      background:
+        radial-gradient(circle at 88% 10%, rgba(255, 218, 96, .30), transparent 28%),
+        radial-gradient(circle at 8% 100%, rgba(255, 189, 73, .15), transparent 31%),
+        linear-gradient(135deg, #76162f 0%, #a32643 46%, #682472 100%);
+      box-shadow: 0 19px 42px rgba(100, 25, 57, .27), inset 0 0 0 1px rgba(255,255,255,.10);
+    }
+
+    .hero-content {
+      width: 67%;
+    }
+
+    .hero .eyebrow {
+      border-color: rgba(255, 225, 132, .34);
+      background: rgba(255, 244, 210, .13);
+      color: #ffe59a;
+    }
+
+    .hero .eyebrow .dot {
+      background: #ffd45e;
+      box-shadow: 0 0 0 3px rgba(255, 212, 94, .18);
+    }
+
+    .hero h1 {
+      color: #fff;
+      text-shadow: 0 3px 12px rgba(55, 6, 25, .16);
+    }
+
+    .hero h1 span {
+      color: #ffd86e;
+    }
+
+    .hero p {
+      color: rgba(255, 249, 236, .87);
+    }
+
+    .hero-emblem {
+      position: absolute;
+      right: 14px;
+      bottom: 22px;
+      z-index: 2;
+      width: 116px;
+      height: 116px;
+      display: grid;
+      place-items: center;
+    }
+
+    .hero-emblem-glow {
+      position: absolute;
+      inset: 7px;
+      border-radius: 50%;
+      background: rgba(255, 210, 77, .24);
+      box-shadow: 0 0 0 12px rgba(255, 214, 91, .07), 0 0 38px rgba(255, 206, 63, .24);
+    }
+
+    .hero-emblem img {
+      position: relative;
+      z-index: 2;
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+      border-radius: 25px;
+      filter: drop-shadow(0 12px 18px rgba(49, 4, 23, .30));
+    }
+
+    .hero-emblem-fallback {
+      display: none;
+      position: relative;
+      z-index: 2;
+      color: #ffd760;
+      font-size: 34px;
+      font-weight: 800;
+    }
+
+    .section-head h2,
+    .section-head h3 {
+      color: #68182f;
+    }
+
+    .section-tag {
+      color: #70287d;
+    }
+
+    .quick-action {
+      color: #4c2030;
+      box-shadow: 0 8px 20px rgba(94, 34, 57, .09);
+    }
+
+    .quick-action:nth-child(1) {
+      border-color: #e7b5c2;
+      background: linear-gradient(145deg, #f9e4e9, #fff8f9);
+    }
+
+    .quick-action:nth-child(1) .quick-icon {
+      background: #8a1d3c;
+      color: #fff3cf;
+    }
+
+    .quick-action:nth-child(2) {
+      border-color: #ecd180;
+      background: linear-gradient(145deg, #fff0b9, #fffaf0);
+    }
+
+    .quick-action:nth-child(2) .quick-icon {
+      background: #e4ad25;
+      color: #62182f;
+    }
+
+    .quick-action:nth-child(3) {
+      border-color: #d6b8e6;
+      background: linear-gradient(145deg, #f0e2f7, #fcf7ff);
+    }
+
+    .quick-action:nth-child(3) .quick-icon {
+      background: #762e84;
+      color: #fff;
+    }
+
+    .quick-action:nth-child(4) {
+      border-color: #eedb7c;
+      background: linear-gradient(145deg, #fff8c9, #fffdf2);
+    }
+
+    .quick-action:nth-child(4) .quick-icon {
+      background: #f2c94c;
+      color: #75213a;
+    }
+
+    .motivation-card {
+      border-color: #e6c25e;
+      background: linear-gradient(110deg, #ffe79b, #fff4c9 58%, #fff9e9);
+      box-shadow: 0 9px 22px rgba(139, 86, 7, .12);
+    }
+
+    .motivation-icon {
+      background: #871f3d;
+      color: #ffe18a;
+    }
+
+    .motivation-card span {
+      color: #75542e;
+    }
+
+    #game {
+      border-color: #e0bd68;
+      background:
+        radial-gradient(circle at 100% 0, rgba(115, 42, 131, .19), transparent 30%),
+        radial-gradient(circle at 0 100%, rgba(255, 210, 75, .24), transparent 33%),
+        linear-gradient(145deg, #fff7df, #f9edf3 52%, #f3e9f8);
+      box-shadow: 0 16px 36px rgba(91, 26, 54, .12);
+    }
+
+    .game-grid {
+      gap: 10px;
+    }
+
+    .game-card {
+      min-height: 0;
+      border-width: 1px;
+      box-shadow: 0 10px 24px rgba(86, 30, 54, .11);
+    }
+
+    .game-card:nth-child(1) {
+      border-color: #d8aeb9;
+      background: linear-gradient(150deg, #f6dce3, #fff7f8);
+    }
+
+    .game-card:nth-child(2) {
+      border-color: #e7c35f;
+      background: linear-gradient(150deg, #ffe69b, #fff8df);
+    }
+
+    .game-card:nth-child(3) {
+      border-color: #cba8dd;
+      background: linear-gradient(150deg, #ead8f2, #fbf4ff);
+    }
+
+    .game-card:nth-child(4) {
+      border-color: #dda854;
+      background: linear-gradient(150deg, #ffdc72, #fff2bf 58%, #f4e6f7);
+    }
+
+    .game-cover,
+    .game-card:nth-child(1) .game-cover,
+    .game-card:nth-child(2) .game-cover,
+    .game-card:nth-child(3) .game-cover,
+    .game-card:nth-child(4) .game-cover {
+      position: relative;
+      width: 100%;
+      height: auto;
+      min-height: 0;
+      aspect-ratio: 4 / 3;
+      padding: 0;
+      overflow: hidden;
+      border: 1px solid rgba(255,255,255,.90);
+      background: rgba(255,255,255,.78);
+      box-shadow: inset 0 0 0 1px rgba(119, 76, 24, .04);
+    }
+
+    .game-cover img {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      max-width: none;
+      max-height: none;
+      padding: 12px;
+      object-fit: contain;
+      object-position: center;
+    }
+
+    .new-badge {
+      z-index: 4;
+      background: linear-gradient(135deg, #861f3d, #70287d);
+      color: #ffe58b;
+      box-shadow: 0 5px 12px rgba(100, 24, 54, .20);
+    }
+
+    .game-title-row strong {
+      color: #65182f;
+    }
+
+    .game-title-row .icon {
+      color: #7d2b79;
+    }
+
+    #belajar > .panel:first-of-type {
+      border-color: #e3bd69;
+      background: linear-gradient(135deg, #fff4c9, #fffdf8 56%, #f4e9f8);
+    }
+
+    #bank-soal {
+      border-color: #dfb2be;
+      background: linear-gradient(135deg, #fae9ed, #fffaf9);
+    }
+
+    #kuis {
+      border-color: #d6bbdf;
+      background: linear-gradient(135deg, #f2e7f6, #fffafd);
+    }
+
+    #platform {
+      border-color: #e4c160;
+      background: linear-gradient(135deg, #fff1b8, #fffaf0);
+    }
+
+    .summary-icon {
+      background: #f4dfe5;
+      color: #861f3d;
+    }
+
+    .grade-tabs {
+      background: #f0e1e5;
+    }
+
+    .grade-tab.active {
+      color: #ffe89a;
+      background: linear-gradient(135deg, #861f3d, #6f267a);
+      box-shadow: 0 6px 15px rgba(105, 27, 65, .23);
+    }
+
+    .pdf-icon {
+      background: #f5dce3;
+      color: #861f3d;
+    }
+
+    .icon-button.primary,
+    .primary-button {
+      border-color: #7b1b38;
+      background: linear-gradient(135deg, #8e213f, #6e2679);
+      color: #fff9e8;
+      box-shadow: 0 9px 20px rgba(103, 27, 65, .22);
+    }
+
+    .platform-icon {
+      background: #f5dce3;
+      color: #861f3d;
+    }
+
+    .account-card {
+      border-color: #e0bd68;
+      background: linear-gradient(145deg, #fff5d2, #fff 55%, #f3e7f7);
+    }
+
+    .account-hero {
+      background: linear-gradient(120deg, #f6dce4, #fff0b8 55%, #ead9f1);
+    }
+
+    .account-avatar {
+      background: linear-gradient(145deg, #8b203f, #6c2878);
+      color: #ffe18a;
+    }
+
+    .account-button:first-child {
+      border-color: #dfb1bd;
+      background: #fff3f5;
+    }
+
+    .account-button:nth-child(2) {
+      border-color: #e8ca73;
+      background: #fff8da;
+    }
+
+    .bottom-nav {
+      border-top: 2px solid #e6c86f;
+      background: rgba(255,253,247,.96);
+      box-shadow: 0 -12px 34px rgba(90, 29, 55, .11);
+    }
+
+    .nav-item {
+      color: #8e7882;
+    }
+
+    .nav-item.active {
+      background: linear-gradient(145deg, #f7dfe5, #fff0b6 58%, #eee0f4);
+      color: #7d1c3a;
+      box-shadow: inset 0 0 0 1px rgba(153, 99, 18, .12);
+    }
+
+    .sheet-title-icon {
+      background: #f5dce3;
+      color: #861f3d;
+    }
+
+    .form-control:focus {
+      border-color: #ad6c7e;
+      box-shadow: 0 0 0 3px rgba(134, 31, 61, .11);
+    }
+
+    :focus-visible {
+      outline-color: rgba(214, 164, 41, .45);
+    }
+
+    @media (max-width: 380px) {
+      .brand-mark {
+        width: 154px;
+        height: 52px;
+        flex-basis: 154px;
+      }
+
+      .hero {
+        min-height: 184px;
+      }
+
+      .hero-content {
+        width: 65%;
+      }
+
+      .hero-emblem {
+        right: 8px;
+        bottom: 25px;
+        width: 102px;
+        height: 102px;
+      }
+
+      .game-cover,
+      .game-card:nth-child(1) .game-cover,
+      .game-card:nth-child(2) .game-cover,
+      .game-card:nth-child(3) .game-cover,
+      .game-card:nth-child(4) .game-cover {
+        height: auto;
+        aspect-ratio: 4 / 3;
+      }
+
+      .game-cover img {
+        padding: 8px;
+      }
+    }
+
+    /* =========================================================
+       REFINEMENT 3.3 — warna background dari desain lama
+       #8B0000 • #7F1D1D • #991B1B • #D4AF37 • #FACC15 • #4C1D95
+       ========================================================= */
+    body {
+      background:
+        radial-gradient(circle at 8% 13%, rgba(250, 204, 21, .34), transparent 28%),
+        radial-gradient(circle at 92% 16%, rgba(76, 29, 149, .18), transparent 30%),
+        radial-gradient(circle at 82% 88%, rgba(139, 0, 0, .12), transparent 34%),
+        linear-gradient(135deg, #fffdf7 0%, #fff3d2 28%, #f8e9ed 61%, #eee8fa 100%);
+      background-attachment: fixed;
+    }
+
+    .app-shell {
+      background:
+        radial-gradient(circle at 100% 8%, rgba(212, 175, 55, .13), transparent 22%),
+        radial-gradient(circle at 0 43%, rgba(76, 29, 149, .07), transparent 25%),
+        linear-gradient(180deg, #fffefb 0%, #fff9ec 34%, #faf2f5 66%, #fffaf0 100%);
+    }
+
+    .app-bar {
+      background: linear-gradient(105deg, rgba(255,255,255,.98), rgba(255,249,231,.98) 62%, rgba(247,239,252,.98));
+      border-bottom-color: #d4af37;
+    }
+
+    .hero {
+      border-color: #d4af37;
+      background:
+        radial-gradient(circle at 89% 7%, rgba(250, 204, 21, .28), transparent 28%),
+        radial-gradient(circle at 5% 100%, rgba(212, 175, 55, .15), transparent 31%),
+        linear-gradient(135deg, #7f1d1d 0%, #991b1b 48%, #4c1d95 100%);
+      box-shadow: 0 19px 42px rgba(88, 20, 48, .28), inset 0 0 0 1px rgba(255,255,255,.10);
+    }
+
+    .hero h1 span {
+      color: #facc15;
+    }
+
+    .hero .eyebrow {
+      border-color: rgba(250, 204, 21, .48);
+      background: rgba(255,255,255,.10);
+      color: #fff0a6;
+    }
+
+    .section-head h2,
+    .section-head h3 {
+      color: #7f1d1d;
+    }
+
+    .motivation-card {
+      position: relative;
+      overflow: hidden;
+      border-color: #d4af37;
+      background:
+        radial-gradient(circle at 96% 8%, rgba(76, 29, 149, .10), transparent 32%),
+        linear-gradient(110deg, #ffffff 0%, #fff8dc 58%, #f7effb 100%);
+      box-shadow: 0 9px 23px rgba(112, 67, 10, .12);
+    }
+
+    .motivation-card::before {
+      content: "";
+      position: absolute;
+      top: 0;
+      bottom: 0;
+      left: 0;
+      width: 4px;
+      background: linear-gradient(180deg, #8b0000, #d4af37 55%, #4c1d95);
+    }
+
+    .motivation-card .motivation-icon {
+      position: relative;
+      z-index: 1;
+      border: 1px solid #c99d16;
+      background: linear-gradient(145deg, #facc15, #d4af37);
+      color: #7f1d1d;
+      box-shadow: 0 6px 14px rgba(151, 105, 5, .20);
+    }
+
+    .motivation-card .motivation-icon .icon {
+      width: 21px;
+      height: 21px;
+      stroke: currentColor;
+      stroke-width: 2.4;
+    }
+
+    .motivation-card > div {
+      position: relative;
+      z-index: 1;
+    }
+
+    .motivation-card > div > strong {
+      color: #68152e;
+    }
+
+    .motivation-card > div > span {
+      color: #765f4a;
+    }
+
+    #game {
+      border-color: #d4af37;
+      background:
+        radial-gradient(circle at 100% 0, rgba(76, 29, 149, .18), transparent 31%),
+        radial-gradient(circle at 0 100%, rgba(250, 204, 21, .24), transparent 34%),
+        linear-gradient(145deg, #fff8dc, #f9e9ed 53%, #f1e8f9);
+    }
+
+    .game-card:nth-child(1) {
+      border-color: #c98fa0;
+      background: linear-gradient(150deg, #f6dce3, #fff8f9);
+    }
+
+    .game-card:nth-child(2) {
+      border-color: #d4af37;
+      background: linear-gradient(150deg, #ffe48b, #fff8dc);
+    }
+
+    .game-card:nth-child(3) {
+      border-color: #ac83c6;
+      background: linear-gradient(150deg, #e9d8f3, #fbf5ff);
+    }
+
+    .game-card:nth-child(4) {
+      border-color: #d4af37;
+      background: linear-gradient(150deg, #facc15, #fff0a8 58%, #eee3f5);
+    }
+
+    .grade-tab.active,
+    .icon-button.primary,
+    .primary-button {
+      background: linear-gradient(135deg, #8b0000, #7f1d1d 55%, #4c1d95);
+    }
+
+    .bottom-nav {
+      border-top-color: #d4af37;
+    }
+
+    .nav-item.active {
+      color: #7f1d1d;
+      background: linear-gradient(145deg, #f8e2e7, #fff0ad 58%, #ede0f5);
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      html { scroll-behavior: auto; }
+      *, *::before, *::after {
+        scroll-behavior: auto !important;
+        animation-duration: .01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: .01ms !important;
+      }
+    }
+  </style>
 </head>
-<body class="bg-gray-50 text-gray-800">
+<body>
+  <!-- Ikon SVG lokal: tetap tampil walaupun halaman sedang offline. -->
+  <svg width="0" height="0" style="position:absolute" aria-hidden="true" focusable="false">
+    <symbol id="i-home" viewBox="0 0 24 24"><path d="m3 10 9-7 9 7v10a1 1 0 0 1-1 1h-5v-7H9v7H4a1 1 0 0 1-1-1Z"/></symbol>
+    <symbol id="i-scan" viewBox="0 0 24 24"><path d="M3 7V4a1 1 0 0 1 1-1h3M17 3h3a1 1 0 0 1 1 1v3M21 17v3a1 1 0 0 1-1 1h-3M7 21H4a1 1 0 0 1-1-1v-3M7 8h3v3H7zM14 8h3v3h-3zM7 14h3v3H7zM14 14h3v3h-3z"/></symbol>
+    <symbol id="i-user" viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"/><path d="M4 21a8 8 0 0 1 16 0"/></symbol>
+    <symbol id="i-users" viewBox="0 0 24 24"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.87M16 3.13a4 4 0 0 1 0 7.75"/></symbol>
+    <symbol id="i-game" viewBox="0 0 24 24"><path d="M8.5 6h7a6.5 6.5 0 0 1 6.1 8.7l-1 2.8a2.3 2.3 0 0 1-3.8.8L14.5 16h-5l-2.3 2.3a2.3 2.3 0 0 1-3.8-.8l-1-2.8A6.5 6.5 0 0 1 8.5 6Z"/><path d="M7 10v4M5 12h4M16 11h.01M19 13h.01"/></symbol>
+    <symbol id="i-book" viewBox="0 0 24 24"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20V4H6.5A2.5 2.5 0 0 0 4 6.5Z"/><path d="M4 6.5v13A2.5 2.5 0 0 0 6.5 22H20v-5"/></symbol>
+    <symbol id="i-trophy" viewBox="0 0 24 24"><path d="M8 21h8M12 17v4M7 4h10v4a5 5 0 0 1-10 0Z"/><path d="M7 6H3v1a4 4 0 0 0 4 4M17 6h4v1a4 4 0 0 1-4 4"/></symbol>
+    <symbol id="i-video" viewBox="0 0 24 24"><rect x="3" y="5" width="15" height="14" rx="2"/><path d="m18 10 4-2v8l-4-2Z"/></symbol>
+    <symbol id="i-refresh" viewBox="0 0 24 24"><path d="M20 11a8 8 0 0 0-14.9-3M4 4v5h5M4 13a8 8 0 0 0 14.9 3M20 20v-5h-5"/></symbol>
+    <symbol id="i-file" viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8Z"/><path d="M14 2v6h6M8 13h8M8 17h6"/></symbol>
+    <symbol id="i-edit" viewBox="0 0 24 24"><path d="M12 20h9M16.5 3.5a2.1 2.1 0 0 1 3 3L8 18l-4 1 1-4Z"/></symbol>
+    <symbol id="i-grid" viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/></symbol>
+    <symbol id="i-external" viewBox="0 0 24 24"><path d="M15 3h6v6M10 14 21 3M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/></symbol>
+    <symbol id="i-download" viewBox="0 0 24 24"><path d="M12 3v12M7 10l5 5 5-5M5 21h14"/></symbol>
+    <symbol id="i-chevron" viewBox="0 0 24 24"><path d="m6 9 6 6 6-6"/></symbol>
+    <symbol id="i-arrow" viewBox="0 0 24 24"><path d="m9 18 6-6-6-6"/></symbol>
+    <symbol id="i-x" viewBox="0 0 24 24"><path d="M18 6 6 18M6 6l12 12"/></symbol>
+    <symbol id="i-lock" viewBox="0 0 24 24"><rect x="4" y="10" width="16" height="11" rx="2"/><path d="M8 10V7a4 4 0 0 1 8 0v3"/></symbol>
+    <symbol id="i-quiz" viewBox="0 0 24 24"><path d="M9 11h6M9 15h4M9 7h6"/><rect x="4" y="3" width="16" height="18" rx="2"/></symbol>
+  </svg>
 
-<nav class="px-4 py-3 flex justify-between items-center shadow-md border-b-4 border-yellow-500 sticky top-0 bg-white z-50">
-  <div class="flex items-center">
-    <img src="images/logo-ez.png" class="h-14 mr-2" onerror="this.style.display='none'">
-    <span class="font-black text-red-800" style="font-size:1.5rem">APPLIKASI LES PRIVATE MATEMATIKA 2026-2027</span>
-  </div>
-  <!-- Tombol Admin TERSEMBUNYI - hanya bisa diakses lewat ketuk logo 5x -->
-  <div id="adminCount" class="hidden bg-gray-100 px-3 py-1 rounded-full text-xs" style="font-size:0.7rem"></div>
-  <button onclick="tapLogoSecret()" class="text-gray-400 text-sm px-2 py-1" style="font-size:0.8rem">v2.0</button>
-</nav>
-
-<section class="px-4 py-6">
-  <div class="text-center mb-6">
-    <h1 class="font-luxury text-red-900 mb-2" style="font-size:3rem;line-height:1;">Portal Belajar <span class="text-yellow-600 italic">Eksklusif</span></h1>
-    <p class="text-gray-600 txt-big">Pilih menu untuk masuk</p>
-  </div>
-
-  <div class="space-y-4">
-
-    <!-- TOMBOL SCAN QR -->
-  <button onclick="goScan()" class="card-tap w-full bg-gradient-to-br from-yellow-400 to-yellow-600 p-5 rounded-3xl shadow-xl text-red-900 flex items-center">
-    <div class="mr-4 flex items-center justify-center bg-white/30 rounded-2xl" style="min-width:90px;height:90px">
-      <svg xmlns="http://www.w3.org/2000/svg" width="55" height="55" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
-        <rect width="5" height="5" x="3" y="3" rx="1"/>
-        <rect width="5" height="5" x="16" y="3" rx="1"/>
-        <rect width="5" height="5" x="3" y="16" rx="1"/>
-        <path d="M21 16h-3a2 2 0 0 0-2 2v3"/>
-        <path d="M21 21v.01"/>
-        <path d="M12 7v3a2 2 0 0 1-2 2H7"/>
-        <path d="M3 12h.01"/>
-        <path d="M12 3h.01"/>
-        <path d="M12 16v.01"/>
-        <path d="M16 12h1"/>
-        <path d="M21 12v.01"/>
-        <path d="M12 21v-1"/>
-      </svg>
-    </div>
-    <div class="text-left flex-1">
-      <div class="txt-jumbo">SCAN QR</div>
-      <div class="txt-med opacity-90">Presensi Kehadiran Siswa</div>
-    </div>
-    <div style="font-size:3.5rem;font-weight:900" class="ml-2">›</div>
-  </button>
-
-  <!-- TOMBOL LOGIN SISWA -->
-  <button onclick="openModalSiswa()" class="card-tap w-full bg-gradient-to-br from-red-900 to-red-700 p-5 rounded-3xl shadow-xl text-white flex items-center">
-    <div class="mr-4 flex items-center justify-center bg-white/20 rounded-2xl" style="min-width:90px;height:90px">
-      <svg xmlns="http://www.w3.org/2000/svg" width="55" height="55" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
-        <path d="M22 10v6M2 10l10-5 10 5-10 5z"/>
-        <path d="M6 12v5c0 2 2 3 6 3s6-1 6-3v-5"/>
-      </svg>
-    </div>
-    <div class="text-left flex-1">
-      <div class="txt-jumbo">LOGIN SISWA</div>
-      <div class="txt-med opacity-90">Jadwal • Nilai • Kehadiran</div>
-    </div>
-    <div style="font-size:3.5rem;font-weight:900" class="ml-2">›</div>
-  </button>
-
-  <!-- TOMBOL LOGIN ORTU -->
-  <button onclick="openModalOrtu()" class="card-tap w-full bg-white border-4 border-red-900 p-5 rounded-3xl shadow-xl text-red-900 flex items-center">
-    <div class="mr-4 flex items-center justify-center bg-red-50 rounded-2xl" style="min-width:90px;height:90px">
-      <svg xmlns="http://www.w3.org/2000/svg" width="55" height="55" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
-        <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/>
-        <circle cx="9" cy="7" r="4"/>
-        <path d="M23 21v-2a4 4 0 0 0-3-3.87"/>
-        <path d="M16 3.13a4 4 0 0 1 0 7.75"/>
-      </svg>
-    </div>
-    <div class="text-left flex-1">
-      <div class="txt-jumbo">LOGIN ORTU</div>
-      <div class="txt-med text-gray-600">Pantau Kehadiran dan Nilai Anak</div>
-    </div>
-    <div style="font-size:3.5rem;font-weight:900" class="ml-2">›</div>
-  </button>
-
-  </div>
-</section>
-
-<!-- KURIKULUM -->
-<section class="bg-red-900 py-8 px-4 text-white mt-4">
-  <h2 class="font-luxury mb-5 text-yellow-400 text-center" style="font-size:2.4rem">Kurikulum Merdeka</h2>
-  <div class="space-y-3">
-    <div class="bg-red-800 p-5 rounded-2xl border-2 border-yellow-600 flex items-center">
-      <div style="font-size:3.5rem" class="mr-4">📘</div>
-      <div><div class="txt-huge">Modul Teori</div><div class="txt-med opacity-90">PDF interaktif lengkap</div></div>
-    </div>
-    <div class="bg-red-800 p-5 rounded-2xl border-2 border-yellow-600 flex items-center">
-      <div style="font-size:3.5rem" class="mr-4">🎥</div>
-      <div><div class="txt-huge">Video Pembahasan</div><div class="txt-med opacity-90">Penjelasan visual</div></div>
-    </div>
-    <div class="bg-red-800 p-5 rounded-2xl border-2 border-yellow-600 flex items-center">
-      <div style="font-size:3.5rem" class="mr-4">🔄</div>
-      <div><div class="txt-huge">Update Mingguan</div><div class="txt-med opacity-90">Konten baru tiap Minggu</div></div>
-    </div>
-  </div>
-</section>
-
-<!-- BANK SOAL PDF -->
-<section class="px-4 py-8">
-  <h2 class="font-luxury text-red-900 mb-3 text-center" style="font-size:2.4rem">Bank Soal PDF</h2>
-  <p class="text-gray-600 text-center mb-5 txt-med">Pilih jenjang pendidikan</p>
-  
-  <!-- TAB JENJANG -->
-  <div class="flex bg-white rounded-2xl shadow overflow-hidden mb-5 border-2 border-red-900">
-    <button onclick="showJenjang('sd')" id="tabSD" class="flex-1 py-4 font-black txt-big text-gray-600">🎒 SD</button>
-    <button onclick="showJenjang('smp')" id="tabSMP" class="flex-1 py-4 font-black txt-big bg-red-900 text-white">📚 SMP</button>
-    <button onclick="showJenjang('sma')" id="tabSMA" class="flex-1 py-4 font-black txt-big text-gray-600">🎓 SMA</button>
-  </div>
-
-  <!-- ============ TAB SD ============ -->
-  <div id="jenjangSD" class="hidden space-y-4">
-    <div class="border-2 border-gray-200 p-5 rounded-2xl bg-white">
-      <div class="text-red-700 font-black txt-med">PDF FILE • SD</div>
-      <h4 class="txt-huge mb-3 text-red-900">Latihan Paket A</h4>
-      <div class="flex gap-2">
-        <button onclick="bukaPDF('pdf/sd/soal-a.pdf')" class="flex-1 text-center bg-gray-800 text-white py-4 rounded-xl font-black txt-big">📖 Buka</button>
-        <a href="pdf/sd/soal-a.pdf" download class="flex-1 text-center border-2 py-4 rounded-xl font-black txt-big">⬇️ Download</a>
-      </div>
-    </div>
-    <div class="border-2 border-gray-200 p-5 rounded-2xl bg-white">
-      <div class="text-red-700 font-black txt-med">PDF FILE • SD</div>
-      <h4 class="txt-huge mb-3 text-red-900">Latihan Paket B</h4>
-      <div class="flex gap-2">
-        <button onclick="bukaPDF('pdf/sd/soal-b.pdf')" class="flex-1 text-center bg-gray-800 text-white py-4 rounded-xl font-black txt-big">📖 Buka</button>
-        <a href="pdf/sd/soal-b.pdf" download class="flex-1 text-center border-2 py-4 rounded-xl font-black txt-big">⬇️ Download</a>
-      </div>
-    </div>
-    <div class="border-2 border-gray-200 p-5 rounded-2xl bg-white">
-      <div class="text-red-700 font-black txt-med">PDF FILE • SD</div>
-      <h4 class="txt-huge mb-3 text-red-900">UTS 2026</h4>
-      <div class="flex gap-2">
-        <button onclick="bukaPDF('pdf/sd/uts-2026.pdf')" class="flex-1 text-center bg-gray-800 text-white py-4 rounded-xl font-black txt-big">📖 Buka</button>
-        <a href="pdf/sd/uts-2026.pdf" download class="flex-1 text-center border-2 py-4 rounded-xl font-black txt-big">⬇️ Download</a>
-      </div>
-    </div>
-  </div>
-
-  <!-- ============ TAB SMP (DEFAULT AKTIF) ============ -->
-  <div id="jenjangSMP" class="space-y-4">
-    <div class="border-2 border-gray-200 p-5 rounded-2xl bg-white">
-      <div class="text-red-700 font-black txt-med">PDF FILE • SMP</div>
-      <h4 class="txt-huge mb-3 text-red-900">Latihan Paket A</h4>
-      <div class="flex gap-2">
-        <button onclick="bukaPDF('pdf/smp/soal-a.pdf')" class="flex-1 text-center bg-gray-800 text-white py-4 rounded-xl font-black txt-big">📖 Buka</button>
-        <a href="pdf/smp/soal-a.pdf" download class="flex-1 text-center border-2 py-4 rounded-xl font-black txt-big">⬇️ Download</a>
-      </div>
-    </div>
-    <div class="border-2 border-gray-200 p-5 rounded-2xl bg-white">
-      <div class="text-red-700 font-black txt-med">PDF FILE • SMP</div>
-      <h4 class="txt-huge mb-3 text-red-900">Latihan Paket B</h4>
-      <div class="flex gap-2">
-        <button onclick="bukaPDF('pdf/smp/soal-b.pdf')" class="flex-1 text-center bg-gray-800 text-white py-4 rounded-xl font-black txt-big">📖 Buka</button>
-        <a href="pdf/smp/soal-b.pdf" download class="flex-1 text-center border-2 py-4 rounded-xl font-black txt-big">⬇️ Download</a>
-      </div>
-    </div>
-    <div class="border-2 border-gray-200 p-5 rounded-2xl bg-white">
-      <div class="text-red-700 font-black txt-med">PDF FILE • SMP</div>
-      <h4 class="txt-huge mb-3 text-red-900">UTS 2026</h4>
-      <div class="flex gap-2">
-        <button onclick="bukaPDF('pdf/smp/uts-2026.pdf')" class="flex-1 text-center bg-gray-800 text-white py-4 rounded-xl font-black txt-big">📖 Buka</button>
-        <a href="pdf/smp/uts-2026.pdf" download class="flex-1 text-center border-2 py-4 rounded-xl font-black txt-big">⬇️ Download</a>
-      </div>
-    </div>
-  </div>
-
-  <!-- ============ TAB SMA ============ -->
-  <div id="jenjangSMA" class="hidden space-y-4">
-    <div class="border-2 border-gray-200 p-5 rounded-2xl bg-white">
-      <div class="text-red-700 font-black txt-med">PDF FILE • SMA</div>
-      <h4 class="txt-huge mb-3 text-red-900">Latihan Paket A</h4>
-      <div class="flex gap-2">
-        <button onclick="bukaPDF('pdf/sma/soal-a.pdf')" class="flex-1 text-center bg-gray-800 text-white py-4 rounded-xl font-black txt-big">📖 Buka</button>
-        <a href="pdf/sma/soal-a.pdf" download class="flex-1 text-center border-2 py-4 rounded-xl font-black txt-big">⬇️ Download</a>
-      </div>
-    </div>
-    <div class="border-2 border-gray-200 p-5 rounded-2xl bg-white">
-      <div class="text-red-700 font-black txt-med">PDF FILE • SMA</div>
-      <h4 class="txt-huge mb-3 text-red-900">Latihan Paket B</h4>
-      <div class="flex gap-2">
-        <button onclick="bukaPDF('pdf/sma/soal-b.pdf')" class="flex-1 text-center bg-gray-800 text-white py-4 rounded-xl font-black txt-big">📖 Buka</button>
-        <a href="pdf/sma/soal-b.pdf" download class="flex-1 text-center border-2 py-4 rounded-xl font-black txt-big">⬇️ Download</a>
-      </div>
-    </div>
-    <div class="border-2 border-gray-200 p-5 rounded-2xl bg-white">
-      <div class="text-red-700 font-black txt-med">PDF FILE • SMA</div>
-      <h4 class="txt-huge mb-3 text-red-900">TKA Matematika</h4>
-      <div class="flex gap-2">
-        <button onclick="bukaPDF('pdf/sma/tka-matematika.pdf')" class="flex-1 text-center bg-gray-800 text-white py-4 rounded-xl font-black txt-big">📖 Buka</button>
-        <a href="pdf/sma/tka-matematika.pdf" download class="flex-1 text-center border-2 py-4 rounded-xl font-black txt-big">⬇️ Download</a>
-      </div>
-    </div>
-  </div>
-</section>
-  <!-- KUIS ONLINE (GOOGLE FORM) -->
-<section class="px-4 py-8 bg-yellow-50">
-  <h2 class="font-luxury text-red-900 mb-3 text-center" style="font-size:2.4rem">📝 Kuis Online</h2>
-  <p class="text-gray-600 text-center mb-5 txt-med">Kerjakan soal quiz melalui Google Form</p>
-  
-  <!-- Tombol Buka Kuis di Tab Baru -->
-  <a href="https://docs.google.com/forms/d/e/1FAIpQLScwpnG3WF07Ee9R4NJAh2741nRYVJ1_lF1EjhUo8obCzHVaFw/viewform" target="_blank" class="card-tap block w-full bg-gradient-to-r from-red-800 to-red-600 text-white p-5 rounded-2xl shadow-xl mb-4">
-    <div class="flex items-center">
-      <div style="font-size:4rem" class="mr-4">📝</div>
-      <div class="flex-1 text-left">
-        <div class="txt-huge">Buka Kuis Online</div>
-        <div class="txt-med opacity-90">Kerjakan di Google Form</div>
-      </div>
-      <div style="font-size:3rem" class="ml-2">›</div>
-    </div>
-  </a>
-  
-  <!-- Google Form Embed (biar bisa langsung dikerjakan di sini juga) -->
-  <div class="bg-white p-2 rounded-2xl shadow-2xl border-4 border-yellow-500 overflow-hidden">
-    <div class="bg-yellow-500 text-red-900 px-4 py-3 font-black txt-big text-center">📋 Form Kuis (Scroll di dalam kotak)</div>
-    <iframe 
-      src="https://docs.google.com/forms/d/e/1FAIpQLScwpnG3WF07Ee9R4NJAh2741nRYVJ1_lF1EjhUo8obCzHVaFw/viewform?embedded=true" 
-      width="100%" 
-      height="600" 
-      frameborder="0" 
-      marginheight="0" 
-      marginwidth="0">
-      Memuat Google Form...
-    </iframe>
-  </div>
-</section>
-<!-- ===== MENU PLATFORM MATEMATIKA ===== -->
-<section class="px-4 py-8 bg-red-900 text-white mt-4">
-  <h2 class="font-luxury mb-2 text-yellow-400 text-center" style="font-size:2.4rem">Platform Matematika</h2>
-  <p class="text-center mb-5 txt-med opacity-90">Pilih menu untuk mengakses</p>
-
-  <div class="space-y-3">
-
-    <!-- 1. Terampil Matematika Dasar -->
-    <a href="https://expert-zealous.github.io/Terampil-Matematika-Dasar/" target="_blank" rel="noopener"
-       class="card-tap w-full bg-red-800 p-5 rounded-2xl border-2 border-yellow-600 flex items-center no-underline text-white">
-      <div style="font-size:3rem" class="mr-4">📘</div>
-      <div class="flex-1 text-left">
-        <div class="txt-huge">Terampil Matematika Dasar</div>
-        <div class="txt-med opacity-90">Kuasai matematika dari dasar</div>
-      </div>
-      <div style="font-size:2rem;font-weight:900" class="ml-2 text-yellow-400">›</div>
-    </a>
-
-    <!-- 2. Quiz CBT -->
-    <a href="https://expert-zealous.github.io/Soal-Latihan-Matematika/" target="_blank" rel="noopener"
-       class="card-tap w-full bg-red-800 p-5 rounded-2xl border-2 border-yellow-600 flex items-center no-underline text-white">
-      <div style="font-size:3rem" class="mr-4">📝</div>
-      <div class="flex-1 text-left">
-        <div class="txt-huge">Quiz CBT</div>
-        <div class="txt-med opacity-90">Latihan soal berbasis Computer Based Test</div>
-      </div>
-      <div style="font-size:2rem;font-weight:900" class="ml-2 text-yellow-400">›</div>
-    </a>
-
-    <!-- 3. Try Out CBT (Dropdown) -->
-    <div>
-      <button type="button" onclick="toggleTryOut()" id="btnTryOut"
-              class="card-tap w-full bg-gradient-to-br from-yellow-400 to-yellow-600 p-5 rounded-2xl shadow-xl text-red-900 flex items-center border-0 cursor-pointer">
-        <div style="font-size:3rem" class="mr-4">📄</div>
-        <div class="flex-1 text-left">
-          <div class="txt-huge">Try Out CBT</div>
-          <div class="txt-med opacity-90">ASAS • TKA • AAFD Matematika</div>
+  <div class="app-shell">
+    <header class="app-bar">
+      <div class="app-bar-inner">
+        <div class="brand">
+          <div class="brand-mark">
+            <img src="images/logo-ez.png" alt="Expert Zealous" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
+            <span class="brand-fallback">EXPERT ZEALOUS</span>
+          </div>
         </div>
-        <div style="font-size:1.8rem;font-weight:900" class="ml-2">
-          <span id="chevronTryOut" class="math-chevron">▼</span>
+        <button type="button" class="version-button" onclick="tapLogoSecret()" aria-label="Versi aplikasi">
+          <span>v3.3</span>
+          <small id="adminCount" hidden></small>
+        </button>
+      </div>
+    </header>
+
+    <main>
+      <section id="home" class="screen" data-nav="home">
+        <div class="hero">
+          <div class="hero-content">
+            <div class="eyebrow"><span class="dot"></span> Ruang belajar aktif</div>
+            <h1>Belajar lebih <span>seru.</span></h1>
+            <p>Materi, latihan, kuis, dan game matematika dalam satu aplikasi.</p>
+          </div>
+          <div class="hero-emblem" aria-hidden="true">
+            <span class="hero-emblem-glow"></span>
+            <img src="images/icon-512.png" alt="" onerror="this.style.display='none';this.nextElementSibling.style.display='block'">
+            <span class="hero-emblem-fallback">EZ</span>
+          </div>
         </div>
-      </button>
 
-      <!-- Isi Dropdown -->
-      <div id="dropdownTryOut" class="math-dropdown mt-2 space-y-2 pl-2 pr-2">
-
-        <!-- Try Out ASAS -->
-        <a href="https://expert-zealous.github.io/try-out-ASAT-matematika-8smp/" target="_blank" rel="noopener"
-           class="card-tap w-full bg-red-800 p-4 rounded-2xl border-2 border-yellow-500 flex items-center no-underline text-white">
-          <div style="font-size:2.2rem" class="mr-3">🚀</div>
-          <div class="flex-1 text-left">
-            <div class="txt-big">Try Out ASAS Matematika</div>
-            <div class="txt-sml opacity-90">Uji kemampuan dasar matematika</div>
+        <div class="section-head">
+          <div class="section-head-copy">
+            <h2>Akses cepat</h2>
+            <p>Langsung ke fitur utama</p>
           </div>
-          <div style="font-size:1.5rem;font-weight:900" class="ml-2 text-yellow-400">›</div>
-        </a>
+          <span class="section-tag">4 fitur</span>
+        </div>
 
-        <!-- Try Out TKA -->
-        <a href="https://docs.google.com/forms/d/e/1FAIpQLSc8YOiG_BxKUy17yVc1LI2wW7GA9Twesu4rCV2Rh7La2bSLLQ/viewform?usp=header" target="_blank" rel="noopener"
-           class="card-tap w-full bg-red-800 p-4 rounded-2xl border-2 border-yellow-500 flex items-center no-underline text-white">
-          <div style="font-size:2.2rem" class="mr-3">🧠</div>
-          <div class="flex-1 text-left">
-            <div class="txt-big">Try Out TKA Matematika</div>
-            <div class="txt-sml opacity-90">Latihan soal TKA Matematika intensif</div>
+        <div class="quick-grid">
+          <button type="button" class="quick-action" onclick="goScan()">
+            <span class="quick-icon"><svg class="icon"><use href="#i-scan"/></svg></span>
+            <span class="quick-label">Presensi QR</span>
+          </button>
+          <button type="button" class="quick-action" onclick="openModalSiswa()">
+            <span class="quick-icon"><svg class="icon"><use href="#i-user"/></svg></span>
+            <span class="quick-label">Login Siswa</span>
+          </button>
+          <a class="quick-action" href="#game">
+            <span class="quick-icon"><svg class="icon"><use href="#i-game"/></svg></span>
+            <span class="quick-label">Game</span>
+          </a>
+          <a class="quick-action" href="#belajar">
+            <span class="quick-icon"><svg class="icon"><use href="#i-book"/></svg></span>
+            <span class="quick-label">Belajar</span>
+          </a>
+        </div>
+
+        <div class="motivation-card">
+          <span class="motivation-icon"><svg class="icon"><use href="#i-trophy"/></svg></span>
+          <div>
+            <strong>Satu langkah kecil setiap hari</strong>
+            <span>Latihan rutin membantu kemampuanmu terus bertumbuh.</span>
           </div>
-          <div style="font-size:1.5rem;font-weight:900" class="ml-2 text-yellow-400">›</div>
-        </a>
+        </div>
+      </section>
 
-        <!-- Try Out AAFD -->
-        <a href="https://expert-zealous.github.io/cbt-matematika/" target="_blank" rel="noopener"
-           class="card-tap w-full bg-red-800 p-4 rounded-2xl border-2 border-yellow-500 flex items-center no-underline text-white">
-          <div style="font-size:2.2rem" class="mr-3">🏆</div>
-          <div class="flex-1 text-left">
-            <div class="txt-big">Try Out AAFD Matematika</div>
-            <div class="txt-sml opacity-90">Persiapan AAFD Matematika terlengkap</div>
+      <section id="game" class="screen" data-nav="game">
+        <div class="section-head">
+          <div class="section-head-copy">
+            <h2>Game edukasi</h2>
+            <p>Asah kemampuan sambil bermain</p>
           </div>
-          <div style="font-size:1.5rem;font-weight:900" class="ml-2 text-yellow-400">›</div>
-        </a>
+          <span class="section-tag">4 game</span>
+        </div>
 
+        <div class="game-grid">
+          <a class="game-card" href="https://expert-zealous.github.io/math-legends-arena-live/" target="_blank" rel="noopener noreferrer">
+            <div class="game-cover">
+              <img src="images/logo-math-legend-arena.png" alt="Logo Math Legend Arena" onerror="this.style.display='none';this.nextElementSibling.style.display='block'">
+              <span class="game-fallback" aria-hidden="true">🏆</span>
+            </div>
+            <div class="game-meta">
+              <div class="game-title-row">
+                <strong>Math Legend Arena</strong>
+                <svg class="icon"><use href="#i-external"/></svg>
+              </div>
+              <p>Arena matematika dan leaderboard.</p>
+            </div>
+          </a>
+
+          <a class="game-card" href="https://www.mediafire.com/file/qqneigv58obs20m/MathLegend.zip/file" target="_blank" rel="noopener noreferrer">
+            <div class="game-cover">
+              <img src="images/logo-math-legend.png" alt="Logo Math Legend" onerror="this.style.display='none';this.nextElementSibling.style.display='block'">
+              <span class="game-fallback" aria-hidden="true">🧠</span>
+            </div>
+            <div class="game-meta">
+              <div class="game-title-row">
+                <strong>Math Legend</strong>
+                <svg class="icon"><use href="#i-external"/></svg>
+              </div>
+              <p>Raih skor terbaik dan jadilah legenda.</p>
+            </div>
+          </a>
+
+          <a class="game-card" href="https://expert-zealous.github.io/Math-Magic-Chess/" target="_blank" rel="noopener noreferrer">
+            <div class="game-cover">
+              <img src="images/logo-math-magic-chess.png" alt="Logo Math Magic Chess" onerror="this.style.display='none';this.nextElementSibling.style.display='block'">
+              <span class="game-fallback" aria-hidden="true">♛</span>
+            </div>
+            <div class="game-meta">
+              <div class="game-title-row">
+                <strong>Math Magic Chess</strong>
+                <svg class="icon"><use href="#i-external"/></svg>
+              </div>
+              <p>Catur strategi untuk mengasah matematika.</p>
+            </div>
+          </a>
+
+          <a class="game-card" href="https://expert-zealous.github.io/Numeric-Monopoly-Matematic/" target="_blank" rel="noopener noreferrer">
+            <div class="game-cover">
+              <span class="new-badge">Baru</span>
+              <img src="images/logo-numeric-monopoly-matematic.png" alt="Logo Numeric Monopoly Matematic" onerror="this.style.display='none';this.nextElementSibling.style.display='block'">
+              <span class="game-fallback" aria-hidden="true">🎲</span>
+            </div>
+            <div class="game-meta">
+              <div class="game-title-row">
+                <strong>Numeric Monopoly Matematic</strong>
+                <svg class="icon"><use href="#i-external"/></svg>
+              </div>
+              <p>Monopoli angka dengan tantangan matematika.</p>
+            </div>
+          </a>
+        </div>
+      </section>
+
+      <section id="belajar" class="screen" data-nav="belajar">
+        <div class="section-head">
+          <div class="section-head-copy">
+            <h2>Ruang belajar</h2>
+            <p>Materi dan evaluasi Kurikulum Merdeka</p>
+          </div>
+          <span class="section-tag">Lengkap</span>
+        </div>
+
+        <div class="panel" aria-label="Fitur Kurikulum Merdeka">
+          <div class="feature-row">
+            <span class="feature-icon"><svg class="icon"><use href="#i-book"/></svg></span>
+            <div class="feature-copy"><strong>Modul teori</strong><span>PDF interaktif dan materi lengkap</span></div>
+          </div>
+          <div class="feature-row">
+            <span class="feature-icon"><svg class="icon"><use href="#i-video"/></svg></span>
+            <div class="feature-copy"><strong>Video pembahasan</strong><span>Penjelasan visual yang mudah dipahami</span></div>
+          </div>
+          <div class="feature-row">
+            <span class="feature-icon"><svg class="icon"><use href="#i-refresh"/></svg></span>
+            <div class="feature-copy"><strong>Update mingguan</strong><span>Konten baru ditambahkan setiap minggu</span></div>
+          </div>
+        </div>
+
+        <details id="bank-soal" class="panel accordion" open>
+          <summary>
+            <span class="summary-icon"><svg class="icon"><use href="#i-file"/></svg></span>
+            <span class="summary-copy"><strong>Bank Soal PDF</strong><span>Pilih jenjang dan paket latihan</span></span>
+            <svg class="icon summary-chevron"><use href="#i-chevron"/></svg>
+          </summary>
+          <div class="accordion-body">
+            <div class="grade-tabs" role="tablist" aria-label="Pilih jenjang pendidikan">
+              <button type="button" id="tabSD" class="grade-tab" role="tab" aria-selected="false" onclick="showJenjang('sd')">SD</button>
+              <button type="button" id="tabSMP" class="grade-tab active" role="tab" aria-selected="true" onclick="showJenjang('smp')">SMP</button>
+              <button type="button" id="tabSMA" class="grade-tab" role="tab" aria-selected="false" onclick="showJenjang('sma')">SMA</button>
+            </div>
+
+            <div id="jenjangSD" class="grade-panel" role="tabpanel" aria-labelledby="tabSD" hidden>
+              <div class="pdf-card">
+                <span class="pdf-icon"><svg class="icon"><use href="#i-file"/></svg></span>
+                <div class="pdf-info"><strong>Latihan Paket A</strong><span>PDF • SD</span></div>
+                <div class="pdf-actions">
+                  <button type="button" class="icon-button primary" onclick="bukaPDF('pdf/sd/soal-a.pdf')" aria-label="Buka Latihan Paket A SD"><svg class="icon"><use href="#i-external"/></svg></button>
+                  <a class="icon-button" href="pdf/sd/soal-a.pdf" download aria-label="Unduh Latihan Paket A SD"><svg class="icon"><use href="#i-download"/></svg></a>
+                </div>
+              </div>
+              <div class="pdf-card">
+                <span class="pdf-icon"><svg class="icon"><use href="#i-file"/></svg></span>
+                <div class="pdf-info"><strong>Latihan Paket B</strong><span>PDF • SD</span></div>
+                <div class="pdf-actions">
+                  <button type="button" class="icon-button primary" onclick="bukaPDF('pdf/sd/soal-b.pdf')" aria-label="Buka Latihan Paket B SD"><svg class="icon"><use href="#i-external"/></svg></button>
+                  <a class="icon-button" href="pdf/sd/soal-b.pdf" download aria-label="Unduh Latihan Paket B SD"><svg class="icon"><use href="#i-download"/></svg></a>
+                </div>
+              </div>
+              <div class="pdf-card">
+                <span class="pdf-icon"><svg class="icon"><use href="#i-file"/></svg></span>
+                <div class="pdf-info"><strong>UTS 2026</strong><span>PDF • SD</span></div>
+                <div class="pdf-actions">
+                  <button type="button" class="icon-button primary" onclick="bukaPDF('pdf/sd/uts-2026.pdf')" aria-label="Buka UTS 2026 SD"><svg class="icon"><use href="#i-external"/></svg></button>
+                  <a class="icon-button" href="pdf/sd/uts-2026.pdf" download aria-label="Unduh UTS 2026 SD"><svg class="icon"><use href="#i-download"/></svg></a>
+                </div>
+              </div>
+            </div>
+
+            <div id="jenjangSMP" class="grade-panel" role="tabpanel" aria-labelledby="tabSMP">
+              <div class="pdf-card">
+                <span class="pdf-icon"><svg class="icon"><use href="#i-file"/></svg></span>
+                <div class="pdf-info"><strong>Latihan Paket A</strong><span>PDF • SMP</span></div>
+                <div class="pdf-actions">
+                  <button type="button" class="icon-button primary" onclick="bukaPDF('pdf/smp/soal-a.pdf')" aria-label="Buka Latihan Paket A SMP"><svg class="icon"><use href="#i-external"/></svg></button>
+                  <a class="icon-button" href="pdf/smp/soal-a.pdf" download aria-label="Unduh Latihan Paket A SMP"><svg class="icon"><use href="#i-download"/></svg></a>
+                </div>
+              </div>
+              <div class="pdf-card">
+                <span class="pdf-icon"><svg class="icon"><use href="#i-file"/></svg></span>
+                <div class="pdf-info"><strong>Latihan Paket B</strong><span>PDF • SMP</span></div>
+                <div class="pdf-actions">
+                  <button type="button" class="icon-button primary" onclick="bukaPDF('pdf/smp/soal-b.pdf')" aria-label="Buka Latihan Paket B SMP"><svg class="icon"><use href="#i-external"/></svg></button>
+                  <a class="icon-button" href="pdf/smp/soal-b.pdf" download aria-label="Unduh Latihan Paket B SMP"><svg class="icon"><use href="#i-download"/></svg></a>
+                </div>
+              </div>
+              <div class="pdf-card">
+                <span class="pdf-icon"><svg class="icon"><use href="#i-file"/></svg></span>
+                <div class="pdf-info"><strong>UTS 2026</strong><span>PDF • SMP</span></div>
+                <div class="pdf-actions">
+                  <button type="button" class="icon-button primary" onclick="bukaPDF('pdf/smp/uts-2026.pdf')" aria-label="Buka UTS 2026 SMP"><svg class="icon"><use href="#i-external"/></svg></button>
+                  <a class="icon-button" href="pdf/smp/uts-2026.pdf" download aria-label="Unduh UTS 2026 SMP"><svg class="icon"><use href="#i-download"/></svg></a>
+                </div>
+              </div>
+            </div>
+
+            <div id="jenjangSMA" class="grade-panel" role="tabpanel" aria-labelledby="tabSMA" hidden>
+              <div class="pdf-card">
+                <span class="pdf-icon"><svg class="icon"><use href="#i-file"/></svg></span>
+                <div class="pdf-info"><strong>Latihan Paket A</strong><span>PDF • SMA</span></div>
+                <div class="pdf-actions">
+                  <button type="button" class="icon-button primary" onclick="bukaPDF('pdf/sma/soal-a.pdf')" aria-label="Buka Latihan Paket A SMA"><svg class="icon"><use href="#i-external"/></svg></button>
+                  <a class="icon-button" href="pdf/sma/soal-a.pdf" download aria-label="Unduh Latihan Paket A SMA"><svg class="icon"><use href="#i-download"/></svg></a>
+                </div>
+              </div>
+              <div class="pdf-card">
+                <span class="pdf-icon"><svg class="icon"><use href="#i-file"/></svg></span>
+                <div class="pdf-info"><strong>Latihan Paket B</strong><span>PDF • SMA</span></div>
+                <div class="pdf-actions">
+                  <button type="button" class="icon-button primary" onclick="bukaPDF('pdf/sma/soal-b.pdf')" aria-label="Buka Latihan Paket B SMA"><svg class="icon"><use href="#i-external"/></svg></button>
+                  <a class="icon-button" href="pdf/sma/soal-b.pdf" download aria-label="Unduh Latihan Paket B SMA"><svg class="icon"><use href="#i-download"/></svg></a>
+                </div>
+              </div>
+              <div class="pdf-card">
+                <span class="pdf-icon"><svg class="icon"><use href="#i-file"/></svg></span>
+                <div class="pdf-info"><strong>TKA Matematika</strong><span>PDF • SMA</span></div>
+                <div class="pdf-actions">
+                  <button type="button" class="icon-button primary" onclick="bukaPDF('pdf/sma/tka-matematika.pdf')" aria-label="Buka TKA Matematika SMA"><svg class="icon"><use href="#i-external"/></svg></button>
+                  <a class="icon-button" href="pdf/sma/tka-matematika.pdf" download aria-label="Unduh TKA Matematika SMA"><svg class="icon"><use href="#i-download"/></svg></a>
+                </div>
+              </div>
+            </div>
+          </div>
+        </details>
+
+        <details id="kuis" class="panel accordion">
+          <summary>
+            <span class="summary-icon" style="background:var(--mint);color:var(--mint-strong)"><svg class="icon"><use href="#i-quiz"/></svg></span>
+            <span class="summary-copy"><strong>Kuis Online</strong><span>Kerjakan melalui Google Form</span></span>
+            <svg class="icon summary-chevron"><use href="#i-chevron"/></svg>
+          </summary>
+          <div class="accordion-body quiz-body">
+            <a class="primary-button full-button" href="https://docs.google.com/forms/d/e/1FAIpQLScwpnG3WF07Ee9R4NJAh2741nRYVJ1_lF1EjhUo8obCzHVaFw/viewform" target="_blank" rel="noopener noreferrer">
+              <svg class="icon"><use href="#i-external"/></svg>
+              Buka Kuis di Tab Baru
+            </a>
+            <details>
+              <summary class="secondary-button full-button" style="margin-top:8px">Tampilkan formulir di aplikasi</summary>
+              <div class="embed-wrap">
+                <iframe src="https://docs.google.com/forms/d/e/1FAIpQLScwpnG3WF07Ee9R4NJAh2741nRYVJ1_lF1EjhUo8obCzHVaFw/viewform?embedded=true" title="Form Kuis Matematika" loading="lazy">Memuat Google Form...</iframe>
+              </div>
+            </details>
+          </div>
+        </details>
+
+        <details id="platform" class="panel accordion">
+          <summary>
+            <span class="summary-icon" style="background:var(--amber);color:var(--amber-strong)"><svg class="icon"><use href="#i-grid"/></svg></span>
+            <span class="summary-copy"><strong>Platform Matematika</strong><span>Latihan dasar, CBT, dan try out</span></span>
+            <svg class="icon summary-chevron"><use href="#i-chevron"/></svg>
+          </summary>
+          <div class="accordion-body platform-list">
+            <a class="platform-link" href="https://expert-zealous.github.io/Terampil-Matematika-Dasar/" target="_blank" rel="noopener noreferrer">
+              <span class="platform-icon"><svg class="icon"><use href="#i-book"/></svg></span>
+              <span class="platform-copy"><strong>Terampil Matematika Dasar</strong><span>Kuasai matematika mulai dari dasar</span></span>
+              <svg class="icon platform-arrow"><use href="#i-arrow"/></svg>
+            </a>
+            <a class="platform-link" href="https://expert-zealous.github.io/Soal-Latihan-Matematika/" target="_blank" rel="noopener noreferrer">
+              <span class="platform-icon" style="background:var(--rose);color:var(--rose-strong)"><svg class="icon"><use href="#i-quiz"/></svg></span>
+              <span class="platform-copy"><strong>Quiz CBT</strong><span>Latihan soal berbasis Computer Based Test</span></span>
+              <svg class="icon platform-arrow"><use href="#i-arrow"/></svg>
+            </a>
+            <details class="tryout-details">
+              <summary>
+                <span class="platform-icon" style="background:var(--amber);color:var(--amber-strong)"><svg class="icon"><use href="#i-trophy"/></svg></span>
+                <span class="platform-copy"><strong>Try Out CBT</strong><span>ASAS • TKA • AAFD Matematika</span></span>
+                <svg class="icon summary-chevron"><use href="#i-chevron"/></svg>
+              </summary>
+              <div class="tryout-menu">
+                <a href="https://expert-zealous.github.io/try-out-ASAT-matematika-8smp/" target="_blank" rel="noopener noreferrer">Try Out ASAS Matematika <svg class="icon"><use href="#i-external"/></svg></a>
+                <a href="https://docs.google.com/forms/d/e/1FAIpQLSc8YOiG_BxKUy17yVc1LI2wW7GA9Twesu4rCV2Rh7La2bSLLQ/viewform?usp=header" target="_blank" rel="noopener noreferrer">Try Out TKA Matematika <svg class="icon"><use href="#i-external"/></svg></a>
+                <a href="https://expert-zealous.github.io/cbt-matematika/" target="_blank" rel="noopener noreferrer">Try Out AAFD Matematika <svg class="icon"><use href="#i-external"/></svg></a>
+              </div>
+            </details>
+          </div>
+        </details>
+      </section>
+
+      <section id="saya" class="screen" data-nav="saya">
+        <div class="section-head">
+          <div class="section-head-copy">
+            <h2>Akun saya</h2>
+            <p>Akses data siswa dan orang tua</p>
+          </div>
+          <span class="section-tag">Aman</span>
+        </div>
+
+        <div class="panel account-card">
+          <div class="account-hero">
+            <span class="account-avatar"><svg class="icon"><use href="#i-user"/></svg></span>
+            <div class="account-copy">
+              <strong>Selamat datang!</strong>
+              <span>Masuk untuk melihat jadwal, nilai, dan kehadiran.</span>
+            </div>
+          </div>
+          <div class="account-actions">
+            <button type="button" class="account-button" onclick="openModalSiswa()">
+              <span class="small-icon"><svg class="icon"><use href="#i-user"/></svg></span>
+              <span><strong>Login Siswa</strong><span>Nilai & kehadiran</span></span>
+            </button>
+            <button type="button" class="account-button" onclick="openModalOrtu()">
+              <span class="small-icon"><svg class="icon"><use href="#i-users"/></svg></span>
+              <span><strong>Login Orang Tua</strong><span>Pantau perkembangan</span></span>
+            </button>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <footer class="footer">&copy; 2026 Expert Zealous · Belajar matematika dengan lebih menyenangkan</footer>
+  </div>
+
+  <nav class="bottom-nav" aria-label="Navigasi utama">
+    <a class="nav-item active" href="#home" data-target="home"><svg class="icon"><use href="#i-home"/></svg><span>Home</span></a>
+    <a class="nav-item" href="#game" data-target="game"><svg class="icon"><use href="#i-game"/></svg><span>Game</span></a>
+    <a class="nav-item" href="#belajar" data-target="belajar"><svg class="icon"><use href="#i-book"/></svg><span>Belajar</span></a>
+    <a class="nav-item" href="#saya" data-target="saya"><svg class="icon"><use href="#i-user"/></svg><span>Saya</span></a>
+  </nav>
+
+  <div id="modalSiswa" class="modal" role="dialog" aria-modal="true" aria-labelledby="judulSiswa" aria-hidden="true">
+    <div class="sheet">
+      <div class="sheet-handle" aria-hidden="true"></div>
+      <div class="sheet-head">
+        <div class="sheet-title-wrap">
+          <span class="sheet-title-icon"><svg class="icon"><use href="#i-user"/></svg></span>
+          <div><h3 id="judulSiswa">Login Siswa</h3><p>Masuk ke ruang belajar pribadi</p></div>
+        </div>
+        <button type="button" class="close-button" onclick="closeModals()" aria-label="Tutup"><svg class="icon"><use href="#i-x"/></svg></button>
       </div>
+      <div class="form-group">
+        <label class="form-label" for="selectSiswa">Nama siswa</label>
+        <select id="selectSiswa" class="form-control"><option>Memuat data...</option></select>
+      </div>
+      <div class="form-group">
+        <label class="form-label" for="passSiswa">Password</label>
+        <input id="passSiswa" class="form-control" type="password" value="1234" autocomplete="current-password">
+      </div>
+      <div id="msgSiswa" class="form-message" aria-live="polite"></div>
+      <button type="button" id="btnLoginSiswa" class="primary-button full-button" onclick="loginSiswa()">Masuk</button>
+      <button type="button" class="secondary-button full-button" style="margin-top:8px" onclick="closeModals()">Batal</button>
     </div>
+  </div>
 
-<!-- =========================================================
-     GAME EDUKASI
-     ========================================================= -->
-<section class="game-education-section">
-
-  <div class="game-education-title">
-    <div class="game-education-icon">🎮</div>
-    <div>
-      <h2>GAME EDUKASI</h2>
-      <p>Belajar matematika sambil bermain</p>
+  <div id="modalOrtu" class="modal" role="dialog" aria-modal="true" aria-labelledby="judulOrtu" aria-hidden="true">
+    <div class="sheet">
+      <div class="sheet-handle" aria-hidden="true"></div>
+      <div class="sheet-head">
+        <div class="sheet-title-wrap">
+          <span class="sheet-title-icon" style="background:var(--amber);color:var(--amber-strong)"><svg class="icon"><use href="#i-users"/></svg></span>
+          <div><h3 id="judulOrtu">Login Orang Tua</h3><p>Pantau perkembangan belajar anak</p></div>
+        </div>
+        <button type="button" class="close-button" onclick="closeModals()" aria-label="Tutup"><svg class="icon"><use href="#i-x"/></svg></button>
+      </div>
+      <div class="form-group">
+        <label class="form-label" for="selectOrtu">Nama anak</label>
+        <select id="selectOrtu" class="form-control"><option>Memuat data...</option></select>
+      </div>
+      <div class="form-group">
+        <label class="form-label" for="kodeOrtu">Kode login</label>
+        <input id="kodeOrtu" class="form-control" type="password" value="4321" autocomplete="current-password">
+      </div>
+      <div id="msgOrtu" class="form-message" aria-live="polite"></div>
+      <button type="button" id="btnLoginOrtu" class="primary-button full-button" onclick="loginOrtu()">Masuk</button>
+      <button type="button" class="secondary-button full-button" style="margin-top:8px" onclick="closeModals()">Batal</button>
     </div>
   </div>
 
-  <div class="game-education-grid">
-
-    <a href="https://expert-zealous.github.io/math-legends-arena-live/"
-       target="_blank" rel="noopener noreferrer"
-       class="game-card arena-card">
-
-      <div class="game-logo-box">
-        <img src="images/logo-math-legend-arena.png"
-             alt="Math Legend Arena"
-             onerror="this.style.display='none';this.parentElement.insertAdjacentHTML('beforeend','<span class=&quot;game-fallback-icon&quot;>🏆</span>')">
+  <div id="modalAdmin" class="modal dialog-center" role="dialog" aria-modal="true" aria-labelledby="judulAdmin" aria-hidden="true">
+    <div class="sheet">
+      <div class="sheet-head">
+        <div class="sheet-title-wrap">
+          <span class="sheet-title-icon" style="background:var(--rose);color:var(--rose-strong)"><svg class="icon"><use href="#i-lock"/></svg></span>
+          <div><h3 id="judulAdmin">Login Admin</h3><p>Masukkan password administrator</p></div>
+        </div>
+        <button type="button" class="close-button" onclick="closeAdmin()" aria-label="Tutup"><svg class="icon"><use href="#i-x"/></svg></button>
       </div>
-
-      <div class="game-info">
-        <div class="game-name">Math Legend Arena</div>
-        <div class="game-description">Arena matematika dan leaderboard</div>
+      <div class="form-group">
+        <label class="form-label" for="passAdmin">Password admin</label>
+        <input id="passAdmin" class="form-control" type="password" placeholder="Masukkan password" autocomplete="current-password">
       </div>
-
-      <div class="game-arrow">›</div>
-    </a>
-
-    <a href="https://www.mediafire.com/file/qqneigv58obs20m/MathLegend.zip/file"
-       target="_blank" rel="noopener noreferrer"
-       class="game-card legend-card">
-
-      <div class="game-logo-box">
-        <img src="images/logo-math-legend.png"
-             alt="Math Legend"
-             onerror="this.style.display='none';this.parentElement.insertAdjacentHTML('beforeend','<span class=&quot;game-fallback-icon&quot;>🧠</span>')">
-      </div>
-
-      <div class="game-info">
-        <div class="game-name">Math Legend</div>
-        <div class="game-description">Jadilah legenda dengan score terbaikmu!</div>
-      </div>
-
-      <div class="game-arrow">›</div>
-    </a>
-
-    <a href="https://expert-zealous.github.io/Math-Magic-Chess/"
-       target="_blank" rel="noopener noreferrer"
-       class="game-card magic-chess-card">
-
-      <div class="game-logo-box">
-        <img src="images/logo-math-magic-chess.png"
-             alt="Math Magic Chess"
-             onerror="this.style.display='none';this.parentElement.insertAdjacentHTML('beforeend','<span class=&quot;game-fallback-icon&quot;>♛</span>')">
-      </div>
-
-      <div class="game-info">
-        <div class="game-name">Math Magic Chess</div>
-        <div class="game-description">Catur strategi sambil mengasah matematika</div>
-      </div>
-
-      <div class="game-arrow">›</div>
-    </a>
-
+      <div id="msgAdmin" class="form-message" aria-live="polite"></div>
+      <button type="button" class="primary-button full-button" onclick="loginAdmin()">Masuk Admin</button>
+      <button type="button" class="secondary-button full-button" style="margin-top:8px" onclick="closeAdmin()">Batal</button>
+    </div>
   </div>
-</section>
 
-  </div>
-</section>
-<footer class="py-6 text-center text-gray-500 txt-med border-t">&copy; 2026 EXPERT ZEALOUS</footer>
+  <script>
+    const API_URL = "https://script.google.com/macros/s/AKfycbzsWmRDZQnf680vmXKcF7s-BxDxXdelv3K6MWG0fRfqpxYv7azBWnldN6UrjUIqdvLG/exec";
+    const PASSWORD_ADMIN = "ezadmin2026";
 
-<!-- MODAL LOGIN SISWA -->
-<div id="modalSiswa" class="hidden fixed inset-0 bg-black/80 flex items-end z-50">
-  <div class="bg-white rounded-t-3xl p-6 w-full">
-    <div class="w-16 h-2 bg-gray-300 rounded-full mx-auto mb-5"></div>
-    <h3 class="txt-jumbo text-red-900 mb-5">👨‍🎓 Login Siswa</h3>
-    <label class="txt-big text-gray-700 block mb-2">Nama</label>
-    <select id="selectSiswa" class="w-full border-2 border-gray-300 p-5 rounded-2xl mb-4"></select>
-    <label class="txt-big text-gray-700 block mb-2">Password</label>
-    <input id="passSiswa" type="password" value="1234" class="w-full border-2 border-gray-300 p-5 rounded-2xl mb-3">
-    <div id="msgSiswa" class="txt-big text-red-600 mb-3 font-bold"></div>
-    <button onclick="loginSiswa()" id="btnLoginSiswa" class="w-full btn-red py-5 rounded-full font-black" style="font-size:1.5rem">MASUK</button>
-    <button onclick="closeModals()" class="w-full mt-2 py-3 text-gray-500 txt-big font-bold">Batal</button>
-  </div>
-</div>
+    let cacheSiswa = null;
+    let cacheOrtu = null;
+    let tapCount = 0;
+    let tapTimer = null;
 
-<!-- MODAL LOGIN ORTU -->
-<div id="modalOrtu" class="hidden fixed inset-0 bg-black/80 flex items-end z-50">
-  <div class="bg-white rounded-t-3xl p-6 w-full">
-    <div class="w-16 h-2 bg-gray-300 rounded-full mx-auto mb-5"></div>
-    <h3 class="txt-jumbo text-red-900 mb-5">👨‍👩‍👧 Login Ortu</h3>
-    <label class="txt-big text-gray-700 block mb-2">Pilih Nama Anak</label>
-    <select id="selectOrtu" class="w-full border-2 border-gray-300 p-5 rounded-2xl mb-4"></select>
-    <label class="txt-big text-gray-700 block mb-2">Kode Login</label>
-    <input id="kodeOrtu" type="password" value="4321" class="w-full border-2 border-gray-300 p-5 rounded-2xl mb-3">
-    <div id="msgOrtu" class="txt-big text-red-600 mb-3 font-bold"></div>
-    <button onclick="loginOrtu()" id="btnLoginOrtu" class="w-full bg-gray-800 text-white py-5 rounded-full font-black" style="font-size:1.5rem">MASUK</button>
-    <button onclick="closeModals()" class="w-full mt-2 py-3 text-gray-500 txt-big font-bold">Batal</button>
-  </div>
-</div>
+    window.addEventListener("load", preload);
 
-<!-- MODAL ADMIN LOGIN (TERSEMBUNYI) -->
-<div id="modalAdmin" class="hidden fixed inset-0 bg-black/90 flex items-center justify-center z-[100] p-4">
-  <div class="bg-white rounded-3xl p-6 w-full max-w-md">
-    <h3 class="txt-jumbo text-red-900 mb-3 text-center">🔐 Admin Login</h3>
-    <p class="txt-med text-gray-600 mb-4 text-center">Masukkan password admin</p>
-    <input id="passAdmin" type="password" placeholder="Password admin" class="w-full border-2 border-gray-300 p-5 rounded-2xl mb-3">
-    <div id="msgAdmin" class="txt-big text-red-600 mb-3 font-bold text-center"></div>
-    <button onclick="loginAdmin()" class="w-full btn-red py-5 rounded-full font-black" style="font-size:1.5rem">MASUK ADMIN</button>
-    <button onclick="closeAdmin()" class="w-full mt-2 py-3 text-gray-500 txt-big font-bold">Batal</button>
-  </div>
-</div>
-
-<script>
-const API_URL="https://script.google.com/macros/s/AKfycbzsWmRDZQnf680vmXKcF7s-BxDxXdelv3K6MWG0fRfqpxYv7azBWnldN6UrjUIqdvLG/exec";
-
-// ============ PASSWORD ADMIN - GANTI SESUAI KEINGINAN ANDA ============
-const PASSWORD_ADMIN = "ezadmin2026";
-
-  
-// ============ BUKA PDF DI VIEWER (tidak langsung download) ============
-function bukaPDF(pathPDF) {
-  const baseURL = window.location.origin + window.location.pathname.replace(/\/[^/]*$/,'/');
-  const urlLengkap = baseURL + pathPDF;
-  const viewerURL = 'https://docs.google.com/viewer?url=' + encodeURIComponent(urlLengkap) + '&embedded=false';
-  window.open(viewerURL, '_blank');
-}
-  // ============ SWITCH TAB JENJANG PDF ============
-function showJenjang(jenjang) {
-  ['sd','smp','sma'].forEach(j => {
-    const kap = j.toUpperCase();
-    document.getElementById('jenjang'+kap).classList.add('hidden');
-    document.getElementById('tab'+kap).classList.remove('bg-red-900','text-white');
-    document.getElementById('tab'+kap).classList.add('text-gray-600');
-  });
-  const kap = jenjang.toUpperCase();
-  document.getElementById('jenjang'+kap).classList.remove('hidden');
-  document.getElementById('tab'+kap).classList.add('bg-red-900','text-white');
-  document.getElementById('tab'+kap).classList.remove('text-gray-600');
-}
-
-let cacheSiswa=null, cacheOrtu=null;
-let tapCount = 0;
-let tapTimer = null;
-
-window.addEventListener('load', preload);
-async function preload() {
-  try {
-    const [rs,ro] = await Promise.all([
-      fetch(API_URL+'?action=getDaftarSiswa').then(r=>r.json()),
-      fetch(API_URL+'?action=getDaftarOrtu').then(r=>r.json())
-    ]);
-    cacheSiswa = rs.data||[]; cacheOrtu = ro.data||[];
-  } catch(e){}
-}
-
-// ============ SECRET: KETUK "v1.0" 5X UNTUK BUKA ADMIN ============
-function tapLogoSecret() {
-  tapCount++;
-  const el = document.getElementById('adminCount');
-  el.classList.remove('hidden');
-  el.innerText = `${tapCount}/5`;
-  
-  clearTimeout(tapTimer);
-  tapTimer = setTimeout(()=>{ 
-    tapCount=0; 
-    el.classList.add('hidden'); 
-  }, 2000);
-  
-  if(tapCount >= 5) {
-    tapCount = 0;
-    el.classList.add('hidden');
-    document.getElementById('modalAdmin').classList.remove('hidden');
-    document.getElementById('passAdmin').focus();
-  }
-}
-
-function loginAdmin() {
-  const pass = document.getElementById('passAdmin').value;
-  if(pass === PASSWORD_ADMIN) {
-    sessionStorage.setItem('ez_admin', 'true');
-    window.location = 'admin-qr.html';
-  } else {
-    document.getElementById('msgAdmin').innerText = '❌ Password salah!';
-    document.getElementById('passAdmin').value = '';
-  }
-}
-
-function closeAdmin() {
-  document.getElementById('modalAdmin').classList.add('hidden');
-  document.getElementById('passAdmin').value = '';
-  document.getElementById('msgAdmin').innerText = '';
-}
-
-// ============ FUNGSI UTAMA ============
-function goScan(){ 
-  if(localStorage.getItem('ez_siswa')) window.location='siswa.html?autoscan=1'; 
-  else { openModalSiswa(); setTimeout(()=>document.getElementById('msgSiswa').innerText='Login dulu sebelum scan!',100); } 
-}
-function openModalSiswa(){document.getElementById('modalSiswa').classList.remove('hidden'); loadSiswa();}
-function openModalOrtu(){document.getElementById('modalOrtu').classList.remove('hidden'); loadOrtu();}
-function closeModals(){['modalSiswa','modalOrtu'].forEach(id=>document.getElementById(id).classList.add('hidden'))}
-
-function loadSiswa(){
-  const sel=document.getElementById('selectSiswa'); 
-  if(cacheSiswa){renderSiswa(sel,cacheSiswa);}
-  else{sel.innerHTML='<option>Loading...</option>';fetch(API_URL+'?action=getDaftarSiswa').then(r=>r.json()).then(j=>{cacheSiswa=j.data;renderSiswa(sel,j.data);});}
-}
-function renderSiswa(sel,d){sel.innerHTML='<option value="">-- Pilih Nama --</option>';d.forEach(s=>sel.innerHTML+=`<option value="${s.nama}">${s.nama}</option>`);}
-function loadOrtu(){
-  const sel=document.getElementById('selectOrtu'); 
-  if(cacheOrtu){renderOrtu(sel,cacheOrtu);}
-  else{sel.innerHTML='<option>Loading...</option>';fetch(API_URL+'?action=getDaftarOrtu').then(r=>r.json()).then(j=>{cacheOrtu=j.data;renderOrtu(sel,j.data);});}
-}
-function renderOrtu(sel,d){
-  sel.innerHTML='<option value="">-- Pilih Nama Anak Anda --</option>';
-  d.forEach(o => {
-    sel.innerHTML += `<option value="${o.idSiswa}">${o.namaSiswa} — Ortu: ${o.nama}</option>`;
-  });
-}
-
-async function loginSiswa(){
-  const nama=document.getElementById('selectSiswa').value; const pass=document.getElementById('passSiswa').value;
-  if(!nama) return document.getElementById('msgSiswa').innerText='Pilih nama dulu!';
-  const btn=document.getElementById('btnLoginSiswa'); btn.innerHTML='<span class="spinner"></span> Proses...'; btn.disabled=true;
-  try{
-    const r=await fetch(`${API_URL}?action=loginSiswa&nama=${encodeURIComponent(nama)}&password=${encodeURIComponent(pass)}`);
-    const j=await r.json();
-    if(j.status==='success'){localStorage.setItem('ez_siswa',JSON.stringify(j.data));window.location='siswa.html';}
-    else{document.getElementById('msgSiswa').innerText=j.message;btn.innerHTML='MASUK';btn.disabled=false;}
-  }catch(e){document.getElementById('msgSiswa').innerText='Gagal koneksi';btn.innerHTML='MASUK';btn.disabled=false;}
-}
-async function loginOrtu(){
-  const idSiswa = document.getElementById('selectOrtu').value;
-  const kode = document.getElementById('kodeOrtu').value;
-  if(!idSiswa) return document.getElementById('msgOrtu').innerText='Pilih nama anak dulu!';
-  const btn = document.getElementById('btnLoginOrtu');
-  btn.innerHTML='<span class="spinner"></span> Proses...'; btn.disabled=true;
-  try{
-    const r = await fetch(`${API_URL}?action=loginOrtu&idSiswa=${encodeURIComponent(idSiswa)}&kode=${encodeURIComponent(kode)}`);
-    const j = await r.json();
-    if(j.status==='success'){
-      localStorage.setItem('ez_ortu', JSON.stringify(j.data));
-      window.location='orangtua.html';
-    } else {
-      document.getElementById('msgOrtu').innerText = j.message;
-      btn.innerHTML='MASUK'; btn.disabled=false;
+    async function preload() {
+      try {
+        const [rs, ro] = await Promise.all([
+          fetch(API_URL + "?action=getDaftarSiswa").then(response => response.json()),
+          fetch(API_URL + "?action=getDaftarOrtu").then(response => response.json())
+        ]);
+        cacheSiswa = rs.data || [];
+        cacheOrtu = ro.data || [];
+      } catch (error) {
+        console.info("Data login akan dimuat saat dibutuhkan.");
+      }
     }
-  } catch(e){
-    document.getElementById('msgOrtu').innerText='Gagal koneksi';
-    btn.innerHTML='MASUK'; btn.disabled=false;
-  }
-}
-// ===== TOGGLE DROPDOWN TRY OUT CBT =====
-function toggleTryOut(){
-  var dd = document.getElementById('dropdownTryOut');
-  var ch = document.getElementById('chevronTryOut');
-  dd.classList.toggle('open');
-  ch.classList.toggle('open');
-}
-</script>
-<script>
-if ('serviceWorker' in navigator) {
 
-  window.addEventListener('load', async function () {
+    function bukaPDF(pathPDF) {
+      const baseURL = window.location.origin + window.location.pathname.replace(/\/[^/]*$/, "/");
+      const urlLengkap = baseURL + pathPDF;
+      const viewerURL = "https://docs.google.com/viewer?url=" + encodeURIComponent(urlLengkap) + "&embedded=false";
+      window.open(viewerURL, "_blank", "noopener");
+    }
 
-    try {
+    function showJenjang(jenjang) {
+      ["sd", "smp", "sma"].forEach(item => {
+        const upper = item.toUpperCase();
+        const panel = document.getElementById("jenjang" + upper);
+        const tab = document.getElementById("tab" + upper);
+        const active = item === jenjang;
+        panel.hidden = !active;
+        tab.classList.toggle("active", active);
+        tab.setAttribute("aria-selected", String(active));
+      });
+    }
 
-      const registration =
-        await navigator.serviceWorker.register(
-          './service-worker.js?v=2',
-          { updateViaCache: 'none' }
-        );
+    function tapLogoSecret() {
+      tapCount += 1;
+      const counter = document.getElementById("adminCount");
+      counter.hidden = false;
+      counter.textContent = tapCount + "/5";
+      clearTimeout(tapTimer);
+      tapTimer = setTimeout(() => {
+        tapCount = 0;
+        counter.hidden = true;
+      }, 2000);
 
-      console.log(
-        'Service Worker aktif:',
-        registration.scope
-      );
+      if (tapCount >= 5) {
+        tapCount = 0;
+        counter.hidden = true;
+        openModal("modalAdmin", "passAdmin");
+      }
+    }
 
-      registration.update();
+    function openModal(id, focusId) {
+      const modal = document.getElementById(id);
+      modal.classList.add("show");
+      modal.setAttribute("aria-hidden", "false");
+      document.body.classList.add("modal-open");
+      if (focusId) setTimeout(() => document.getElementById(focusId)?.focus(), 180);
+    }
 
-      registration.addEventListener(
-        'updatefound',
-        function () {
+    function hideModal(id) {
+      const modal = document.getElementById(id);
+      modal.classList.remove("show");
+      modal.setAttribute("aria-hidden", "true");
+      if (!document.querySelector(".modal.show")) document.body.classList.remove("modal-open");
+    }
 
-          const newWorker = registration.installing;
+    function goScan() {
+      if (localStorage.getItem("ez_siswa")) {
+        window.location = "siswa.html?autoscan=1";
+      } else {
+        openModalSiswa();
+        setTimeout(() => {
+          document.getElementById("msgSiswa").textContent = "Login terlebih dahulu sebelum melakukan scan.";
+        }, 100);
+      }
+    }
 
-          if (!newWorker) return;
+    function openModalSiswa() {
+      openModal("modalSiswa", "selectSiswa");
+      loadSiswa();
+    }
 
-          newWorker.addEventListener(
-            'statechange',
-            function () {
+    function openModalOrtu() {
+      openModal("modalOrtu", "selectOrtu");
+      loadOrtu();
+    }
 
-              if (
-                newWorker.state === 'installed' &&
-                navigator.serviceWorker.controller
-              ) {
+    function closeModals() {
+      ["modalSiswa", "modalOrtu"].forEach(hideModal);
+    }
 
-                newWorker.postMessage({
-                  type: 'SKIP_WAITING'
-                });
+    function closeAdmin() {
+      hideModal("modalAdmin");
+      document.getElementById("passAdmin").value = "";
+      document.getElementById("msgAdmin").textContent = "";
+    }
 
-              }
+    function loginAdmin() {
+      const pass = document.getElementById("passAdmin").value;
+      if (pass === PASSWORD_ADMIN) {
+        sessionStorage.setItem("ez_admin", "true");
+        window.location = "admin-qr.html";
+      } else {
+        document.getElementById("msgAdmin").textContent = "Password salah. Silakan coba lagi.";
+        document.getElementById("passAdmin").value = "";
+      }
+    }
 
-            }
-          );
+    function loadSiswa() {
+      const select = document.getElementById("selectSiswa");
+      if (cacheSiswa) {
+        renderSiswa(select, cacheSiswa);
+        return;
+      }
+      select.innerHTML = "<option>Memuat data...</option>";
+      fetch(API_URL + "?action=getDaftarSiswa")
+        .then(response => response.json())
+        .then(json => {
+          cacheSiswa = json.data || [];
+          renderSiswa(select, cacheSiswa);
+        })
+        .catch(() => {
+          select.innerHTML = "<option value=''>Data gagal dimuat</option>";
+        });
+    }
 
+    function renderSiswa(select, data) {
+      select.innerHTML = "<option value=''>Pilih nama siswa</option>";
+      data.forEach(siswa => select.add(new Option(siswa.nama, siswa.nama)));
+    }
+
+    function loadOrtu() {
+      const select = document.getElementById("selectOrtu");
+      if (cacheOrtu) {
+        renderOrtu(select, cacheOrtu);
+        return;
+      }
+      select.innerHTML = "<option>Memuat data...</option>";
+      fetch(API_URL + "?action=getDaftarOrtu")
+        .then(response => response.json())
+        .then(json => {
+          cacheOrtu = json.data || [];
+          renderOrtu(select, cacheOrtu);
+        })
+        .catch(() => {
+          select.innerHTML = "<option value=''>Data gagal dimuat</option>";
+        });
+    }
+
+    function renderOrtu(select, data) {
+      select.innerHTML = "<option value=''>Pilih nama anak</option>";
+      data.forEach(ortu => select.add(new Option(ortu.namaSiswa + " — Ortu: " + ortu.nama, ortu.idSiswa)));
+    }
+
+    async function loginSiswa() {
+      const nama = document.getElementById("selectSiswa").value;
+      const pass = document.getElementById("passSiswa").value;
+      const message = document.getElementById("msgSiswa");
+      const button = document.getElementById("btnLoginSiswa");
+
+      if (!nama) {
+        message.textContent = "Pilih nama siswa terlebih dahulu.";
+        return;
+      }
+
+      button.innerHTML = '<span class="spinner"></span> Memproses...';
+      button.disabled = true;
+      message.textContent = "";
+
+      try {
+        const response = await fetch(API_URL + "?action=loginSiswa&nama=" + encodeURIComponent(nama) + "&password=" + encodeURIComponent(pass));
+        const json = await response.json();
+        if (json.status === "success") {
+          localStorage.setItem("ez_siswa", JSON.stringify(json.data));
+          window.location = "siswa.html";
+        } else {
+          message.textContent = json.message || "Login gagal.";
+          button.textContent = "Masuk";
+          button.disabled = false;
         }
-      );
-
-    } catch (error) {
-
-      console.log(
-        'Service Worker gagal:',
-        error
-      );
-
+      } catch (error) {
+        message.textContent = "Gagal terhubung. Periksa koneksi internet.";
+        button.textContent = "Masuk";
+        button.disabled = false;
+      }
     }
 
-  });
+    async function loginOrtu() {
+      const idSiswa = document.getElementById("selectOrtu").value;
+      const kode = document.getElementById("kodeOrtu").value;
+      const message = document.getElementById("msgOrtu");
+      const button = document.getElementById("btnLoginOrtu");
 
-}
-</script>
+      if (!idSiswa) {
+        message.textContent = "Pilih nama anak terlebih dahulu.";
+        return;
+      }
+
+      button.innerHTML = '<span class="spinner"></span> Memproses...';
+      button.disabled = true;
+      message.textContent = "";
+
+      try {
+        const response = await fetch(API_URL + "?action=loginOrtu&idSiswa=" + encodeURIComponent(idSiswa) + "&kode=" + encodeURIComponent(kode));
+        const json = await response.json();
+        if (json.status === "success") {
+          localStorage.setItem("ez_ortu", JSON.stringify(json.data));
+          window.location = "orangtua.html";
+        } else {
+          message.textContent = json.message || "Login gagal.";
+          button.textContent = "Masuk";
+          button.disabled = false;
+        }
+      } catch (error) {
+        message.textContent = "Gagal terhubung. Periksa koneksi internet.";
+        button.textContent = "Masuk";
+        button.disabled = false;
+      }
+    }
+
+    document.querySelectorAll(".modal").forEach(modal => {
+      modal.addEventListener("click", event => {
+        if (event.target === modal) {
+          modal.id === "modalAdmin" ? closeAdmin() : closeModals();
+        }
+      });
+    });
+
+    document.addEventListener("keydown", event => {
+      if (event.key === "Escape") {
+        closeModals();
+        closeAdmin();
+      }
+    });
+
+    (function setupBottomNavigation() {
+      const links = Array.from(document.querySelectorAll(".nav-item"));
+      const sections = Array.from(document.querySelectorAll("[data-nav]"));
+
+      function activate(id) {
+        links.forEach(link => link.classList.toggle("active", link.dataset.target === id));
+      }
+
+      links.forEach(link => link.addEventListener("click", () => activate(link.dataset.target)));
+
+      if ("IntersectionObserver" in window) {
+        const observer = new IntersectionObserver(entries => {
+          const visible = entries
+            .filter(entry => entry.isIntersecting)
+            .sort((a, b) => b.intersectionRatio - a.intersectionRatio)[0];
+          if (visible) activate(visible.target.dataset.nav);
+        }, { rootMargin: "-24% 0px -58% 0px", threshold: [0, .15, .35] });
+        sections.forEach(section => observer.observe(section));
+      }
+    })();
+
+    if ("serviceWorker" in navigator) {
+      window.addEventListener("load", async () => {
+        try {
+          const registration = await navigator.serviceWorker.register("./service-worker.js?v=6", { updateViaCache: "none" });
+          registration.update();
+          registration.addEventListener("updatefound", () => {
+            const newWorker = registration.installing;
+            if (!newWorker) return;
+            newWorker.addEventListener("statechange", () => {
+              if (newWorker.state === "installed" && navigator.serviceWorker.controller) {
+                newWorker.postMessage({ type: "SKIP_WAITING" });
+              }
+            });
+          });
+        } catch (error) {
+          console.info("Service Worker belum tersedia:", error);
+        }
+      });
+    }
+  </script>
 </body>
 </html>
