@@ -2285,6 +2285,187 @@
       background: linear-gradient(145deg, #f8e2e7, #fff0ad 58%, #ede0f5);
     }
 
+    /* =========================================================
+       GROUPED APP VIEW 3.4 — satu kelompok tampil pada satu waktu
+       Warna tidak diubah; optimasi ini mengurangi beban saat scroll.
+       ========================================================= */
+    :root {
+      --bottom-nav: 0px;
+    }
+
+    html {
+      scroll-behavior: auto;
+    }
+
+    body {
+      background-attachment: scroll;
+    }
+
+    .app-shell {
+      padding-bottom: calc(22px + env(safe-area-inset-bottom));
+    }
+
+    .app-bar {
+      backdrop-filter: none;
+      -webkit-backdrop-filter: none;
+    }
+
+    .brand-home {
+      min-width: 0;
+      padding: 0;
+      border: 0;
+      background: transparent;
+      text-align: left;
+    }
+
+    .brand-home:active {
+      transform: scale(.98);
+    }
+
+    .app-view {
+      display: none;
+    }
+
+    .app-view.active {
+      display: block;
+    }
+
+    .group-toolbar {
+      min-height: 64px;
+      margin: 0 0 16px;
+      padding: 10px 11px;
+      display: grid;
+      grid-template-columns: 40px minmax(0, 1fr) 32px;
+      align-items: center;
+      gap: 10px;
+      border: 1px solid #d4af37;
+      border-radius: 17px;
+      background: linear-gradient(120deg, #fff8dc, #ffffff 54%, #f2e8f8);
+      box-shadow: 0 8px 20px rgba(93, 30, 57, .09);
+    }
+
+    .group-back {
+      width: 40px;
+      height: 40px;
+      display: grid;
+      place-items: center;
+      border: 1px solid #d4af37;
+      border-radius: 12px;
+      background: linear-gradient(145deg, #8b0000, #7f1d1d);
+      color: #facc15;
+      box-shadow: 0 5px 12px rgba(100, 20, 43, .18);
+    }
+
+    .group-back .icon {
+      width: 19px;
+      height: 19px;
+      transform: rotate(180deg);
+    }
+
+    .group-toolbar-copy {
+      min-width: 0;
+    }
+
+    .group-toolbar-copy strong,
+    .group-toolbar-copy span {
+      display: block;
+    }
+
+    .group-toolbar-copy strong {
+      color: #7f1d1d;
+      font-size: 13px;
+      font-weight: 800;
+    }
+
+    .group-toolbar-copy span {
+      overflow: hidden;
+      margin-top: 2px;
+      color: #786673;
+      font-size: 9px;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+
+    .group-count {
+      width: 30px;
+      height: 30px;
+      display: grid;
+      place-items: center;
+      border-radius: 10px;
+      background: #facc15;
+      color: #7f1d1d;
+      font-size: 11px;
+      font-weight: 800;
+    }
+
+    .group-toolbar + .section-head {
+      display: none;
+    }
+
+    .featured-game {
+      grid-column: 1 / -1;
+      display: grid;
+      grid-template-columns: minmax(116px, 42%) minmax(0, 1fr);
+      align-items: center;
+      gap: 11px;
+      border-color: #d4af37;
+      background:
+        radial-gradient(circle at 100% 0, rgba(76,29,149,.15), transparent 35%),
+        linear-gradient(145deg, #fff0a8, #fff9df 58%, #f1e6f7);
+    }
+
+    .featured-game .game-cover {
+      width: 100%;
+      aspect-ratio: 4 / 3;
+    }
+
+    .featured-game .game-meta {
+      padding: 5px 5px 5px 0;
+    }
+
+    .featured-game .game-title-row strong {
+      font-size: 13px;
+    }
+
+    .featured-game .game-meta p {
+      margin-top: 6px;
+      font-size: 9px;
+      -webkit-line-clamp: 3;
+    }
+
+    .play-label {
+      width: max-content;
+      margin-top: 9px;
+      padding: 5px 8px;
+      display: inline-flex;
+      border-radius: 999px;
+      background: linear-gradient(135deg, #8b0000, #4c1d95);
+      color: #fff1a8;
+      font-size: 8px;
+      font-weight: 800;
+    }
+
+    @media (max-width: 380px) {
+      .group-toolbar {
+        grid-template-columns: 38px minmax(0, 1fr) 29px;
+        padding: 9px;
+      }
+
+      .group-back {
+        width: 38px;
+        height: 38px;
+      }
+
+      .featured-game {
+        grid-template-columns: minmax(104px, 41%) minmax(0, 1fr);
+        gap: 8px;
+      }
+
+      .featured-game .game-cover img {
+        padding: 7px;
+      }
+    }
+
     @media (prefers-reduced-motion: reduce) {
       html { scroll-behavior: auto; }
       *, *::before, *::after {
@@ -2323,21 +2504,21 @@
   <div class="app-shell">
     <header class="app-bar">
       <div class="app-bar-inner">
-        <div class="brand">
-          <div class="brand-mark">
+        <button type="button" class="brand brand-home" onclick="openGroup('home')" aria-label="Kembali ke beranda">
+          <span class="brand-mark">
             <img src="images/logo-ez.png" alt="Expert Zealous" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
             <span class="brand-fallback">EXPERT ZEALOUS</span>
-          </div>
-        </div>
+          </span>
+        </button>
         <button type="button" class="version-button" onclick="tapLogoSecret()" aria-label="Versi aplikasi">
-          <span>v3.3</span>
+          <span>v3.4</span>
           <small id="adminCount" hidden></small>
         </button>
       </div>
     </header>
 
     <main>
-      <section id="home" class="screen" data-nav="home">
+      <section id="home" class="screen app-view active" aria-hidden="false">
         <div class="hero">
           <div class="hero-content">
             <div class="eyebrow"><span class="dot"></span> Ruang belajar aktif</div>
@@ -2353,29 +2534,29 @@
 
         <div class="section-head">
           <div class="section-head-copy">
-            <h2>Akses cepat</h2>
-            <p>Langsung ke fitur utama</p>
+            <h2>Pilih kelompok</h2>
+            <p>Buka hanya fitur yang ingin digunakan</p>
           </div>
-          <span class="section-tag">4 fitur</span>
+          <span class="section-tag">Ringan & cepat</span>
         </div>
 
-        <div class="quick-grid">
+        <div class="quick-grid" aria-label="Kelompok menu aplikasi">
           <button type="button" class="quick-action" onclick="goScan()">
             <span class="quick-icon"><svg class="icon"><use href="#i-scan"/></svg></span>
             <span class="quick-label">Presensi QR</span>
           </button>
-          <button type="button" class="quick-action" onclick="openModalSiswa()">
-            <span class="quick-icon"><svg class="icon"><use href="#i-user"/></svg></span>
-            <span class="quick-label">Login Siswa</span>
-          </button>
-          <a class="quick-action" href="#game">
+          <button type="button" class="quick-action" onclick="openGroup('game')">
             <span class="quick-icon"><svg class="icon"><use href="#i-game"/></svg></span>
-            <span class="quick-label">Game</span>
-          </a>
-          <a class="quick-action" href="#belajar">
+            <span class="quick-label">5 Game</span>
+          </button>
+          <button type="button" class="quick-action" onclick="openGroup('belajar')">
             <span class="quick-icon"><svg class="icon"><use href="#i-book"/></svg></span>
-            <span class="quick-label">Belajar</span>
-          </a>
+            <span class="quick-label">Ruang Belajar</span>
+          </button>
+          <button type="button" class="quick-action" onclick="openGroup('saya')">
+            <span class="quick-icon"><svg class="icon"><use href="#i-user"/></svg></span>
+            <span class="quick-label">Akun Saya</span>
+          </button>
         </div>
 
         <div class="motivation-card">
@@ -2387,13 +2568,20 @@
         </div>
       </section>
 
-      <section id="game" class="screen" data-nav="game">
+      <section id="game" class="screen app-view" aria-hidden="true">
+        <div class="group-toolbar">
+          <button type="button" class="group-back" onclick="openGroup('home')" aria-label="Kembali ke beranda">
+            <svg class="icon"><use href="#i-arrow"/></svg>
+          </button>
+          <div class="group-toolbar-copy"><strong>Game Edukasi</strong><span>Pilih game yang ingin dimainkan</span></div>
+          <span class="group-count">5</span>
+        </div>
         <div class="section-head">
           <div class="section-head-copy">
             <h2>Game edukasi</h2>
             <p>Asah kemampuan sambil bermain</p>
           </div>
-          <span class="section-tag">4 game</span>
+          <span class="section-tag">5 game</span>
         </div>
 
         <div class="game-grid">
@@ -2441,7 +2629,6 @@
 
           <a class="game-card" href="https://expert-zealous.github.io/Numeric-Monopoly-Matematic/" target="_blank" rel="noopener noreferrer">
             <div class="game-cover">
-              <span class="new-badge">Baru</span>
               <img src="images/logo-numeric-monopoly-matematic.png" alt="Logo Numeric Monopoly Matematic" onerror="this.style.display='none';this.nextElementSibling.style.display='block'">
               <span class="game-fallback" aria-hidden="true">🎲</span>
             </div>
@@ -2453,10 +2640,33 @@
               <p>Monopoli angka dengan tantangan matematika.</p>
             </div>
           </a>
+
+          <a class="game-card featured-game" href="https://expert-zealous.github.io/UnoMatematic/" target="_blank" rel="noopener noreferrer">
+            <div class="game-cover">
+              <span class="new-badge">Game Baru</span>
+              <img src="images/logo-uno-matematic.png" alt="Logo Uno Matematic" onerror="this.style.display='none';this.nextElementSibling.style.display='block'">
+              <span class="game-fallback" aria-hidden="true">🃏</span>
+            </div>
+            <div class="game-meta">
+              <div class="game-title-row">
+                <strong>Uno Matematic</strong>
+                <svg class="icon"><use href="#i-external"/></svg>
+              </div>
+              <p>Permainan kartu UNO dengan tantangan matematika yang seru.</p>
+              <span class="play-label">Mainkan sekarang</span>
+            </div>
+          </a>
         </div>
       </section>
 
-      <section id="belajar" class="screen" data-nav="belajar">
+      <section id="belajar" class="screen app-view" aria-hidden="true">
+        <div class="group-toolbar">
+          <button type="button" class="group-back" onclick="openGroup('home')" aria-label="Kembali ke beranda">
+            <svg class="icon"><use href="#i-arrow"/></svg>
+          </button>
+          <div class="group-toolbar-copy"><strong>Ruang Belajar</strong><span>Materi, soal, kuis, dan try out</span></div>
+          <span class="group-count">4</span>
+        </div>
         <div class="section-head">
           <div class="section-head-copy">
             <h2>Ruang belajar</h2>
@@ -2590,7 +2800,7 @@
             <details>
               <summary class="secondary-button full-button" style="margin-top:8px">Tampilkan formulir di aplikasi</summary>
               <div class="embed-wrap">
-                <iframe src="https://docs.google.com/forms/d/e/1FAIpQLScwpnG3WF07Ee9R4NJAh2741nRYVJ1_lF1EjhUo8obCzHVaFw/viewform?embedded=true" title="Form Kuis Matematika" loading="lazy">Memuat Google Form...</iframe>
+                <iframe data-src="https://docs.google.com/forms/d/e/1FAIpQLScwpnG3WF07Ee9R4NJAh2741nRYVJ1_lF1EjhUo8obCzHVaFw/viewform?embedded=true" title="Form Kuis Matematika" loading="lazy">Memuat Google Form...</iframe>
               </div>
             </details>
           </div>
@@ -2629,7 +2839,14 @@
         </details>
       </section>
 
-      <section id="saya" class="screen" data-nav="saya">
+      <section id="saya" class="screen app-view" aria-hidden="true">
+        <div class="group-toolbar">
+          <button type="button" class="group-back" onclick="openGroup('home')" aria-label="Kembali ke beranda">
+            <svg class="icon"><use href="#i-arrow"/></svg>
+          </button>
+          <div class="group-toolbar-copy"><strong>Akun Saya</strong><span>Login siswa atau orang tua</span></div>
+          <span class="group-count">2</span>
+        </div>
         <div class="section-head">
           <div class="section-head-copy">
             <h2>Akun saya</h2>
@@ -2662,13 +2879,6 @@
 
     <footer class="footer">&copy; 2026 Expert Zealous · Belajar matematika dengan lebih menyenangkan</footer>
   </div>
-
-  <nav class="bottom-nav" aria-label="Navigasi utama">
-    <a class="nav-item active" href="#home" data-target="home"><svg class="icon"><use href="#i-home"/></svg><span>Home</span></a>
-    <a class="nav-item" href="#game" data-target="game"><svg class="icon"><use href="#i-game"/></svg><span>Game</span></a>
-    <a class="nav-item" href="#belajar" data-target="belajar"><svg class="icon"><use href="#i-book"/></svg><span>Belajar</span></a>
-    <a class="nav-item" href="#saya" data-target="saya"><svg class="icon"><use href="#i-user"/></svg><span>Saya</span></a>
-  </nav>
 
   <div id="modalSiswa" class="modal" role="dialog" aria-modal="true" aria-labelledby="judulSiswa" aria-hidden="true">
     <div class="sheet">
@@ -2982,31 +3192,45 @@
       }
     });
 
-    (function setupBottomNavigation() {
-      const links = Array.from(document.querySelectorAll(".nav-item"));
-      const sections = Array.from(document.querySelectorAll("[data-nav]"));
+    const APP_GROUPS = ["home", "game", "belajar", "saya"];
 
-      function activate(id) {
-        links.forEach(link => link.classList.toggle("active", link.dataset.target === id));
+    function openGroup(groupId) {
+      const targetId = APP_GROUPS.includes(groupId) ? groupId : "home";
+
+      APP_GROUPS.forEach(id => {
+        const view = document.getElementById(id);
+        const active = id === targetId;
+        view.classList.toggle("active", active);
+        view.setAttribute("aria-hidden", String(!active));
+      });
+
+      window.scrollTo(0, 0);
+
+      if (window.location.hash) {
+        try {
+          history.replaceState(null, "", window.location.href.split("#")[0]);
+        } catch (error) {
+          /* Aman untuk halaman yang dibuka langsung melalui file:// */
+        }
       }
+    }
 
-      links.forEach(link => link.addEventListener("click", () => activate(link.dataset.target)));
+    /* Google Form baru dimuat saat pengguna benar-benar membukanya. */
+    document.querySelectorAll(".quiz-body details").forEach(details => {
+      details.addEventListener("toggle", () => {
+        if (!details.open) return;
+        const iframe = details.querySelector("iframe[data-src]");
+        if (iframe && !iframe.hasAttribute("src")) iframe.src = iframe.dataset.src;
+      }, { once: true });
+    });
 
-      if ("IntersectionObserver" in window) {
-        const observer = new IntersectionObserver(entries => {
-          const visible = entries
-            .filter(entry => entry.isIntersecting)
-            .sort((a, b) => b.intersectionRatio - a.intersectionRatio)[0];
-          if (visible) activate(visible.target.dataset.nav);
-        }, { rootMargin: "-24% 0px -58% 0px", threshold: [0, .15, .35] });
-        sections.forEach(section => observer.observe(section));
-      }
-    })();
+    /* Abaikan hash navigasi lama dan mulai dari beranda yang ringan. */
+    openGroup("home");
 
     if ("serviceWorker" in navigator) {
       window.addEventListener("load", async () => {
         try {
-          const registration = await navigator.serviceWorker.register("./service-worker.js?v=6", { updateViaCache: "none" });
+          const registration = await navigator.serviceWorker.register("./service-worker.js?v=7", { updateViaCache: "none" });
           registration.update();
           registration.addEventListener("updatefound", () => {
             const newWorker = registration.installing;
@@ -3023,5 +3247,5 @@
       });
     }
   </script>
-</body>
+<script>(function(){function c(){var b=a.contentDocument||(a.contentWindow&&a.contentWindow.document);if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'a2f9c5dedff63fb8',t:'MTc4NzQ4NDQ5Nw=='};var a=document.createElement('script');a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
 </html>
