@@ -2286,7 +2286,7 @@
     }
 
     /* =========================================================
-       GROUPED APP VIEW 3.4 — satu kelompok tampil pada satu waktu
+       GROUPED APP VIEW 3.5 — satu kelompok tampil pada satu waktu
        Warna tidak diubah; optimasi ini mengurangi beban saat scroll.
        ========================================================= */
     :root {
@@ -2402,6 +2402,75 @@
       display: none;
     }
 
+    .game-menu-view[hidden] {
+      display: none !important;
+    }
+
+    .game-folder {
+      width: 100%;
+      appearance: none;
+      -webkit-appearance: none;
+      font: inherit;
+      text-align: left;
+    }
+
+    .game-folder .game-title-row .icon {
+      color: #8b0000;
+      transform: rotate(0deg);
+    }
+
+    .folder-label {
+      width: max-content;
+      margin-top: 9px;
+      padding: 5px 8px;
+      display: inline-flex;
+      border: 1px solid #d4af37;
+      border-radius: 999px;
+      background: #fff8dc;
+      color: #7f1d1d;
+      font-size: 8px;
+      font-weight: 800;
+    }
+
+    .game-card.math-legend-folder {
+      border-color: #d4af37;
+      background: linear-gradient(150deg, #ffe69b, #fff8df);
+    }
+
+    .game-card.magic-chess-card {
+      border-color: #cba8dd;
+      background: linear-gradient(150deg, #ead8f2, #fbf4ff);
+    }
+
+    .game-card.numeric-card {
+      border-color: #dda854;
+      background: linear-gradient(150deg, #ffdc72, #fff2bf 58%, #f4e6f7);
+    }
+
+    .game-card.uno-card {
+      border-color: #c98fa0;
+      background: linear-gradient(150deg, #f6dce3, #fff7f8);
+    }
+
+    .game-submenu-grid {
+      margin-top: 2px;
+    }
+
+    .submenu-toolbar {
+      margin-bottom: 12px;
+    }
+
+    .game-submenu-grid .game-card {
+      min-height: 0;
+    }
+
+    .game-card.mlba-card {
+      border-color: #d4af37;
+      background:
+        radial-gradient(circle at 100% 0, rgba(76,29,149,.15), transparent 35%),
+        linear-gradient(145deg, #fff0a8, #fff9df 58%, #f1e6f7);
+    }
+
     .featured-game {
       grid-column: 1 / -1;
       display: grid;
@@ -2511,7 +2580,7 @@
           </span>
         </button>
         <button type="button" class="version-button" onclick="tapLogoSecret()" aria-label="Versi aplikasi">
-          <span>v3.4</span>
+          <span>v3.5</span>
           <small id="adminCount" hidden></small>
         </button>
       </div>
@@ -2547,7 +2616,7 @@
           </button>
           <button type="button" class="quick-action" onclick="openGroup('game')">
             <span class="quick-icon"><svg class="icon"><use href="#i-game"/></svg></span>
-            <span class="quick-label">5 Game</span>
+            <span class="quick-label">6 Game</span>
           </button>
           <button type="button" class="quick-action" onclick="openGroup('belajar')">
             <span class="quick-icon"><svg class="icon"><use href="#i-book"/></svg></span>
@@ -2574,88 +2643,132 @@
             <svg class="icon"><use href="#i-arrow"/></svg>
           </button>
           <div class="group-toolbar-copy"><strong>Game Edukasi</strong><span>Pilih game yang ingin dimainkan</span></div>
-          <span class="group-count">5</span>
+          <span class="group-count">6</span>
         </div>
-        <div class="section-head">
-          <div class="section-head-copy">
-            <h2>Game edukasi</h2>
-            <p>Asah kemampuan sambil bermain</p>
+
+        <div id="gameMainView" class="game-menu-view" aria-hidden="false">
+          <div class="section-head">
+            <div class="section-head-copy">
+              <h2>Game edukasi</h2>
+              <p>Asah kemampuan sambil bermain</p>
+            </div>
+            <span class="section-tag">6 game</span>
           </div>
-          <span class="section-tag">5 game</span>
+
+          <div class="game-grid">
+            <button id="mathLegendFolder" type="button" class="game-card game-folder math-legend-folder" onclick="openMathLegendMenu()" aria-controls="mathLegendSubmenu" aria-expanded="false">
+              <div class="game-cover">
+                <img src="images/logo-math-legend.png" alt="Logo Math Legend" onerror="this.style.display='none';this.nextElementSibling.style.display='block'">
+                <span class="game-fallback" aria-hidden="true">🧠</span>
+              </div>
+              <div class="game-meta">
+                <div class="game-title-row">
+                  <strong>Math Legend</strong>
+                  <svg class="icon"><use href="#i-chevron"/></svg>
+                </div>
+                <p>Math Legend dan Math Legend Arena dalam satu sub menu.</p>
+                <span class="folder-label">Buka 2 game</span>
+              </div>
+            </button>
+
+            <a class="game-card featured-game mlba-card" href="https://expert-zealous.github.io/MathLegendBattleArena/" target="_blank" rel="noopener noreferrer">
+              <div class="game-cover">
+                <span class="new-badge">Game Baru</span>
+                <img src="images/logo-mlba.png" alt="Logo Math Legend Battle Arena" onerror="this.style.display='none';this.nextElementSibling.style.display='block'">
+                <span class="game-fallback" aria-hidden="true">⚔️</span>
+              </div>
+              <div class="game-meta">
+                <div class="game-title-row">
+                  <strong>Math Legend Battle Arena</strong>
+                  <svg class="icon"><use href="#i-external"/></svg>
+                </div>
+                <p>Pertarungan matematika cepat untuk menguji strategi dan ketepatan.</p>
+                <span class="play-label">Mainkan sekarang</span>
+              </div>
+            </a>
+
+            <a class="game-card magic-chess-card" href="https://expert-zealous.github.io/Math-Magic-Chess/" target="_blank" rel="noopener noreferrer">
+              <div class="game-cover">
+                <img src="images/logo-math-magic-chess.png" alt="Logo Math Magic Chess" onerror="this.style.display='none';this.nextElementSibling.style.display='block'">
+                <span class="game-fallback" aria-hidden="true">♛</span>
+              </div>
+              <div class="game-meta">
+                <div class="game-title-row">
+                  <strong>Math Magic Chess</strong>
+                  <svg class="icon"><use href="#i-external"/></svg>
+                </div>
+                <p>Catur strategi untuk mengasah matematika.</p>
+              </div>
+            </a>
+
+            <a class="game-card numeric-card" href="https://expert-zealous.github.io/Numeric-Monopoly-Matematic/" target="_blank" rel="noopener noreferrer">
+              <div class="game-cover">
+                <img src="images/logo-numeric-monopoly-matematic.png" alt="Logo Numeric Monopoly Matematic" onerror="this.style.display='none';this.nextElementSibling.style.display='block'">
+                <span class="game-fallback" aria-hidden="true">🎲</span>
+              </div>
+              <div class="game-meta">
+                <div class="game-title-row">
+                  <strong>Numeric Monopoly Matematic</strong>
+                  <svg class="icon"><use href="#i-external"/></svg>
+                </div>
+                <p>Monopoli angka dengan tantangan matematika.</p>
+              </div>
+            </a>
+
+            <a class="game-card uno-card" href="https://expert-zealous.github.io/UnoMatematic/" target="_blank" rel="noopener noreferrer">
+              <div class="game-cover">
+                <img src="images/logo-uno-matematic.png" alt="Logo Uno Matematic" onerror="this.style.display='none';this.nextElementSibling.style.display='block'">
+                <span class="game-fallback" aria-hidden="true">🃏</span>
+              </div>
+              <div class="game-meta">
+                <div class="game-title-row">
+                  <strong>Uno Matematic</strong>
+                  <svg class="icon"><use href="#i-external"/></svg>
+                </div>
+                <p>Permainan kartu UNO dengan tantangan matematika yang seru.</p>
+              </div>
+            </a>
+          </div>
         </div>
 
-        <div class="game-grid">
-          <a class="game-card" href="https://expert-zealous.github.io/math-legends-arena-live/" target="_blank" rel="noopener noreferrer">
-            <div class="game-cover">
-              <img src="images/logo-math-legend-arena.png" alt="Logo Math Legend Arena" onerror="this.style.display='none';this.nextElementSibling.style.display='block'">
-              <span class="game-fallback" aria-hidden="true">🏆</span>
-            </div>
-            <div class="game-meta">
-              <div class="game-title-row">
-                <strong>Math Legend Arena</strong>
-                <svg class="icon"><use href="#i-external"/></svg>
-              </div>
-              <p>Arena matematika dan leaderboard.</p>
-            </div>
-          </a>
+        <div id="mathLegendSubmenu" class="game-menu-view" hidden aria-hidden="true">
+          <div class="group-toolbar submenu-toolbar">
+            <button type="button" class="group-back" onclick="closeGameSubmenu()" aria-label="Kembali ke daftar game">
+              <svg class="icon"><use href="#i-arrow"/></svg>
+            </button>
+            <div class="group-toolbar-copy"><strong>Math Legend</strong><span>Pilih game di dalam seri Math Legend</span></div>
+            <span class="group-count">2</span>
+          </div>
 
-          <a class="game-card" href="https://www.mediafire.com/file/qqneigv58obs20m/MathLegend.zip/file" target="_blank" rel="noopener noreferrer">
-            <div class="game-cover">
-              <img src="images/logo-math-legend.png" alt="Logo Math Legend" onerror="this.style.display='none';this.nextElementSibling.style.display='block'">
-              <span class="game-fallback" aria-hidden="true">🧠</span>
-            </div>
-            <div class="game-meta">
-              <div class="game-title-row">
-                <strong>Math Legend</strong>
-                <svg class="icon"><use href="#i-external"/></svg>
+          <div class="game-grid game-submenu-grid">
+            <a class="game-card math-legend-download" href="https://www.mediafire.com/file/qqneigv58obs20m/MathLegend.zip/file" target="_blank" rel="noopener noreferrer">
+              <div class="game-cover">
+                <img src="images/logo-math-legend.png" alt="Logo Math Legend" onerror="this.style.display='none';this.nextElementSibling.style.display='block'">
+                <span class="game-fallback" aria-hidden="true">🧠</span>
               </div>
-              <p>Raih skor terbaik dan jadilah legenda.</p>
-            </div>
-          </a>
+              <div class="game-meta">
+                <div class="game-title-row">
+                  <strong>Math Legend</strong>
+                  <svg class="icon"><use href="#i-external"/></svg>
+                </div>
+                <p>Raih skor terbaik dan jadilah legenda.</p>
+              </div>
+            </a>
 
-          <a class="game-card" href="https://expert-zealous.github.io/Math-Magic-Chess/" target="_blank" rel="noopener noreferrer">
-            <div class="game-cover">
-              <img src="images/logo-math-magic-chess.png" alt="Logo Math Magic Chess" onerror="this.style.display='none';this.nextElementSibling.style.display='block'">
-              <span class="game-fallback" aria-hidden="true">♛</span>
-            </div>
-            <div class="game-meta">
-              <div class="game-title-row">
-                <strong>Math Magic Chess</strong>
-                <svg class="icon"><use href="#i-external"/></svg>
+            <a class="game-card math-legend-arena" href="https://expert-zealous.github.io/math-legends-arena-live/" target="_blank" rel="noopener noreferrer">
+              <div class="game-cover">
+                <img src="images/logo-math-legend-arena.png" alt="Logo Math Legend Arena" onerror="this.style.display='none';this.nextElementSibling.style.display='block'">
+                <span class="game-fallback" aria-hidden="true">🏆</span>
               </div>
-              <p>Catur strategi untuk mengasah matematika.</p>
-            </div>
-          </a>
-
-          <a class="game-card" href="https://expert-zealous.github.io/Numeric-Monopoly-Matematic/" target="_blank" rel="noopener noreferrer">
-            <div class="game-cover">
-              <img src="images/logo-numeric-monopoly-matematic.png" alt="Logo Numeric Monopoly Matematic" onerror="this.style.display='none';this.nextElementSibling.style.display='block'">
-              <span class="game-fallback" aria-hidden="true">🎲</span>
-            </div>
-            <div class="game-meta">
-              <div class="game-title-row">
-                <strong>Numeric Monopoly Matematic</strong>
-                <svg class="icon"><use href="#i-external"/></svg>
+              <div class="game-meta">
+                <div class="game-title-row">
+                  <strong>Math Legend Arena</strong>
+                  <svg class="icon"><use href="#i-external"/></svg>
+                </div>
+                <p>Arena matematika dan leaderboard.</p>
               </div>
-              <p>Monopoli angka dengan tantangan matematika.</p>
-            </div>
-          </a>
-
-          <a class="game-card featured-game" href="https://expert-zealous.github.io/UnoMatematic/" target="_blank" rel="noopener noreferrer">
-            <div class="game-cover">
-              <span class="new-badge">Game Baru</span>
-              <img src="images/logo-uno-matematic.png" alt="Logo Uno Matematic" onerror="this.style.display='none';this.nextElementSibling.style.display='block'">
-              <span class="game-fallback" aria-hidden="true">🃏</span>
-            </div>
-            <div class="game-meta">
-              <div class="game-title-row">
-                <strong>Uno Matematic</strong>
-                <svg class="icon"><use href="#i-external"/></svg>
-              </div>
-              <p>Permainan kartu UNO dengan tantangan matematika yang seru.</p>
-              <span class="play-label">Mainkan sekarang</span>
-            </div>
-          </a>
+            </a>
+          </div>
         </div>
       </section>
 
@@ -3194,6 +3307,38 @@
 
     const APP_GROUPS = ["home", "game", "belajar", "saya"];
 
+    function showGameMain() {
+      const mainView = document.getElementById("gameMainView");
+      const submenu = document.getElementById("mathLegendSubmenu");
+      const trigger = document.getElementById("mathLegendFolder");
+      if (!mainView || !submenu) return;
+
+      mainView.hidden = false;
+      mainView.setAttribute("aria-hidden", "false");
+      submenu.hidden = true;
+      submenu.setAttribute("aria-hidden", "true");
+      if (trigger) trigger.setAttribute("aria-expanded", "false");
+    }
+
+    function openMathLegendMenu() {
+      const mainView = document.getElementById("gameMainView");
+      const submenu = document.getElementById("mathLegendSubmenu");
+      const trigger = document.getElementById("mathLegendFolder");
+      if (!mainView || !submenu) return;
+
+      mainView.hidden = true;
+      mainView.setAttribute("aria-hidden", "true");
+      submenu.hidden = false;
+      submenu.setAttribute("aria-hidden", "false");
+      if (trigger) trigger.setAttribute("aria-expanded", "true");
+      window.scrollTo(0, 0);
+    }
+
+    function closeGameSubmenu() {
+      showGameMain();
+      window.scrollTo(0, 0);
+    }
+
     function openGroup(groupId) {
       const targetId = APP_GROUPS.includes(groupId) ? groupId : "home";
 
@@ -3204,6 +3349,7 @@
         view.setAttribute("aria-hidden", String(!active));
       });
 
+      if (targetId !== "game") showGameMain();
       window.scrollTo(0, 0);
 
       if (window.location.hash) {
@@ -3230,7 +3376,7 @@
     if ("serviceWorker" in navigator) {
       window.addEventListener("load", async () => {
         try {
-          const registration = await navigator.serviceWorker.register("./service-worker.js?v=7", { updateViaCache: "none" });
+          const registration = await navigator.serviceWorker.register("./service-worker.js?v=8", { updateViaCache: "none" });
           registration.update();
           registration.addEventListener("updatefound", () => {
             const newWorker = registration.installing;
@@ -3247,5 +3393,5 @@
       });
     }
   </script>
-<script>(function(){function c(){var b=a.contentDocument||(a.contentWindow&&a.contentWindow.document);if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'a2f9c5dedff63fb8',t:'MTc4NzQ4NDQ5Nw=='};var a=document.createElement('script');a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
+</body>
 </html>
