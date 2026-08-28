@@ -2535,6 +2535,33 @@
       }
     }
 
+    /* =========================================================
+       HEADER LOGO TRANSPARAN 3.7
+       PNG logo memakai alpha; kontainer tidak boleh membuat bidang putih.
+       ========================================================= */
+    .brand-home,
+    .brand-mark,
+    .brand-mark img {
+      background: transparent !important;
+    }
+
+    .brand-home {
+      border: 0 !important;
+      box-shadow: none !important;
+    }
+
+    .brand-mark {
+      overflow: visible;
+      border: 0 !important;
+      border-radius: 0;
+      box-shadow: none !important;
+    }
+
+    .brand-mark img {
+      filter: none;
+      mix-blend-mode: normal;
+    }
+
     @media (prefers-reduced-motion: reduce) {
       html { scroll-behavior: auto; }
       *, *::before, *::after {
@@ -2580,7 +2607,7 @@
           </span>
         </button>
         <button type="button" class="version-button" onclick="tapLogoSecret()" aria-label="Versi aplikasi">
-          <span>v3.6</span>
+          <span>v3.7</span>
           <small id="adminCount" hidden></small>
         </button>
       </div>
@@ -3376,7 +3403,7 @@
     if ("serviceWorker" in navigator) {
       window.addEventListener("load", async () => {
         try {
-          const registration = await navigator.serviceWorker.register("./service-worker.js?v=9", { updateViaCache: "none" });
+          const registration = await navigator.serviceWorker.register("./service-worker.js?v=10", { updateViaCache: "none" });
           registration.update();
           registration.addEventListener("updatefound", () => {
             const newWorker = registration.installing;
