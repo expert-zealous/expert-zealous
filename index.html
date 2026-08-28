@@ -2286,7 +2286,7 @@
     }
 
     /* =========================================================
-       GROUPED APP VIEW 3.5 — satu kelompok tampil pada satu waktu
+       GROUPED APP VIEW 3.6 — satu kelompok tampil pada satu waktu
        Warna tidak diubah; optimasi ini mengurangi beban saat scroll.
        ========================================================= */
     :root {
@@ -2580,7 +2580,7 @@
           </span>
         </button>
         <button type="button" class="version-button" onclick="tapLogoSecret()" aria-label="Versi aplikasi">
-          <span>v3.5</span>
+          <span>v3.6</span>
           <small id="adminCount" hidden></small>
         </button>
       </div>
@@ -2671,22 +2671,6 @@
               </div>
             </button>
 
-            <a class="game-card featured-game mlba-card" href="https://expert-zealous.github.io/MathLegendBattleArena/" target="_blank" rel="noopener noreferrer">
-              <div class="game-cover">
-                <span class="new-badge">Game Baru</span>
-                <img src="images/logo-mlba.png" alt="Logo Math Legend Battle Arena" onerror="this.style.display='none';this.nextElementSibling.style.display='block'">
-                <span class="game-fallback" aria-hidden="true">⚔️</span>
-              </div>
-              <div class="game-meta">
-                <div class="game-title-row">
-                  <strong>Math Legend Battle Arena</strong>
-                  <svg class="icon"><use href="#i-external"/></svg>
-                </div>
-                <p>Pertarungan matematika cepat untuk menguji strategi dan ketepatan.</p>
-                <span class="play-label">Mainkan sekarang</span>
-              </div>
-            </a>
-
             <a class="game-card magic-chess-card" href="https://expert-zealous.github.io/Math-Magic-Chess/" target="_blank" rel="noopener noreferrer">
               <div class="game-cover">
                 <img src="images/logo-math-magic-chess.png" alt="Logo Math Magic Chess" onerror="this.style.display='none';this.nextElementSibling.style.display='block'">
@@ -2726,6 +2710,22 @@
                   <svg class="icon"><use href="#i-external"/></svg>
                 </div>
                 <p>Permainan kartu UNO dengan tantangan matematika yang seru.</p>
+              </div>
+            </a>
+
+            <a class="game-card featured-game mlba-card" href="https://expert-zealous.github.io/MathLegendBattleArena/" target="_blank" rel="noopener noreferrer">
+              <div class="game-cover">
+                <span class="new-badge">Game Baru</span>
+                <img src="images/logo-mlba.png" alt="Logo Math Legend Battle Arena" onerror="this.style.display='none';this.nextElementSibling.style.display='block'">
+                <span class="game-fallback" aria-hidden="true">⚔️</span>
+              </div>
+              <div class="game-meta">
+                <div class="game-title-row">
+                  <strong>Math Legend Battle Arena</strong>
+                  <svg class="icon"><use href="#i-external"/></svg>
+                </div>
+                <p>Pertarungan matematika cepat untuk menguji strategi dan ketepatan.</p>
+                <span class="play-label">Mainkan sekarang</span>
               </div>
             </a>
           </div>
@@ -3376,7 +3376,7 @@
     if ("serviceWorker" in navigator) {
       window.addEventListener("load", async () => {
         try {
-          const registration = await navigator.serviceWorker.register("./service-worker.js?v=8", { updateViaCache: "none" });
+          const registration = await navigator.serviceWorker.register("./service-worker.js?v=9", { updateViaCache: "none" });
           registration.update();
           registration.addEventListener("updatefound", () => {
             const newWorker = registration.installing;
