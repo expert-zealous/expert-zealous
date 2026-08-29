@@ -141,7 +141,7 @@ body{margin:0;padding:0;font-family:'Poppins',sans-serif}
     <div class="bg-white p-4 rounded-2xl shadow text-center">
       <div style="font-size:2.5rem">📊</div>
       <div class="font-black text-yellow-600" style="font-size:2.5rem" id="rataNilai">-</div>
-      <div class="txt-med text-gray-600">Nilai</div>
+      <div class="txt-med text-gray-600">Total Nilai</div>
     </div>
   </div>
 </div>
@@ -255,7 +255,7 @@ hitungPembayaran(pr.data);
 document.getElementById('totalPresensi').innerText=pr.data.length;
     renderNilai(nl.data);
     const totalN = nl.data.reduce((s,x)=>s+(parseInt(x.nilai100)||0),0);
-    document.getElementById('rataNilai').innerText = nl.data.length ? Math.round(totalN/nl.data.length) : '-';
+document.getElementById('rataNilai').innerText = nl.data.length ? totalN : '-';
     renderJadwal(jd.data);
 const namaHari = ['Minggu','Senin','Selasa','Rabu','Kamis','Jumat','Sabtu'];
 const hariIni = namaHari[new Date().getDay()];
