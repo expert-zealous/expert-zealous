@@ -2536,6 +2536,196 @@
     }
 
     /* =========================================================
+       TATA TERTIB & AKSES MENU SISWA 3.8
+       Satu konfirmasi wajib sebelum menu utama dapat dibuka.
+       ========================================================= */
+    .rules-card {
+      margin-top: 10px;
+      overflow: hidden;
+      border: 1px solid #d4af37;
+      border-radius: 19px;
+      background:
+        radial-gradient(circle at 100% 0, rgba(76, 29, 149, .11), transparent 30%),
+        linear-gradient(135deg, #fff8dc, #ffffff 56%, #f6ecfa);
+      box-shadow: 0 10px 24px rgba(91, 30, 55, .11);
+    }
+
+    .rules-card > summary {
+      min-height: 67px;
+      padding: 12px 13px;
+      display: grid;
+      grid-template-columns: 38px minmax(0, 1fr) auto 18px;
+      align-items: center;
+      gap: 9px;
+      list-style: none;
+      cursor: pointer;
+    }
+
+    .rules-card > summary::-webkit-details-marker {
+      display: none;
+    }
+
+    .rules-icon {
+      width: 38px;
+      height: 38px;
+      display: grid;
+      place-items: center;
+      border-radius: 12px;
+      background: linear-gradient(145deg, #8b0000, #4c1d95);
+      color: #facc15;
+      box-shadow: 0 6px 13px rgba(100, 20, 43, .16);
+    }
+
+    .rules-status {
+      padding: 5px 7px;
+      border: 1px solid #e2bd45;
+      border-radius: 999px;
+      background: #fff0a8;
+      color: #7f1d1d;
+      font-size: 8px;
+      font-weight: 850;
+      white-space: nowrap;
+    }
+
+    .rules-card.is-accepted .rules-status {
+      border-color: #c89c1b;
+      background: #facc15;
+      color: #68152e;
+    }
+
+    .rules-card .summary-chevron {
+      color: #7f1d1d;
+    }
+
+    .rules-body {
+      padding: 0 13px 14px;
+      border-top: 1px solid rgba(212, 175, 55, .55);
+    }
+
+    .rules-intro {
+      margin-top: 11px;
+      padding: 9px 10px;
+      border-left: 3px solid #8b0000;
+      border-radius: 0 11px 11px 0;
+      background: rgba(255,255,255,.70);
+    }
+
+    .rules-intro strong,
+    .rules-intro span {
+      display: block;
+    }
+
+    .rules-intro strong {
+      color: #7f1d1d;
+      font-size: 10px;
+      font-weight: 850;
+    }
+
+    .rules-intro span {
+      margin-top: 2px;
+      color: #786673;
+      font-size: 9px;
+    }
+
+    .rules-list {
+      margin: 12px 0 14px;
+      padding-left: 23px;
+      color: #4c2030;
+      font-size: 10px;
+      line-height: 1.48;
+    }
+
+    .rules-list li {
+      padding-left: 3px;
+    }
+
+    .rules-list li + li {
+      margin-top: 8px;
+    }
+
+    .rules-list li::marker {
+      color: #8b0000;
+      font-weight: 850;
+    }
+
+    .rules-list strong {
+      color: #68152e;
+      font-weight: 850;
+    }
+
+    .rules-agreement {
+      padding: 10px;
+      display: flex;
+      align-items: flex-start;
+      gap: 9px;
+      border: 1px solid #d4af37;
+      border-radius: 13px;
+      background: linear-gradient(135deg, #fff0a8, #fffdf3);
+      cursor: pointer;
+    }
+
+    .rules-agreement input {
+      width: 22px;
+      height: 22px;
+      flex: 0 0 22px;
+      margin: 1px 0 0;
+      accent-color: #8b0000;
+      cursor: pointer;
+    }
+
+    .rules-agreement-copy,
+    .rules-agreement-copy strong,
+    .rules-agreement-copy span {
+      display: block;
+    }
+
+    .rules-agreement-copy {
+      min-width: 0;
+    }
+
+    .rules-agreement-copy strong {
+      color: #7f1d1d;
+      font-size: 10px;
+      font-weight: 850;
+    }
+
+    .rules-agreement-copy span {
+      margin-top: 2px;
+      color: #75542e;
+      font-size: 9px;
+      line-height: 1.42;
+    }
+
+    .rules-access-message {
+      min-height: 15px;
+      margin: 8px 2px 0;
+      color: #8b0000;
+      font-size: 9px;
+      font-weight: 750;
+    }
+
+    .rules-card.is-accepted .rules-access-message {
+      color: #4c1d95;
+    }
+
+    .rules-card.needs-attention {
+      border-color: #8b0000;
+      box-shadow: 0 0 0 3px rgba(139, 0, 0, .12), 0 10px 24px rgba(91, 30, 55, .11);
+    }
+
+    .quick-action:disabled {
+      opacity: .58;
+      cursor: not-allowed;
+      filter: saturate(.65);
+      box-shadow: none;
+      transform: none;
+    }
+
+    .quick-action:disabled .quick-label {
+      color: #8d7882;
+    }
+
+    /* =========================================================
        HEADER LOGO TRANSPARAN 3.7
        PNG logo memakai alpha; kontainer tidak boleh membuat bidang putih.
        ========================================================= */
@@ -2607,7 +2797,7 @@
           </span>
         </button>
         <button type="button" class="version-button" onclick="tapLogoSecret()" aria-label="Versi aplikasi">
-          <span>v3.7</span>
+          <span>v3.8</span>
           <small id="adminCount" hidden></small>
         </button>
       </div>
@@ -2623,7 +2813,7 @@
           </div>
           <div class="hero-emblem" aria-hidden="true">
             <span class="hero-emblem-glow"></span>
-            <img src="images/icon-logo.png" alt="" onerror="this.style.display='none';this.nextElementSibling.style.display='block'">
+            <img src="images/icon-512.png" alt="" onerror="this.style.display='none';this.nextElementSibling.style.display='block'">
             <span class="hero-emblem-fallback">EZ</span>
           </div>
         </div>
@@ -2637,19 +2827,19 @@
         </div>
 
         <div class="quick-grid" aria-label="Kelompok menu aplikasi">
-          <button type="button" class="quick-action" onclick="goScan()">
+          <button type="button" class="quick-action" data-requires-rules onclick="goScan()">
             <span class="quick-icon"><svg class="icon"><use href="#i-scan"/></svg></span>
             <span class="quick-label">Presensi QR</span>
           </button>
-          <button type="button" class="quick-action" onclick="openGroup('game')">
+          <button type="button" class="quick-action" data-requires-rules onclick="openGroup('game')">
             <span class="quick-icon"><svg class="icon"><use href="#i-game"/></svg></span>
             <span class="quick-label">6 Game</span>
           </button>
-          <button type="button" class="quick-action" onclick="openGroup('belajar')">
+          <button type="button" class="quick-action" data-requires-rules onclick="openGroup('belajar')">
             <span class="quick-icon"><svg class="icon"><use href="#i-book"/></svg></span>
             <span class="quick-label">Ruang Belajar</span>
           </button>
-          <button type="button" class="quick-action" onclick="openGroup('saya')">
+          <button type="button" class="quick-action" data-requires-rules onclick="openGroup('saya')">
             <span class="quick-icon"><svg class="icon"><use href="#i-user"/></svg></span>
             <span class="quick-label">Akun Saya</span>
           </button>
@@ -2662,6 +2852,37 @@
             <span>Latihan rutin membantu kemampuanmu terus bertumbuh.</span>
           </div>
         </div>
+
+        <details id="rulesNotice" class="rules-card" open>
+          <summary aria-controls="rulesBody">
+            <span class="rules-icon"><svg class="icon"><use href="#i-lock"/></svg></span>
+            <span class="summary-copy"><strong>Tata Tertib &amp; Info Penting Siswa</strong><span>Wajib dibaca sebelum membuka menu aplikasi</span></span>
+            <span id="rulesStatus" class="rules-status">Wajib dibaca</span>
+            <svg class="icon summary-chevron"><use href="#i-chevron"/></svg>
+          </summary>
+          <div id="rulesBody" class="rules-body">
+            <div class="rules-intro">
+              <strong>Perhatian untuk seluruh siswa Expert Zealous</strong>
+              <span>Mohon baca seluruh tata tertib berikut dengan teliti.</span>
+            </div>
+            <ol class="rules-list">
+              <li>Siswa hadir selambat-lambatnya 5 menit sebelum jadwal les.</li>
+              <li>Siswa wajib mengerjakan 10 soal Terampil Matematika Dasar di menu Ruang Belajar &gt; Platform Matematika setiap hari.</li>
+              <li>Siswa yang tidak hadir les tanpa izin tetap terhitung masuk les dan Absen QR dilakukan oleh teman les yang hadir.</li>
+              <li>Siswa diizinkan tidak masuk les jika sakit atau memiliki alasan lain yang dapat dipertanggungjawabkan.</li>
+              <li>Jika semua siswa dalam satu kelompok tidak hadir les tanpa izin yang dapat dipertanggungjawabkan sebelumnya, kehadiran tetap terhitung masuk dan absen QR dilakukan oleh admin.</li>
+              <li>Aktivitas belajar siswa SMP dan SMA 90 menit terbagi atas 75 menit pembahasan teori dan soal serta 15 menit game edukasi (berubah berdasar situasi dan kondisi).</li>
+              <li>Aktivitas belajar siswa SD 60 menit terbagi atas 45 menit pembahasan teori dan soal serta 15 menit game edukasi (berubah berdasar situasi dan kondisi).</li>
+              <li>Info biaya les tersedia di menu Akun Orang Tua dan pembayaran dapat dilakukan secara tunai atau transfer ke rekening <strong>Bank Mandiri 1710019929515</strong>.</li>
+            </ol>
+
+            <label class="rules-agreement" for="rulesAgreement">
+              <input id="rulesAgreement" type="checkbox" onchange="handleRulesAgreement(this)" aria-describedby="rulesAccessMessage">
+              <span class="rules-agreement-copy"><strong>Konfirmasi siswa</strong><span>Saya telah membaca, memahami, dan menyetujui Tata Tertib &amp; Info Penting Expert Zealous.</span></span>
+            </label>
+            <p id="rulesAccessMessage" class="rules-access-message" role="status">Centang konfirmasi di atas untuk membuka semua menu aplikasi.</p>
+          </div>
+        </details>
       </section>
 
       <section id="game" class="screen app-view" aria-hidden="true">
@@ -3090,7 +3311,9 @@
   <script>
     const API_URL = "https://script.google.com/macros/s/AKfycbzsWmRDZQnf680vmXKcF7s-BxDxXdelv3K6MWG0fRfqpxYv7azBWnldN6UrjUIqdvLG/exec";
     const PASSWORD_ADMIN = "ezadmin2026";
+    const RULES_ACK_KEY = "ez_student_rules_ack_2026_v1";
 
+    let rulesAcceptedThisSession = false;
     let cacheSiswa = null;
     let cacheOrtu = null;
     let tapCount = 0;
@@ -3112,6 +3335,7 @@
     }
 
     function bukaPDF(pathPDF) {
+      if (!requireRulesAgreement()) return;
       const baseURL = window.location.origin + window.location.pathname.replace(/\/[^/]*$/, "/");
       const urlLengkap = baseURL + pathPDF;
       const viewerURL = "https://docs.google.com/viewer?url=" + encodeURIComponent(urlLengkap) + "&embedded=false";
@@ -3164,6 +3388,7 @@
     }
 
     function goScan() {
+      if (!requireRulesAgreement()) return;
       if (localStorage.getItem("ez_siswa")) {
         window.location = "siswa.html?autoscan=1";
       } else {
@@ -3175,11 +3400,13 @@
     }
 
     function openModalSiswa() {
+      if (!requireRulesAgreement()) return;
       openModal("modalSiswa", "selectSiswa");
       loadSiswa();
     }
 
     function openModalOrtu() {
+      if (!requireRulesAgreement()) return;
       openModal("modalOrtu", "selectOrtu");
       loadOrtu();
     }
@@ -3334,6 +3561,66 @@
 
     const APP_GROUPS = ["home", "game", "belajar", "saya"];
 
+    function hasRulesAgreement() {
+      try {
+        return localStorage.getItem(RULES_ACK_KEY) === "accepted";
+      } catch (error) {
+        return rulesAcceptedThisSession;
+      }
+    }
+
+    function showRulesRequired() {
+      const notice = document.getElementById("rulesNotice");
+      const message = document.getElementById("rulesAccessMessage");
+      if (notice) {
+        notice.open = true;
+        notice.classList.add("needs-attention");
+        setTimeout(() => notice.classList.remove("needs-attention"), 900);
+        document.getElementById("rulesAgreement")?.focus();
+      }
+      if (message) message.textContent = "Akses terkunci. Centang konfirmasi Tata Tertib & Info Penting terlebih dahulu.";
+    }
+
+    function requireRulesAgreement() {
+      if (hasRulesAgreement()) return true;
+      showRulesRequired();
+      return false;
+    }
+
+    function syncMenuAccess() {
+      const accepted = hasRulesAgreement();
+      document.querySelectorAll("[data-requires-rules]").forEach(control => {
+        control.disabled = !accepted;
+        control.setAttribute("aria-disabled", String(!accepted));
+      });
+
+      const checkbox = document.getElementById("rulesAgreement");
+      const status = document.getElementById("rulesStatus");
+      const message = document.getElementById("rulesAccessMessage");
+      const notice = document.getElementById("rulesNotice");
+      if (checkbox) checkbox.checked = accepted;
+      if (status) status.textContent = accepted ? "Disetujui" : "Wajib dibaca";
+      if (message) message.textContent = accepted
+        ? "Konfirmasi tersimpan. Semua menu aplikasi sudah dapat dibuka."
+        : "Centang konfirmasi di atas untuk membuka semua menu aplikasi.";
+      if (notice) notice.classList.toggle("is-accepted", accepted);
+    }
+
+    function handleRulesAgreement(checkbox) {
+      const accepted = Boolean(checkbox.checked);
+      rulesAcceptedThisSession = accepted;
+      try {
+        if (accepted) {
+          localStorage.setItem(RULES_ACK_KEY, "accepted");
+        } else {
+          localStorage.removeItem(RULES_ACK_KEY);
+        }
+      } catch (error) {
+        /* Tetap berlaku selama sesi ini jika penyimpanan browser dibatasi. */
+      }
+      syncMenuAccess();
+    }
+
     function showGameMain() {
       const mainView = document.getElementById("gameMainView");
       const submenu = document.getElementById("mathLegendSubmenu");
@@ -3348,6 +3635,7 @@
     }
 
     function openMathLegendMenu() {
+      if (!requireRulesAgreement()) return;
       const mainView = document.getElementById("gameMainView");
       const submenu = document.getElementById("mathLegendSubmenu");
       const trigger = document.getElementById("mathLegendFolder");
@@ -3368,6 +3656,7 @@
 
     function openGroup(groupId) {
       const targetId = APP_GROUPS.includes(groupId) ? groupId : "home";
+      if (targetId !== "home" && !requireRulesAgreement()) return;
 
       APP_GROUPS.forEach(id => {
         const view = document.getElementById(id);
@@ -3397,13 +3686,16 @@
       }, { once: true });
     });
 
+    /* Terapkan persetujuan sebelum pengguna mencoba membuka menu apa pun. */
+    syncMenuAccess();
+
     /* Abaikan hash navigasi lama dan mulai dari beranda yang ringan. */
     openGroup("home");
 
     if ("serviceWorker" in navigator) {
       window.addEventListener("load", async () => {
         try {
-          const registration = await navigator.serviceWorker.register("./service-worker.js?v=10", { updateViaCache: "none" });
+          const registration = await navigator.serviceWorker.register("./service-worker.js?v=11", { updateViaCache: "none" });
           registration.update();
           registration.addEventListener("updatefound", () => {
             const newWorker = registration.installing;
